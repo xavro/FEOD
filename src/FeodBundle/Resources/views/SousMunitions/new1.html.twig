@@ -1,0 +1,876 @@
+{% extends "::base2.html.twig" %}
+
+{% block body -%}
+<div id="rouge" {% if entity is defined and entity.rouge %}class="alert rouge"{% endif %}>
+<h1 style="text-align:center;"><b>Sous-Munitions</b> - {{entity.nomine}}</h1>
+{% if error is defined and error is not null %}
+<div class="flash-notice alert alert-danger">
+        {{error}}
+</div>
+{% endif %}
+
+    <div class="well container-fluid">
+            {{ form_start(form, {"attr": {"class": "form-horizontal","role": "form", "id":"form"}}) }}
+
+		<div class="row">
+			<div class="col-sm-5">{{form_label(form.nomine)}}{{form_widget(form.nomine)}}</div>
+			<div class="col-sm-3">{{form_label(form.rouge)}}{{form_widget(form.rouge)}}</div>
+			<div class="col-sm-4">{{form_label(form.TypeSousMunition)}}{{form_widget(form.TypeSousMunition)}}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">{{form_label(form.pays)}}{{form_widget(form.pays)}}</div>
+			<div class="col-sm-4">{{form_label(form.paysAcquereur)}}{{form_widget(form.paysAcquereur)}}</div>
+			<div class="col-sm-4">{{form_label(form.Alias)}}{{form_widget(form.Alias)}}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">{{form_label(form.retrouveEn)}}{{form_widget(form.retrouveEn)}}</div>
+		</div>
+
+		<div class="row">
+		<br><br/>
+			<ul class="nav nav-tabs">
+				<li role="presentation"><a href="#Generalites" role="tab" data-toggle="tab">Généralités</a></li>
+				<li role="presentation"><a href="#Chargement" role="tab" data-toggle="tab">Chargement</a></li>
+				<li role="presentation"><a href="#Aspect-Dimensions" role="tab" data-toggle="tab">Aspect-Dimensions</a></li>
+				<li role="presentation"><a href="#Marquages" role="tab" data-toggle="tab">Marquages</a></li>
+				<li role="presentation"><a href="#amorcage" role="tab" data-toggle="tab">Amorçage</a></li>
+				{% if is_granted("ROLE_CLIENT") %}
+					<li role="presentation"><a href="#fonctionnement" role="tab" data-toggle="tab">Fonctionnement</a></li>
+				{% endif %}
+				<li role="presentation"><a href="#conditionnement" role="tab" data-toggle="tab">Conditionnement</a></li>
+				<li role="presentation"><a href="#lanceur" role="tab" data-toggle="tab">Vecteur</a></li>
+				<li role="presentation"><a href="#historique" role="tab" data-toggle="tab">Historique</a></li>
+				<li role="presentation"><a href="#securite" role="tab" data-toggle="tab">Sécurité</a></li>
+				{% if is_granted("ROLE_CLIENT") %}
+					<li role="presentation"><a href="#traitement" role="tab" data-toggle="tab">Traitement</a></li>
+				{% endif %}
+				<li role="presentation"><a href="#remarque" role="tab" data-toggle="tab">Remarques</a></li>
+				<li role="presentation"><a href="#gestion" role="tab" data-toggle="tab">Gestion</a></li>
+			</ul>
+		</div>
+
+		<div class="tab-content">
+			<div id="Generalites" role="tabpanel" class="tab-pane row container-fluid">
+				<div class="col-md-12">
+					<br>
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.denominationOTAN)}}</div><div class="col-sm-6">{{form_widget(form.denominationOTAN)}}</div>
+					</div>
+					                    <br>
+                    <h3 class="center"> <I>Photos</I></h3>
+
+                        {% if entity.images is not empty %}
+                        {% for image in form.images %}
+
+                            {% block carousel %}
+                            {% include ":default:CarousselImages.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+
+                    <br>
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.SousMunitionEmploi)}}</div><div class="col-sm-2">{{form_widget(form.SousMunitionEmploi)}}</div>
+						<div class="col-sm-2 text-right">{{form_label(form.AntiManipulation)}}</div><div class="col-sm-1">{{form_widget(form.AntiManipulation)}}</div>
+					</div>
+                                        <br>
+                                        <div class="row">
+                                        <div class="col-sm-2 text-right">{{form_label(form.PoidsNonLargue)}}</div><div class="col-sm-1">{{form_widget(form.PoidsNonLargue)}}</div>
+                                        </div>
+                                        <br>
+					<div class="row">
+						<div class="col-sm-2 text-right"><b>{{form_label(form.AutoDestruction)}}</b></div><div class="col-sm-1">{{form_widget(form.AutoDestruction)}}</div>
+						<div class="col-sm-1 text-right">{{form_label(form.DelaiAutoDestruction)}}</div><div class="col-sm-4">{{form_widget(form.DelaiAutoDestruction)}}</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-2 text-right"><b>{{form_label(form.AutoNeutralisation)}}</b></div><div class="col-sm-1">{{form_widget(form.AutoNeutralisation)}}</div>
+						<div class="col-sm-1 text-right">{{form_label(form.DelaiAutoNeutralisation)}}</div><div class="col-sm-4">{{form_widget(form.DelaiAutoNeutralisation)}}</div>
+					</div>
+					<br>
+					<div class="row"><hr />Armement</div>
+                                        <div class="row">	
+						<div class="col-sm-2 text-right">{{form_label(form.PrincipeArmement)}}</div><div class="col-sm-3">{{form_widget(form.PrincipeArmement)}}</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.IndicateurArmement)}}</div><div class="col-sm-1">{{form_widget(form.IndicateurArmement)}}</div>
+						<div class="col-sm-1 text-right">{{form_label(form.TypeIndicateur)}}</div><div class="col-sm-3">{{form_widget(form.TypeIndicateur)}}</div>
+						<div class="col-sm-1 text-right">{{form_label(form.PositionIndicateur)}}</div><div class="col-sm-2">{{form_widget(form.PositionIndicateur)}}</div>
+					</div>
+					<br>
+					
+					<div class="row"><hr />Guidage</div>	
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.SystemeGuidage)}}</div><div class="col-sm-1">{{form_widget(form.SystemeGuidage)}}</div>
+						<div class="col-sm-1 text-right">{{form_label(form.TypeGuidage)}}</div><div class="col-sm-2">{{form_widget(form.TypeGuidage)}}</div>
+					</div>
+					
+					<div class="row"><hr />Divers</div>	
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.ChargeTandem)}}</div><div class="col-sm-1">{{form_widget(form.ChargeTandem)}}</div>
+						<div class="col-sm-2 text-right">{{form_label(form.PropulsionAdditionnelle)}}</div><div class="col-sm-1">{{form_widget(form.PropulsionAdditionnelle)}}</div>
+						<div class="col-sm-2 text-right">{{form_label(form.SousMunitionAccessoires)}}</div><div class="col-sm-2">{{form_widget(form.SousMunitionAccessoires)}}</div>
+					</div>
+                    <hr>
+                    <div class="row">
+                    <h4 class="center"> <I>Performances</I></h4>
+                        <div class="col-sm-8 col-lg-offset-1">
+                            {{form_widget(form.performances)}}
+                        </div>
+                    </div>
+                <hr>
+                    <div class="row">
+                        <h5 class="col-sm-1 text-right"> <I>Nom Usine</I></h5>
+                        <div class="col-sm-4">
+                            {{form_widget(form.nomUsine)}}
+                        </div>
+                        <h5 class="col-sm-1 text-right"> <I>Code Usine</I></h5>
+                        <div class="col-sm-3">
+                            {{form_widget(form.codeUsine)}}
+                        </div>
+                    </div>
+                        <br>
+                    <div class="row">
+                    <h4 class="center"> <I>Copie(s) Existante(s)</I></h4>
+                        <div class="col-sm-12">
+                            {{form_widget(form.CopieExistante)}}
+                        </div>
+                    </div>
+					</div>
+            </div>
+                    
+			<div id="Chargement" role="tabpanel" class="tab-pane row container-fluid"><div class="row"></div><br>
+				<div class="col-md-12">
+					<div class="row">
+					<h3 class="center"> <b>Charge Militaire</b></h3>
+					</div>
+                        <br>
+                        <h4 class="center"> <I>Chargement Explosif Principal</I></h4>
+                        <div class="row">
+                        <div class="col-sm-2 col-sm-offset-1">
+                        {{form_label(form.ExplosifAssocies)}}{{form_widget(form.ExplosifAssocies)}}
+                        </div>
+                        {% if entity.ExplosifAssocies is not null %} 
+                        <div class="col-sm-1">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/explosif/{{entity.ExplosifAssocies.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                        </div>
+                        {% endif %}
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-1 text-right">{{form_label(form.PoidsChargeMili)}}</div><div class="col-sm-1">{{form_widget(form.PoidsChargeMili)}}</div>
+							<div class="col-sm-1">{{form_widget(form.UniteQMA)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.EjectionDeLaChargeMilitaire)}}</div><div class="col-sm-1">{{form_widget(form.EjectionDeLaChargeMilitaire)}}</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.NombreDetonateur)}}</div><div class="col-sm-1">{{form_widget(form.NombreDetonateur)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.NombreAmorce)}}</div><div class="col-sm-1">{{form_widget(form.NombreAmorce)}}</div>
+						</div>
+						<br>
+                        <h4 class="center"> <I>Chargement Explosif Alternative</I></h4>
+                        <div class="row">
+                            <div class="col-sm-1 col-sm-offset-1" onchange="showBande('feodbundle_sousmunitions_nBExploAlter','ExplosifAssociesAlter')">
+                                {{form_label(form.nBExploAlter)}}{{form_widget(form.nBExploAlter)}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ExplosifAssociesAlter">
+                                <div class="row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-2 col-sm-offset-1">{{form_label(form.ExplosifAssociesAlter1)}}{{form_widget(form.ExplosifAssociesAlter1)}}</div>
+                                {% if entity.ExplosifAssociesAlter1 is not null %} 
+                                <div class="col-sm-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/explosif/{{entity.ExplosifAssociesAlter1.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                                </div>
+                                {% endif %}
+                                <div class="col-sm-1">{{form_label(form.poidsExploAlter1)}}{{form_widget(form.poidsExploAlter1)}}</div></div>
+                            </div>
+                            <div class="ExplosifAssociesAlter">
+                                <div class="row">
+                                <div class="col-sm-1"></div>    
+                                <div class="col-sm-2 col-sm-offset-1">{{form_label(form.ExplosifAssociesAlter2)}}{{form_widget(form.ExplosifAssociesAlter2)}}</div>
+                                {% if entity.ExplosifAssociesAlter2 is not null %} 
+                                <div class="col-sm-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/explosif/{{entity.ExplosifAssociesAlter2.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                                </div>
+                                {% endif %}
+                                <div class="col-sm-1">{{form_label(form.poidsExploAlter2)}}{{form_widget(form.poidsExploAlter2)}}</div></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="center"> <I>Chargement Chimique Principal</I></h4>
+                        <div class="row">
+                        <div class="col-sm-2 col-sm-offset-1">
+                        {{form_label(form.ChimiqueAssocies)}}{{form_widget(form.ChimiqueAssocies)}}
+                        </div>
+                        {% if entity.ChimiqueAssocies is not null %} 
+                        <div class="col-sm-1">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/explosif/{{entity.ChimiqueAssocies.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                        </div>
+                        {% endif %}
+                        <div class="col-sm-1">
+                            {{form_label(form.poidsChim)}}{{form_widget(form.poidsChim)}}
+                        </div>
+                        </div>
+                        <br>
+                        <h4 class="center"> <I>Chargement Chimique Alternative</I></h4>
+                        <div class="row">
+                            <div class="col-sm-1 col-sm-offset-1" onchange="showBande('feodbundle_sousmunitions_nBChimAlter','ChimiqueAssociesAlter')">
+                                {{form_label(form.nBChimAlter)}}{{form_widget(form.nBChimAlter)}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ChimiqueAssociesAlter">
+                                <div class="row">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-2 col-sm-offset-1">{{form_label(form.ChimiqueAssociesAlter1)}}{{form_widget(form.ChimiqueAssociesAlter1)}}</div>
+                                {% if entity.ChimiqueAssociesAlter1 is not null %} 
+                                <div class="col-sm-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/chimique/{{entity.ChimiqueAssociesAlter1.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                                </div>
+                                {% endif %}
+                                <div class="col-sm-1">{{form_label(form.poidsChimAlter1)}}{{form_widget(form.poidsChimAlter1)}}</div></div>
+                            </div>
+                            <div class="ChimiqueAssociesAlter">
+                                <div class="row">
+                                <div class="col-sm-1"></div>    
+                                <div class="col-sm-2 col-sm-offset-1">{{form_label(form.ChimiqueAssociesAlter2)}}{{form_widget(form.ChimiqueAssociesAlter2)}}</div>
+                                {% if entity.ChimiqueAssociesAlter2 is not null %} 
+                                <div class="col-sm-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/chimique/{{entity.ChimiqueAssociesAlter2.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                                </div>
+                                {% endif %}
+                                <div class="col-sm-1">{{form_label(form.poidsChimAlter2)}}{{form_widget(form.poidsChimAlter2)}}</div></div>
+                            </div>
+                        </div>
+                        <br>
+                        <h4 class="center"> <I>Matière Inerte</I></h4>
+                        <div class="row">
+                        <div class="col-sm-2 col-sm-offset-1">
+                        {{form_label(form.natureChargeInerte)}}{{form_widget(form.natureChargeInerte)}}
+                        </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="row">
+                        <div class="col-sm-3 col-sm-offset-2">
+                        <h4 class="center"> <I>Effet Terminal du Chargement</I></h4>{{form_widget(form.effetChargement)}}
+                        </div>
+                        </div>
+                        <hr>
+						<div class="row">
+                        <h3 class="center"> <b>Charge Propulsion</b></h3>
+						</div>
+                        <div class="row">
+                        <div class="col-sm-4">
+                            {{form_label(form.natureChargePropu)}}{{form_widget(form.natureChargePropu)}}
+                        </div>
+						{% if entity.natureChargePropu is not null %} 
+                        <div class="col-sm-1">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/explosif/{{entity.natureChargePropu.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                        </div>
+                        {% endif %}
+						<div class="col-sm-1">
+                            {{form_label(form.poidsChargePropu)}}{{form_widget(form.poidsChargePropu)}}
+                        </div>
+                        </div>
+                        <hr>
+						<div class="row">
+                        <h3 class="center"> <b>Charge Tandem</b></h3>
+						</div>
+                        <div class="row">
+                        <div class="col-sm-4">
+                            {{form_label(form.natureChargeTandem)}}{{form_widget(form.natureChargeTandem)}}
+                        </div>
+						{% if entity.natureChargeTandem is not null %} 
+                        <div class="col-sm-1">
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/explosif/{{entity.natureChargeTandem.id}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-arrow-right"></span> Voir Fiche</a>
+                        </div>
+                        {% endif %}
+						<div class="col-sm-1">
+                            {{form_label(form.poidsChargeTandem)}}{{form_widget(form.poidsChargeTandem)}}
+                        </div>
+                        </div>
+                                            <br>
+                                                            <hr>
+                    <h3 class="center"> <I>Photos</I></h3>
+                        {% if entity.imagesChargement is not empty %}
+                        {% for image in form.imagesChargement %}
+
+                            {% block carousel1 %}
+                            {% include ":default:CarousselImagesChargement.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+                   
+                    <br>
+				</div>
+			</div>
+
+			<div id="Aspect-Dimensions" role="tabpanel" class="tab-pane row container-fluid"><div class="row"></div><br>
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-sm-2"><h4><b>{{form_label(form.FormeGenerale)}}</b></div><div class="col-sm-4">{{form_widget(form.FormeGenerale)}}</h4></div>
+					</div>
+					<div class="row"><hr /><div class="col-sm-2"><b>Enveloppe</b></div></div>
+						<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.NatureEnveloppe)}}</div><div class="col-sm-4">{{form_widget(form.NatureEnveloppe)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.AspectExterieur)}}</div><div class="col-sm-3">{{form_widget(form.AspectExterieur)}}</div>
+						</div>
+					<div class="row"><div class="col-sm-3"><hr /><b>Munition en conteneur</b></div></div>	
+						<div class="row">
+								<div class="col-sm-2 text-right">{{form_label(form.HauteurNonLargue)}}</div><div class="col-sm-2">{{form_widget(form.HauteurNonLargue)}}</div>
+								<div class="col-sm-2 text-right">{{form_label(form.LongueurNonLargue)}}</div><div class="col-sm-2">{{form_widget(form.LongueurNonLargue)}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.LargeurNonLargue)}}</div><div class="col-sm-2">{{form_widget(form.LargeurNonLargue)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.DiametreNonLargue)}}</div><div class="col-sm-2">{{form_widget(form.DiametreNonLargue)}}</div>
+						</div>
+					<div class="row"><hr /><div class="col-sm-2"><b>Munition larguée</b></div></div>
+						<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.HauteurLargue)}}</div><div class="col-sm-2">{{form_widget(form.HauteurLargue)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.LongueurLargue)}}</div><div class="col-sm-2">{{form_widget(form.LongueurLargue)}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.LargeurLargue)}}</div><div class="col-sm-2">{{form_widget(form.LargeurLargue)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.DiametreLargue)}}</div><div class="col-sm-2">{{form_widget(form.DiametreLargue)}}</div>
+						</div>
+                                  <br>
+                                  <div class="row"><hr /><div class="col-sm-2"><b>Stabilisation</b></div>
+				<div class="col-sm-1 text-right">{{form_label(form.ModeStabilisation)}}</div><div class="col-sm-3">{{form_widget(form.ModeStabilisation)}}</div>
+			</div>
+                        <br>
+			<div class="row"><div class="col-sm-1 col-sm-offset-1"><I>Empennage</I></div></div>
+				<div class="row">
+					<div class="col-sm-1 col-sm-offset-2 text-right">{{form_label(form.TypeEmpennage)}}</div><div class="col-sm-2">{{form_widget(form.TypeEmpennage)}}</div>
+					
+					<div class="col-sm-2 text-right">{{form_label(form.LongEmp)}}</div><div class="col-sm-1">{{form_widget(form.LongEmp)}}</div>
+				</div>
+                        <br>
+			<div class="row"><div class="col-sm-1 col-sm-offset-1"><I>Ailettes</I></div></div>
+				<div class="row">
+					<div class="col-sm-1 col-sm-offset-2 text-right">{{form_label(form.NbAilettes)}}</div><div class="col-sm-2">{{form_widget(form.NbAilettes)}}</div>
+					<div class="col-sm-1"></div>
+					<div class="col-sm-1 text-right">{{form_label(form.TypeAilette)}}</div><div class="col-sm-2">{{form_widget(form.TypeAilette)}}</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-1 col-sm-offset-2 text-right">{{form_label(form.FormeAilette)}}</div><div class="col-sm-2">{{form_widget(form.FormeAilette)}}</div>
+					<div class="col-sm-2 text-right">{{form_label(form.LongAilette)}}</div><div class="col-sm-1">{{form_widget(form.LongAilette)}}</div>
+					<div class="col-sm-2 text-right">{{form_label(form.LargAilette)}}</div><div class="col-sm-1">{{form_widget(form.LargAilette)}}</div>
+				</div>
+                                <hr>
+                                <br>
+                    <h3 class="center"> <I>Photos</I></h3>
+
+                        {% if entity.imagesDimensions is not empty %}
+                        {% for image in form.imagesDimensions %}
+
+                            {% block carousel2 %}
+                            {% include ":default:CarousselImagesDimensions.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+
+                    <br>
+				</div>
+			</div>
+
+			<div id="Marquages" role="tabpanel" class="tab-pane row container-fluid"><div class="row"></div><br>
+				<div class="col-md-12">
+					<div class="row"><hr /><div class="col-sm-2"><b>Couleurs</b></div></div>
+						<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.CouleurPrincipale)}}</div><div class="col-sm-2">{{form_widget(form.CouleurPrincipale)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.CouleurSecondaire)}}</div><div class="col-sm-2">{{form_widget(form.CouleurSecondaire)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.CouleurStabilisateur)}}</div><div class="col-sm-2">{{form_widget(form.CouleurStabilisateur)}}</div>
+						</div>
+					<div class="row"><hr /><div class="col-sm-2"><b>Inscriptions</b></div>
+						<div class="col-sm-1 text-right">{{form_label(form.TypeDeMarquage)}}</div><div class="col-sm-2">{{form_widget(form.TypeDeMarquage)}}</div>
+						<div class="col-sm-1 text-right">{{form_label(form.MarquageEnCouleur)}}</div><div class="col-sm-4">{{form_widget(form.MarquageEnCouleur)}}</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-2 text-right"><b>{{form_label(form.MarquageAFroid)}}</b></div><div class="col-sm-4">{{form_widget(form.MarquageAFroid)}}</div>
+						<div class="col-sm-2 text-right"><b>{{form_label(form.MarquageEnRelief)}}</b></div><div class="col-sm-4">{{form_widget(form.MarquageEnRelief)}}</div>
+					</div>
+					<div class="row"><hr /><div class="col-sm-2"><b>Bandes de couleur</b></div></div>
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.NombreDeBande)}}</div><div class="col-sm-3">{{form_widget(form.NombreDeBande)}}</div>
+						<div class="col-sm-2 text-right">{{form_label(form.BandeCouleur1)}}</div><div class="col-sm-3">{{form_widget(form.BandeCouleur1)}}</div>
+					</div>
+					<div class="row"><div class="col-sm-2 col-sm-offset-5 text-right">{{form_label(form.BandeCouleur2)}}</div><div class="col-sm-3">{{form_widget(form.BandeCouleur2)}}</div></div>
+					<div class="row"><div class="col-sm-2 col-sm-offset-5 text-right">{{form_label(form.BandeCouleur3)}}</div><div class="col-sm-3">{{form_widget(form.BandeCouleur3)}}</div></div>
+					<div class="row"><div class="col-sm-2 col-sm-offset-5 text-right">{{form_label(form.BandeCouleur4)}}</div><div class="col-sm-3">{{form_widget(form.BandeCouleur4)}}</div></div>
+					<br>
+                    <h3 class="center"> <I>Photos</I></h3>
+
+                        {% if entity.imagesMarquages is not empty %}
+                        {% for image in form.imagesMarquages %}
+
+                            {% block carousel3 %}
+                            {% include ":default:CarousselImagesMarquages.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+
+                    <br>
+				</div>
+			</div>
+			
+			    <div id="amorcage" role="tabpanel" class="tab-pane row container-fluid"><br>
+                <div class="col-sm-12">
+                    <h3 class="center"> <I>Fusée(s) Associée(s)</I></h3>
+                    
+                    <div class="well"> 
+                        {% if prototype13 is defined %}
+                        {% set attr = attr|merge({'data-prototype13': block('_AmorcageAssocies_item_widget') }) %}
+                        {% endif %}
+                    {{ form_errors(form) }}
+			{% for rows in form.AmorcageAssocies %}
+                                        <div class="row">
+                                        <div class="col-sm-1 col-lg-offset-1">
+                                             
+                                        </div>
+					<div class="col-sm-2">
+						<b><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;{{ form_label(rows.NomAmorcage, "Nom"|trans) }}</b>{{ form_widget(rows.NomAmorcage)}}
+					</div>
+                                        <div class="col-sm-3">
+						{{ form_label(rows.typeFusee, "Type"|trans) }}{{ form_widget(rows.typeFusee)}}
+					</div>
+                                                {% if rows.NomAmorcage is not null %} 
+                                        <div class="col-sm-1">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-info btn-sm" href="http://feod.intradef.gouv.fr/amorcage/{{rows.NomAmorcage.vars.value}}/lire" role="button" target="_blank"><span class="glyphicon glyphicon-eye-open"></span> Voir Fiche</a>
+                                        </div>
+                                        {% endif %}
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-sm-2 col-lg-offset-2">
+                                            {{ form_label(rows.positionFusee, "Position"|trans) }}
+                                                {{ form_widget(rows.positionFusee) }}
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{ form_label(rows.DeclenchementFusee, "Déclenchement"|trans) }}
+                                                {{ form_widget(rows.DeclenchementFusee) }}
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-sm-5 col-lg-offset-2">
+                                            {{ form_label(rows.commentaires, "Commentaires"|trans) }}
+                                                {{ form_widget(rows.commentaires)}}
+                                        </div>
+                                        </div>
+                                        <hr>
+                                        {% endfor %}
+                                <br>
+                                <div class="row">
+                    </div>
+                    </div>
+                    <hr>
+                    <br>
+                    <div class="row">
+                    <h3 class="center"> <I>Photos</I></h3>
+                        {% if entity.imagesFusees is not empty %}
+                        {% for image in form.imagesFusees %}
+
+                            {% block carousel4 %}
+                            {% include ":default:CarousselImagesFusees.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+                        </div>
+                    <br>
+                </div>
+		</div>
+                
+			<div id="fonctionnement" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-md-12">
+					<div class="row">
+							<div class="col-sm-2 text-right">{{form_label(form.ModeDeFonctionnement)}}</div><div class="col-sm-2">{{form_widget(form.ModeDeFonctionnement)}}</div>
+							<div class="col-sm-2 text-right">{{form_label(form.PrincipeDeFonctionnement)}}</div><div class="col-sm-2">{{form_widget(form.PrincipeDeFonctionnement)}}</div>
+						</div>
+						<br>
+					<div class="row">
+						<div class="col-sm-2 text-right">{{form_label(form.HauteurEjection)}}</div><div class="col-sm-2">{{form_widget(form.HauteurEjection)}}</div>
+						<div class="col-sm-2 text-right">{{form_label(form.Stabilisation)}}</div><div class="col-sm-2">{{form_widget(form.Stabilisation)}}</div>
+					</div>
+					<br>
+					<div class="">
+                        {{form_label(form.fonctionnement)}}{{form_widget(form.fonctionnement)}}
+                    </div>
+<br>
+                    <h3 class="center"> <I>Schéma de Fonctionnement</I></h3>
+
+                        {% if entity.imagesFonctionnement is not empty %}
+                        {% for image in form.imagesFonctionnement %}
+
+                            {% block carousel5 %}
+                            {% include ":default:CarousselImagesFonctionnement.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+
+                    <br>
+				</div>
+			</div>
+
+
+
+            <div id="conditionnement" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-md-12">
+					<br>
+						<div class="row">
+							<div class="col-sm-2">
+							<h4 class="center"> <I>Emballage</I></h4>
+							</div>
+							<div class="col-sm-4">
+								{{form_label(form.conditionnementTypeEmballage)}}{{form_widget(form.conditionnementTypeEmballage)}}
+							</div>
+							<div class="col-sm-4">
+								{{form_label(form.conditionnementTypeCloisonnement)}}{{form_widget(form.conditionnementTypeCloisonnement)}}
+							</div>
+							<div class="col-sm-1">
+								{{form_label(form.coupComplet)}}
+							</div>
+							<div class="col-sm-1">
+								{{form_widget(form.coupComplet)}}
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-2" onchange="volumeCalc('feodbundle_sousmunitions_conditionnementDimEmballageHaut','feodbundle_sousmunitions_conditionnementDimEmballageLarg','feodbundle_sousmunitions_conditionnementDimEmballageLong','feodbundle_sousmunitions_conditionnementVolumeEmballage')">
+								{{form_label(form.conditionnementDimEmballageLong)}}{{form_widget(form.conditionnementDimEmballageLong)}}
+							</div>
+							<div class="col-sm-2" onchange="volumeCalc('feodbundle_sousmunitions_conditionnementDimEmballageHaut','feodbundle_sousmunitions_conditionnementDimEmballageLarg','feodbundle_sousmunitions_conditionnementDimEmballageLong','feodbundle_sousmunitions_conditionnementVolumeEmballage')">
+								{{form_label(form.conditionnementDimEmballageLarg)}}{{form_widget(form.conditionnementDimEmballageLarg)}}
+							</div>
+							<div class="col-sm-2" onchange="volumeCalc('feodbundle_sousmunitions_conditionnementDimEmballageHaut','feodbundle_sousmunitions_conditionnementDimEmballageLarg','feodbundle_sousmunitions_conditionnementDimEmballageLong','feodbundle_sousmunitions_conditionnementVolumeEmballage')">
+								{{form_label(form.conditionnementDimEmballageHaut)}}{{form_widget(form.conditionnementDimEmballageHaut)}}
+							</div>
+							<div class="col-sm-2">{{form_label(form.conditionnementVolumeEmballage)}}{{form_widget(form.conditionnementVolumeEmballage)}}</div>
+							<div class="col-sm-2">
+								{{form_label(form.conditionnementPoidsEmballage)}}{{form_widget(form.conditionnementPoidsEmballage)}}
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-3">
+								{{form_label(form.conditionnementQteEmballage)}}{{form_widget(form.conditionnementQteEmballage)}}
+							</div>
+							<div class="col-sm-3">
+								{{form_label(form.conditionnementPoidsTotal)}}{{form_widget(form.conditionnementPoidsTotal)}}
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-8">
+								{{form_label(form.conditionnementMarquageEmballage)}}{{form_widget(form.conditionnementMarquageEmballage)}}
+							</div>    
+						</div>
+						
+						
+						<br>
+						<div class="row">
+							<div class="col-sm-2">
+								<h4 class="center"> <I>T° Stockage</I></h4>
+							</div>
+							<div class="col-sm-1 text-right">
+								{{form_label(form.conditionnementTempStockMin)}}
+							</div>
+							<div class="col-sm-1">
+								{{form_widget(form.conditionnementTempStockMin)}}
+							</div>
+							<div class="col-sm-1 text-right">
+								{{form_label(form.conditionnementTempStockMax)}}
+							</div>
+							<div class="col-sm-1">
+								{{form_widget(form.conditionnementTempStockMax)}}
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-2">
+								<h4 class="center"> <I>T° Utilisation</I></h4>
+							</div>
+							<div class="col-sm-1 text-right">
+								{{form_label(form.conditionnementTempUtilMin)}}
+							</div>
+							<div class="col-sm-1">
+								{{form_widget(form.conditionnementTempUtilMin)}}
+							</div>
+							<div class="col-sm-1 text-right">
+								{{form_label(form.conditionnementTempUtilMax)}}
+							</div>
+							<div class="col-sm-1">
+								{{form_widget(form.conditionnementTempUtilMax)}}
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-sm-2">
+								<h4 class="center"> <I>Classe de Stockage</I></h4>
+							</div>
+							<div class="col-sm-3">
+								{{form_label(form.conditionnementClasseDangerStockage)}}{{form_widget(form.conditionnementClasseDangerStockage)}}
+							</div>
+							<div class="col-sm-3">
+								{{form_label(form.conditionnementGroupeComptabiliteStockage)}}{{form_widget(form.conditionnementGroupeComptabiliteStockage)}}
+							</div>
+						</div>
+						<br>
+						
+						<div class="row">
+						<div class="col-sm-3"><h4 class="center"> <I>Rayonnements electromagnétiques</I></h4></div>
+							<div class="col-sm-4" onchange="colorField('feodbundle_sousmunitions_DRAM')>
+								{{form_label(form.DRAM)}}{{form_widget(form.DRAM)}}
+							</div>
+							<div class="col-sm-4" onchange="colorField('feodbundle_sousmunitions_DREP')">
+								{{form_label(form.DREP)}}{{form_widget(form.DREP)}}
+							</div>
+						</div>
+						<br>
+                    <h3 class="center"> <I>Photos</I></h3>
+
+                        {% if entity.imagesConditionnement is not empty %}
+                        {% for image in form.imagesConditionnement %}
+
+                            {% block carousel6 %}
+                            {% include ":default:CarousselImagesConditionnement.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+
+                    <br>
+				</div>
+			</div>
+
+
+
+
+            <div id="lanceur" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-md-12">
+					<div class="">
+                        {{form_label(form.lanceur)}}{{form_widget(form.lanceur)}}
+                    </div>
+                    <br>
+                    <h3 class="center"> <I>Photos</I></h3>
+
+                        {% if entity.imagesVecteur is not empty %}
+                        {% for image in form.imagesVecteur %}
+
+                            {% block carousel8 %}
+                            {% include ":default:CarousselImagesVecteur.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+
+                    <br>
+                </div>
+			</div>
+
+
+
+
+            <div id="historique" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-md-12">
+                    <div class="">
+                        {{form_label(form.historique)}}{{form_widget(form.historique)}}
+                    </div>
+                </div>
+			</div>
+
+
+
+            <div id="securite" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-md-12">
+                    <div class="">
+                        {{form_label(form.securite)}}{{form_widget(form.securite)}}
+                    </div>
+                     <div class="">
+                        {{form_label(form.TravauxAttenuation)}}{{form_widget(form.TravauxAttenuation)}}
+                    </div>
+               </div>
+			</div>
+					
+					
+		<div id="traitement" role="tabpanel" class="tab-pane row container-fluid"><br>
+			<div class="col-md-12">
+				<div class="">
+					{{form_label(form.NEDE)}}{{form_widget(form.NEDE)}}
+				</div>
+				<div class="">
+					{{form_label(form.dementelement)}}{{form_widget(form.dementelement)}}
+				</div>
+				<div class="">
+					{{form_label(form.demilitarisationConnue)}}{{form_widget(form.demilitarisationConnue)}}
+				</div>
+				<br>
+				<div class="panel-group" id="accordion9">
+					<div class="well panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title"> 
+								<h3 class="center"><span class="glyphicon glyphicon-camera"></span> <I>Photos</I></h3>
+							</h4>
+						</div>
+						<div id="collapseOne9" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div class="well-lg">
+									<div class="imagesTraitement" data-prototype4="{{ form_widget(form.imagesTraitement.vars.prototype)|e }}">
+										{% if entity.imagesTraitement is not empty %}
+											{% for image in form.imagesTraitement %}
+												{% block carousel7 %}
+												{% include ":default:CarousselImagesTraitement.html.twig" %}
+												{% endblock %}
+											{%endfor%}
+										{%endif%}
+										<br>
+									</div>
+									<hr>
+								</div>
+							</div>
+						</div>                
+					</div>   
+				</div>
+				<hr>
+			</div>
+		</div>
+
+
+
+            <div id="remarque" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-md-12">
+                    <div class="">
+                        {{form_label(form.remarques)}}{{form_widget(form.remarques)}}
+                    </div>
+                </div>
+			</div>
+
+
+
+            <div id="gestion" role="tabpanel" class="tab-pane row container-fluid"><br />
+				<div class="col-sm-12">
+                    <center><FONT color="red"><I>Les champs Source, Fiabilité, Cohérence doivent être remplis</I> </FONT></center>
+                    <br />
+					<div class="row">
+                        <div class="col-sm-5">
+                            {% if entity.createurFiche is not null %}
+                            <div class="col-sm-4">Fiche créée par : </div><div class="col-sm-5">{{entity.createurFiche}}</div>
+                            {% else %}
+                                <p>Pas de Créateur</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-5 col-lg-offset-1">
+                            {% if entity is defined and entity.dateCreation is defined %}
+                            <div class="col-sm-5">Date de création : </div><div class="col-sm-5">{{entity.dateCreation|date("d/m/Y")}}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {% if entity.modificateurFiche is not null %}
+                            <div class="col-sm-4">Fiche modifiée par : </div><div class="col-sm-5">{{entity.modificateurFiche}}</div>
+                            {% else %}
+                            <p>Pas de modificateur<p>
+                                {% endif %}
+                        </div>
+                        <div class="col-sm-5 col-lg-offset-1">
+                            {% if entity is defined and entity.dateMAJ is defined %}
+                            <div class="col-sm-5">Date de dernière mise à jour : </div><div class="col-sm-5">{{entity.dateMAJ|date("d/m/Y")}}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {% if entity.validateur is not null %}
+                            <div class="col-sm-4">Fiche validée par :  </div><div class="col-sm-5">{{entity.validateur}}</div>
+                            {% else %}
+                                <p>Pas de validateur</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-5 col-lg-offset-1">
+                            {% if entity is defined and entity.dateValidation is defined %}
+                                {% if entity.dateValidation is not null %}
+                                <div class="col-sm-5">Date de validation : </div><div class="col-sm-5">{{entity.dateValidation|date("d/m/Y")}}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+					<br />
+                    <div class="row">
+                        <div class="col-sm-5">{{form_label(form.origineInfos)}}</div>
+                        <div class="text-center" style="float: left; margin-left:4%; width:18%">{{form_label(form.fiabiliteSource)}}</div>
+                        <div class="text-center" style="float: left; margin-left:2px; width:24%">{{form_label(form.coherenceInformation)}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">{{form_widget(form.origineInfos)}}</div>
+                        <div class="text-right" style="float: left; margin-left:4%; width:18%">{{form_widget(form.fiabiliteSource)}}</div>
+                        <div style="float: left; margin-left:2px; width:24%">{{form_widget(form.coherenceInformation)}}</div>
+                    </div>
+					<br />
+                    <div class="row">
+                        <div class="col-sm-8 col-lg-offset-2">
+                            {{form_label(form.collectionTravail)}}{{form_widget(form.collectionTravail)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-lg-offset-2">
+                            {{form_label(form.collectionTerrain)}}{{form_widget(form.collectionTerrain)}}
+                        </div>
+                    </div>
+                </div>
+			</div>
+            <br /><br/>
+        </div>
+
+            <br>
+			<a class="btn btn-warning" href="{{ path('munition_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+
+
+            <div class="hidden">{{ form_rest(form) }}</div>
+            {{ form_end(form) }}
+
+    </div>
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path("munition",{"type":"sousMunitions"}) }}">
+                    Retour à la liste
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% javascripts
+    "@FeodBundle/Resources/js/new.js"
+    "@FeodBundle/Resources/js/collection.js"
+    "@FeodBundle/Resources/js/script.js"
+    "@FeodBundle/Resources/js/launch.js"%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

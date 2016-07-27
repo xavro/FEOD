@@ -1,0 +1,21 @@
+admin_admin_group:
+    resource: "@UserBundle/Resources/config/routing/group.yml"
+    prefix:   /groupe
+
+admin_admin_user:
+    resource: "@UserBundle/Resources/config/routing/user.yml"
+    prefix:   /user   
+
+
+profil:
+    pattern:  /profil
+    defaults: { _controller: "UserBundle:User:profil" }    
+
+admin_password:
+    pattern:  /{id}/password
+    defaults: { _controller: "UserBundle:User:password" }    
+
+admin_password_update:
+    pattern:  /{id}/updatePassword
+    defaults: { _controller: "UserBundle:User:updatePassword" }
+    requirements: { _method: post } 

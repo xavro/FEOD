@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset=utf-8" />
+
+    <title>{% block title %}FEOD{% endblock %}</title>
+
+    {% stylesheets
+        'css/bootstrap.css'
+        '@chosen_css'
+        %}
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}" type="text/css" />
+    <link href="{{ asset_url }}" rel="stylesheet" type="text/css">
+    <link href="{{asset('bower_components/lightbox2/dist/css/lightbox.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('main.css')}}" rel="stylesheet" type="text/css">
+    <style type='text/css'>
+    <!--
+    .alert.rouge {
+        background-color: #f2dede;
+        border-color: #ebccd1;
+        color: black;}
+        .chosen-container-single .chosen-single {
+            height: 30px;
+            border-radius: 3px;
+            border: 1px solid #CCCCCC;
+        }
+        .chosen-container-single .chosen-single span {
+            padding-top: 2px;
+        }
+        .chosen-container-single .chosen-single div b {
+            margin-top: 2px;
+        }
+    -->
+    </style>
+    {% endstylesheets %}
+
+        
+    {% block favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% endblock %}
+
+    {% javascripts 'js/jquery.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+</head>
+<body>
+
+    {% block page_header %}
+    {% include ":default:page_header.html.twig" %}
+    {% endblock %}
+
+    <div class="row">
+        <div class="col-sm-2">
+            {% block sidebar %}
+            {% include ":default:sidebar.html.twig" %}
+            {% endblock %}
+        </div>
+
+        <div class="col-sm-9">
+            {% block flashes %}
+            {% include ":default:flash.html.twig" %}
+            {% endblock flashes %}
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+        
+                    <!--la foot bar-->
+            <br>
+            <div style="text-align:right;">
+                <footer>
+                    <hr>                
+                    Développé par PIAM.
+                </footer>
+            </div>
+        
+    
+    <script type="text/javascript" src="{{asset('bower_components/lightbox2/dist/js/lightbox.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('bower_components/Chart.js/Chart.min.js')}}"></script>    
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{asset('js/script.js')}}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    {% javascripts
+        'js/bootstrap.js'
+        '@chosen_js'
+        '@FeodBundle/Resources/js/script.js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+</body>
+</html>

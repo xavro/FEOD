@@ -1,0 +1,118 @@
+{% extends '::base2.html.twig' %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}" type="text/css" />
+{% endblock %}
+
+
+{% block body %}
+<div role="tabpanel">
+    <h1 style="text-align:center;">Dix dernières fiches par famille</h1>
+    <br>
+    <ul class="nav nav-tabs" role="tablist">
+        {% for key in results|keys %}
+        <li role="presentation"><a href={{"#"~key}} aria-controls="home" role="tab" data-toggle="tab">{{key|capitalize}}</a></li>
+        {% endfor %}
+    </ul>
+    <br>
+    <div class="tab-content">
+    {% for key in results|keys %}
+    <div role="tabpanel" class="tab-pane" id={{key}}>
+        <div class="table-responsive">
+        <table id="tableau" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 10%">Photos</th>
+                    <th class="text-center">Noms</th>
+                    <th class="text-center">Pays d'Origine</th>
+                    <th class="text-center">Date MAJ</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in results[key] %}
+                <tr>
+                    <td>
+					{% if entity.className== 'Explosif' %}{% if entity.ExplosifImage is defined %}{% for images in entity.ExplosifImage%}{% if loop.index == 1 %}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/{{images.name}}">{%endif%}{%else%}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/no_photo.jpg">{%endfor%}{% endif %}
+					{% elseif entity.className== 'Chimique' %}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/no_photo.jpg">
+					{% else %}{% if entity.images is defined %}{% for images in entity.images%}{% if loop.index == 1 %}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/{{images.name}}">{%endif%}{%else%}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/no_photo.jpg">{%endfor%}{% endif %}
+					{% endif %}
+					</td>
+					<td>{% if entity.className=='Amorcage' %}<a href="{{ path('amorcage_lire', { 'id': entity.id, 'type':entity.className|lower }) }}">{{ entity.nomine }}</a>{% elseif entity.className=='Explosif' %}<a href="{{ path('explosif_lire', { 'id': entity.id, 'type':'explosif' }) }}">{{ entity.nomine }}</a>{% elseif entity.className=='Chimique' %}<a href="{{ path('chimique_lire', { 'id': entity.id, 'type':'chimique' }) }}">{{ entity.nomine }}</a>{%else%}<a href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}">{{ entity.nomine }}</a>{% endif %}</td>
+					<td>{% for munition in entity.pays %}{{munition.pays}}<br>{%endfor%}</td>
+                    <td>{{ entity.dateMAJ|date('Y-m-d') }}</td>
+                    <td class="text-center">
+{% if entity.className=='Amorcage' %}
+<a class="btn btn-primary" href="{{ path('amorcage_fiche', { 'id': entity.id, 'type':'amorcage' }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% elseif entity.className=='Explosif' %}
+<a class="btn btn-primary disabled" href="{{ path('explosif_fiche', { 'id': entity.id, 'type':'explosif' }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% elseif entity.className=='Chimique' %}
+<a class="btn btn-primary disabled" href="{{ path('chimique_fiche', { 'id': entity.id, 'type':'chimique' }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% else %}
+<a class="btn btn-primary" href="{{ path('munition_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% endif %}
+{% if entity.className=='Amorcage' %}
+<a class="btn btn-warning" href="{{ path('amorcage_edit', { 'id': entity.id, 'type':'amorcage' }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+{% elseif entity.className=='Explosif' %}
+<a class="btn btn-warning" href="{{ path('explosif_edit', { 'id': entity.id, 'type':'explosif' }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>  
+{% elseif entity.className=='Chimique' %}
+<a class="btn btn-warning" href="{{ path('chimique_edit', { 'id': entity.id, 'type':'chimique' }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+{% else %}
+<a class="btn btn-warning" href="{{ path('munition_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+    
+    {% javascripts        
+    '@FeodBundle/Resources/js/jquery-1.12.0.min.js'
+    '@FeodBundle/Resources/js/jquery.dataTables.min.js'
+    '@FeodBundle/Resources/js/dataTables.bootstrap.min.js'
+    %}
+<script type="text/javascript" src="{{ asset('js/jquery-1.12.0.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{ asset_url }}"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    $('#tableau').dataTable({
+        "oLanguage": {
+                    "sSearch": "Recherche globale:",
+                    "sLengthMenu": "Afficher _MENU_ fiches par page.",
+                    "sZeroRecords": "Aucune fiche trouvée - désolé",
+                    "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ fiche(s)",
+                    "sInfoEmpty": "Aucun résultat",
+                    "sInfoFiltered": "(filtré sur _MAX_ total fiches)"
+                    },
+                "sPaginationType": "full_numbers",
+                "order": [[4, 'desc']],
+                "displayLength": 10,
+                "responsive": true,
+                
+                "columnDefs": [
+            {
+                "targets": [ 0, 3, 4 ],
+                "visible": true,
+                "searchable": false
+            }
+  ],
+    });
+});
+</script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+$(".clickable-row").click(function(){
+        window.document.location = $(this).data("href");
+});
+    });
+</script>
+{% endjavascripts %}
+{% endblock %}

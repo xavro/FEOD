@@ -1,0 +1,59 @@
+chimique:
+    path:     /
+    defaults: { _controller: "FeodBundle:Chimique:index" }
+
+chimique_new:
+    path:     /new
+    defaults: { _controller: "FeodBundle:Chimique:new" }
+
+chimique_create:
+    path:     /create
+    defaults: { _controller: "FeodBundle:Chimique:create" }
+    methods:  POST
+
+chimique_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FeodBundle:Chimique:edit" }
+
+chimique_update:
+    path:     /{id}/update
+    defaults: { _controller: "FeodBundle:Chimique:update" }
+    methods:  [POST, PUT]
+
+chimique_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FeodBundle:Chimique:delete" }
+    methods:  [POST, DELETE]
+
+chimique_tampon:
+    path:    /{statut}/tampon
+    defaults: { _controller: "FeodBundle:Chimique:tampon" }
+    requirements:
+        statut: 0|1|2|3
+
+chimique_suite:
+    path:    /{id}/suite
+    defaults: { _controller: "FeodBundle:Chimique:suite" }
+
+chimique_search:
+    path:    /search
+    defaults: { _controller: "FeodBundle:Chimique:search" }
+
+chimique_lire:
+    path:    /{id}/lire
+    defaults: { _controller: "FeodBundle:Lire:lire" }
+    
+chimique_fiche:
+    path:    /{id}/fiche
+    defaults: { _controller: "FeodBundle:Chimique:fiche" }
+
+chimique_recherche:
+    path:     /chimiquerecherche
+    defaults: { _controller: "FeodBundle:Chimique:recherche" }
+
+chimique_createrecherche:
+    path:     /createrecherche
+    defaults: { _controller: "FeodBundle:Chimique:createrecherche" }
+    methods:  POST
+
+

@@ -1,0 +1,40 @@
+admin_group:
+    pattern:  /
+    defaults: { _controller: "AdminUserBundle:Group:index" }
+
+admin_group_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminUserBundle:Group:show" }
+
+admin_group_new:
+    pattern:  /new
+    defaults: { _controller: "AdminUserBundle:Group:new" }
+
+admin_group_create:
+    pattern:  /create
+    defaults: { _controller: "AdminUserBundle:Group:create" }
+    requirements: { _method: post }
+
+admin_group_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AdminUserBundle:Group:edit" }
+
+#routage pour afficher l'ecran de relation utilisateur-groupe    
+admin_group_relation:
+    pattern:  /{id}/relation
+    defaults: { _controller: "AdminUserBundle:Group:relation" }
+
+#routage pour executer les modifications relation utilisateur-groupe 
+admin_group_relation_update:
+    pattern:  /relationUpdate
+    defaults: { _controller: "AdminUserBundle:Group:relationUpdate" }    
+
+admin_group_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AdminUserBundle:Group:update" }
+    requirements: { _method: post }
+
+admin_group_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AdminUserBundle:Group:delete" }
+    requirements: { _method: post }

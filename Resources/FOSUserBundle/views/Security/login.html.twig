@@ -1,0 +1,29 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+{% endif %}
+
+
+<div class="form">
+      <form class="login-form form-signin" action="{{ path("fos_user_security_check") }}" method="post">
+      <h3 class="form-signin-heading" style="margin: 20px 0px">Veuillez vous connecter :</h3>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+    <label for="username" style="width: 150px">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="text" id="username"  style="width: 300px" name="_username" value="{{ last_username }}" required placeholder="login" autocomplete="off"/>
+
+    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="password" id="password" style="width: 300px" name="_password" required="required" required placeholder="password" autocomplete="off"/> <br/>
+    <button type="submit" id="_submit" name="_submit" style="margin: 25px 100px" class="btn btn-primary btn-primary"> 
+        <i class="icon-user icon-white"></i>
+                {{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}
+    </button>
+      <p class="message">Pas encore inscrit ? <a class="lienInscription" href="{{ path('fos_user_registration_register') }}">Créer un compte</a></p>
+      
+    </form>
+</div>
+
+
+{% endblock fos_user_content %}

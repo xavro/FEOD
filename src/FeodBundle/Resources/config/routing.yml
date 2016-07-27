@@ -1,0 +1,57 @@
+
+feod_stat:
+    resource: "@FeodBundle/Resources/config/routing/stat.yml"
+    prefix:   /stat
+
+feod_admin:
+    resource: "@FeodBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin
+
+feod_munition:
+    resource: "@FeodBundle/Resources/config/routing/munition.yml"
+    prefix:   /{type}
+    requirements:
+        type: mines|mortier|artillerie|munition|missiles|roquettes|bombes|grenades|sousmunitions|sousMunitions|minesmarines|minesMarines
+
+feod_amorcage:
+    resource: "@FeodBundle/Resources/config/routing/amorcage.yml"
+    prefix:   /{type}
+    requirements:
+        type: amorcage
+        
+feod_explosif:
+    resource: "@FeodBundle/Resources/config/routing/explosif.yml"
+    prefix:   /{type}
+    requirements:
+        type: explosif
+        
+feod_chimique:
+    resource: "@FeodBundle/Resources/config/routing/chimique.yml"
+    prefix:   /{type}
+    requirements:
+        type: chimique
+
+feod_warn:
+    path:     /warn
+    defaults: { _controller: FeodBundle:Default:warn }
+
+feod_creation:
+    path:     /creation
+    defaults: { _controller: FeodBundle:Default:creation }
+
+feod_index:
+    path:     /
+    defaults: { _controller: FeodBundle:Default:index }
+
+feod_search:
+    path:     /search
+    defaults: { _controller: FeodBundle:Default:search }
+
+feod_search1:
+    path:     /search1
+    defaults: { _controller: FeodBundle:Default:search1 }
+    
+feod_search2:
+    path:     /recherche
+    defaults: { _controller: FeodBundle:Default:rechercheTraitement }
+

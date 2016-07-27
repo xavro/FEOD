@@ -1,0 +1,66 @@
+
+    <div class="formregister">
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register login-form">
+
+
+		<h3 class="text-center"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp; <b>Inscription</b></h3>
+                <hr>
+                {{ form_errors(form) }}
+	   <div class="row">
+			<div class="col-sm-1 col-sm-offset-2"><b>{{form_label(form.grade)}}</b>{{form_widget(form.grade)}}</div>
+			<div class="col-sm-3"><b>{{form_label(form.nom)}}</b>{{form_widget(form.nom)}}</div>
+			<div class="col-sm-3"><b>{{form_label(form.prenom)}}</b>{{form_widget(form.prenom)}}</div>
+			<div class="col-sm-1">{{form_label(form.trigramme)}}{{form_widget(form.trigramme)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-3 col-sm-offset-2 text-right"><b>{{form_label(form.username)}}</b></div><div class="col-sm-3">{{form_widget(form.username)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2"><b>{{form_label(form.email)}}</b>{{form_widget(form.email)}}</div>
+			<div class="col-sm-3">{{form_label(form.armee)}}{{form_widget(form.armee)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2"><b>{{form_label(form.unite)}}</b>{{form_widget(form.unite)}}</div>
+			<div class="col-sm-4"><b>{{form_label(form.fonction)}}</b>{{form_widget(form.fonction)}}</div>
+		</div>
+		<br>
+                 <hr>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2"><b>{{form_label(form.qualifications.qualif1)}}</b>{{form_widget(form.qualifications.qualif1)}}</div>
+			<div class="col-sm-2 col-sm-offset-1"><b>{{form_label(form.qualifications.date1)}}</b>{{form_widget(form.qualifications.date1)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif2)}}{{form_widget(form.qualifications.qualif2)}}</div>
+			<div class="col-sm-2 col-sm-offset-1">{{form_label(form.qualifications.date2)}}{{form_widget(form.qualifications.date2)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif3)}}{{form_widget(form.qualifications.qualif3)}}</div>
+			<div class="col-sm-2 col-sm-offset-1">{{form_label(form.qualifications.date3)}}{{form_widget(form.qualifications.date3)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif4)}}{{form_widget(form.qualifications.qualif4)}}</div>
+			<div class="col-sm-2 col-sm-offset-1">{{form_label(form.qualifications.date4)}}{{form_widget(form.qualifications.date4)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif5)}}{{form_widget(form.qualifications.qualif5)}}</div>
+			<div class="col-sm-2 col-sm-offset-1">{{form_label(form.qualifications.date5)}}{{form_widget(form.qualifications.date5)}}</div>
+		</div>
+		<br>
+                <hr>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4"><b>{{form_label(form.plainPassword)}}</b>{{form_widget(form.plainPassword)}}</div>
+		</div>
+                <hr>
+
+        <input type="submit" class="btn btn-primary" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+                <div class="hidden">{{ form_rest(form) }}</div>
+            {{ form_end(form) }}
+</form>
+            </div>

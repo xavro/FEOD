@@ -1,0 +1,28 @@
+services:
+#    feod.example:
+#        class: FeodBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    feod.directory_namer:
+        class: FeodBundle\Naming\DirectoryNamer
+        
+    feod.amorcagedirectory_namer:
+        class: FeodBundle\Naming\AmorcageDirectoryNamer
+
+    feod.explosifdirectory_namer:
+        class: FeodBundle\Naming\ExplosifDirectoryNamer
+
+    feod.chimiquedirectory_namer:
+        class: FeodBundle\Naming\ChimiqueDirectoryNamer
+
+    feod.munition_namer:
+        class: FeodBundle\Naming\MunitionNamer
+
+    feod.amorcage_namer:
+        class: FeodBundle\Naming\AmorcageNamer
+
+    feod.explosif_namer:
+        class: FeodBundle\Naming\ExplosifNamer
+
+    feod.chimique_namer:
+        class: FeodBundle\Naming\ChimiqueNamer

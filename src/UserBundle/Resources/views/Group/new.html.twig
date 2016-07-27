@@ -1,0 +1,47 @@
+{% extends "AdminUserBundle::layout.html.twig" %}
+{% block title %}
+Nouveau groupe - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #btnCreer {height: 33px; margin-left: 100px;}
+        select#admin_userbundle_grouptype_roles { height: 107px; }
+        input[type="checkbox"] { {# float: left; margin: 4px 10px 0;#}}
+        label[for^="admin_userbundle_grouptype_roles_"] {display: block; left: 30px; position: relative; top: -23px;}    
+    </style>
+{% endblock %}
+    
+{% block sousMenu %}
+{{ parent() }} - Création d'un groupe</h4>
+{% endblock %} 
+
+{% block fos_user_content %} 
+
+<div class="well">
+<form action="{{ path('admin_group_create') }}" method="post" {{ form_enctype(form) }}>
+    <!--Customisation du formulaire pour l'affichage dans un tableau-->
+    {% form_theme form ':Form:customForm.html.twig' %}
+    <table>
+        {{ form_row(form.name)}}
+        {{ form_row(form.roles)}}
+    </table>
+    <!--reste du formulaire-->
+    {{ form_widget(form) }}
+    <br/>
+     <p>
+        <button id="btnCreer" type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Créer</button>
+     </p>
+</form>
+</div>
+
+ <ul class="nav nav-pills">
+    <li>
+        <a class="btn" href="{{ path('admin_group') }}">
+            <i class="icon-backward"></i> Retour à la liste
+        </a>
+    </li>
+ </ul>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "AdminUserBundle::layout.html.twig" %}
+{% block title %}
+Détails - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        th {padding-right: 10px; text-align: right;}
+        #btnSupprimer {height: 33px; margin-bottom: -15px;}
+    </style>
+{% endblock %}
+
+{% block sousMenu %}
+    {{ parent() }} - Détails du groupe {{ entity.name }}</h4>
+{% endblock %} 
+
+{% block fos_user_content %} 
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Nom : </th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Roles : </th>
+            <td><ul>
+                {% for role in entity.roles %} 
+                        <li>{{role}}</li>
+                {% endfor %}</ul>
+            </td>
+        </tr>
+        <tr>
+            <th>Identifiant : </th>
+            <td>{{ entity.id }}</td>
+        </tr>
+    </tbody>
+</table>
+<br/><br/>
+<ul class="nav nav-pills">
+    <li>
+        <a class="btn" href="{{ path('admin_group') }}">
+            <i class="icon-backward"></i> Retour à la liste
+        </a>
+    </li>
+    <li>
+        <a class="btn" href="{{ path('admin_group_edit', { 'id': entity.id }) }}">
+            <i class="icon-pencil"></i>Modifier
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('admin_group_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+                <button id="btnSupprimer" type="submit" class="btn"><i class="icon-remove"></i> Supprimer</button>
+        </form>
+    </li>
+</ul>
+    
+{% endblock %}

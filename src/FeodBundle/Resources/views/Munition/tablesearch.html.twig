@@ -1,0 +1,126 @@
+{% extends '::base2.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}" type="text/css" />
+{% endblock %}
+    
+{% block body %}
+
+{% set str_statut = {0: 'Modification', 1:'Vérification',
+2:'Validation', 3:'Validée'} %}
+
+{% block ttitle %}
+{% endblock %}
+<br>
+<div class="table-responsive">
+<table id="datatable" class="table table-striped table-bordered table-hover display nowrap" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th class="text-center">Famille</th>
+            <th class="text-center" style="width: 10%">Photos</th>
+			<th class="text-center">Type</th>
+            <th class="text-center">Noms</th>
+            <th class="text-center">Pays d'Origine</th>
+            {#<th class="text-center">Calibre / Ø</th>#}
+            <th class="text-center">Date MAJ</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td>
+			{% if entity.className== 'Amorcage' %}Amorçage<br><br>{% if entity.id != entity.amorcageId %}<FONT color="red"><b><span class="glyphicon glyphicon-alert"></span>&nbsp;Modification <br> &nbsp;&nbsp;&nbsp;&nbsp;en cours</b></FONT>{%endif%}
+			{% elseif entity.className== 'Explosif' %}Explosif<br><br>{% if entity.id != entity.explosifId %}<FONT color="red"><b><span class="glyphicon glyphicon-alert"></span>&nbsp;Modification <br> &nbsp;&nbsp;&nbsp;&nbsp;en cours</b></FONT>{%endif%}
+			{% elseif entity.className== 'Chimique' %}Chimique<br><br>{% if entity.id != entity.chimiqueId %}<FONT color="red"><b><span class="glyphicon glyphicon-alert"></span>&nbsp;Modification <br> &nbsp;&nbsp;&nbsp;&nbsp;en cours</b></FONT>{%endif%}
+			{% else %}{{ entity.className }}<br><br>{% if entity.id != entity.munitionId %}<FONT color="red"><b><span class="glyphicon glyphicon-alert"></span>&nbsp;Modification <br> &nbsp;&nbsp;&nbsp;&nbsp;en cours</b></FONT>{%endif%}{%endif%}
+			</td>
+            <td>{% if entity.images is defined %}{% for images in entity.images%}{% if loop.index == 1 %}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/{{images.name}}">{%endif%}{%else%}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/no_photo.jpg">{%endfor%}{% endif %}</td>    
+			<td>
+			{% if entity.className== 'Artillerie' %}{% for munition in entity.typeObus %}{{munition.typeObus}}{% endfor %}{% endif %}
+			{% if entity.className== 'Mortier' %}{{entity.typeMortier}}{% endif %}
+			{% if entity.className== 'Mines' %}{{entity.typeMine}}{% endif %}
+			{% if entity.className== 'Grenades' %}{{entity.TypeGrenade}}{% endif %}
+			{% if entity.className== 'Roquettes' %}{{entity.TypeRoquette}}{% endif %}
+			{% if entity.className== 'bombes' %}{{entity.FamilleBombe}}{% endif %}
+			{% if entity.className== 'Missiles' %}{% for munition in entity.TypeMissile %}{{munition.name}}{% endfor %}{% endif %}
+			{% if entity.className== 'SousMunitions' %}{{entity.TypeSousMunition}}{% endif %}
+			{% if entity.className== 'MinesMarines' %}{% for munition in entity.typeMineMarine %}{{munition.typeMineMarine}}{% endfor %}{% endif %}
+			{% if entity.className== 'Amorcage' %}{{entity.FuseeTypeAmorcage}}{% endif %}
+			{% if entity.className== 'Explosif' %}{{entity.TypeExplosif}}{% endif %}
+			{% if entity.className== 'Chimique' %}{{entity.TypeChimique}}{% endif %}
+			</td>
+			<td>{% if entity.className=='Amorcage' %}<a href="{{ path('amorcage_lire', { 'id': entity.id, 'type':entity.className|lower }) }}">{{ entity.nomine }}</a>{% elseif entity.className=='Explosif' %}<a href="{{ path('explosif_lire', { 'id': entity.id, 'type':'explosif' }) }}">{{ entity.nomine }}</a>{% elseif entity.className=='Chimique' %}<a href="{{ path('chimique_lire', { 'id': entity.id, 'type':'chimique' }) }}">{{ entity.nomine }}</a>{%else%}<a href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}">{{ entity.nomine }}</a>{% endif %}</td>
+            <td>{% for munition in entity.pays %}{{munition.pays}}<br>{%endfor%}</td>
+            {#<td>{% if type=='artillerie' %}{%if entity.calibre > 1%}{{ entity.calibre }}{{ entity.uniteDistance}}{%endif%}{%elseif type=='bombes'%}{%if entity.Diametre > 1%}{{entity.Diametre}}mm{%endif%}{%elseif type=='mortier'%}{%if entity.calibre > 1%}{{entity.calibre}}{{ entity.uniteCalibre}}{%endif%}{%elseif type=='mines'%}{%if entity.Diametre > 1%}{{entity.Diametre}}mm{%endif%}{%elseif type=='grenades'%}{%if entity.DiametreGrenade >1 %}{{entity.DiametreGrenade}}mm{%endif%}{%elseif type=='roquettes'%}{%if entity.calibre >1%}{{entity.calibre}}{{ entity.uniteCalibre}}{%endif%}{%elseif type=='missiles'%}{%if entity.CalibreDiametre > 1%}{{entity.CalibreDiametre}}{{ entity.uniteCalibre}}{%endif%}{%elseif type=='sousMunitions'%}{%if entity.DiametreNonLargue >1%}{{entity.DiametreNonLargue}}mm{%endif%}{%elseif type=='fusees'%}{%if entity.DiametreFusee > 1%}{{entity.DiametreFusee}}mm{%endif%}{%endif%}
+                </td>#}
+            <td>{% if entity.dateMAJ %}{{ entity.dateMAJ|date('Y/m/d') }}{% endif %}</td>
+            {#<td>{{str_statut[entity.statut]}}</td>#}
+            <td class="text-center">
+                {% block button %}
+
+                {% endblock %}
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+
+
+
+
+
+{% javascripts        
+    '@FeodBundle/Resources/js/jquery-1.12.0.min.js'
+    '@FeodBundle/Resources/js/jquery.dataTables.min.js'
+    '@FeodBundle/Resources/js/dataTables.bootstrap.min.js'
+    %}
+<script type="text/javascript" src="{{ asset('js/jquery-1.12.0.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{ asset_url }}"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    var table = $('#datatable').DataTable({
+           
+        "oLanguage": {
+                    "sSearch": "Recherche globale:",
+                    "sLengthMenu": "Afficher _MENU_ enregistrements par page.",
+                    "sZeroRecords": "Aucune fiche trouvée - désolé",
+                    "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ enregistrement(s)",
+                    "sInfoEmpty": "Aucun résultat",
+                    "sInfoFiltered": "(filtré sur _MAX_ total enregistrements)"
+                    },
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                "order": [[5, 'desc']],
+                "displayLength": 10,
+                "responsive": true,
+                
+                "columnDefs": [
+            {
+                "targets": [ 0, 1, 5, 6 ],
+                "visible": true,
+                "searchable": false
+            }
+  ],
+        });      
+} );
+</script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+$(".clickable-row").click(function(){
+        window.document.location = $(this).data("href");
+});
+    });
+</script>
+{% endjavascripts %}
+
+{% endblock %}
+
+
+

@@ -1,0 +1,3 @@
+admin_stat:
+    path:     /stat
+    defaults: { _controller: "FeodBundle:Stat:admin" }

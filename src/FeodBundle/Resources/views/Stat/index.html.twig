@@ -1,0 +1,78 @@
+{% extends '::base2.html.twig' %}
+
+{% block body %}
+<div class="col-sm-12">
+
+	<div class="col-sm-6 col-sm-offset-2 text-center">
+		<h2>Nombre de fiches total et par familles</h2>
+		<br>
+	</div>
+
+	<div class="col-sm-6 col-sm-offset-2">
+		<ul class="list-group">
+			<li class="list-group-item active">
+				<span class="badge">{{total}}</span>
+				<strong>TOTAL</strong>
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{artillerie}}</span>
+				Artillerie
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{mortier}}</span>
+				Mortier
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{mines}}</span>
+				Mines
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{grenades}}</span>
+				Grenades
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{roquettes}}</span>
+				Roquettes
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{bombes}}</span>
+				Bombes
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{missiles}}</span>
+				Missiles
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{sousMunitions}}</span>
+				Sous-Munitions
+			</li>
+			<li class="list-group-item">
+				<span class="badge">{{minesMarines}}</span>
+				Mines-Marines
+			</li>
+				<li class="list-group-item">
+				<span class="badge">{{amorcage}}</span>
+				Amorçage
+			</li>
+			</li>
+				<li class="list-group-item">
+				<span class="badge">{{explosif}}</span>
+				Explosif
+			</li>
+			</li>
+				<li class="list-group-item">
+				<span class="badge">{{chimique}}</span>
+				Chimique
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="col-sm-3">
+<canvas id="stat" width="150" height="150"></canvas>
+</div>
+
+{% javascripts '@FeodBundle/Resources/js/chart.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% endblock %}

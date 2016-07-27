@@ -1,0 +1,380 @@
+{% extends "::base2.html.twig" %}
+
+{% block body -%}
+<div id="rouge" {% if entity is defined and entity.rouge %}class="alert rouge"{% endif %}>
+<h1 style="text-align:center;">Recherche Bombes</h1>
+{% if error is defined and error is not null %}
+<div class="flash-notice alert alert-danger">
+        {{error}}
+</div>
+{% endif %}
+
+        <div class="well well-lg">
+
+            {{ form_start(form, {"attr": {"class": "form-horizontal","role": "form", "id":"form"}}) }}
+
+            <div class="row">
+                <div class="col-sm-5">{{form_label(form.nomine)}}{{form_widget(form.nomine)}}</div>
+                {#<div class="col-sm-3">{{form_label(form.rouge)}}{{form_widget(form.rouge)}}</div>#}
+                <div class="col-sm-4">{{form_label(form.FamilleBombe)}}{{form_widget(form.FamilleBombe)}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">{{form_label(form.pays)}}{{form_widget(form.pays)}}</div>
+                <div class="col-sm-4">{{form_label(form.paysAcquereur)}}{{form_widget(form.paysAcquereur)}}</div>
+                <div class="col-sm-4">{{form_label(form.denominationOTAN)}}{{form_widget(form.denominationOTAN)}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">{{form_label(form.retrouveEn)}}{{form_widget(form.retrouveEn)}}</div>
+            </div>
+            <br><br/>
+            <div class="row">
+                <ul class="nav nav-tabs">
+			<li role="presentation"><a href="#Generalites" role="tab" data-toggle="tab">Géneralités</a></li>
+			{#<li role="presentation"><a href="#Chargement" role="tab" data-toggle="tab">Chargement</a></li>#}
+			<li role="presentation"><a href="#Aspect-Dimensions" role="tab" data-toggle="tab">Aspect-Dimensions</a></li>
+			<li role="presentation"><a href="#Marquages" role="tab" data-toggle="tab">Marquages</a></li>
+			{#<li role="presentation"><a href="#Fusees" role="tab" data-toggle="tab">Fusees</a></li>#}
+                    {#<li role="presentation"><a href="#fonctionnement" role="tab" data-toggle="tab">Fonctionnement</a></li>#}
+                    {#<li role="presentation"><a href="#conditionnement" role="tab" data-toggle="tab">Conditionnement</a></li>#}
+                    {#<li role="presentation"><a href="#lanceur" role="tab" data-toggle="tab">Vecteur</a></li>#}
+                    {#<li role="presentation"><a href="#historique" role="tab" data-toggle="tab">Historiques</a></li>#}
+                    {#<li role="presentation"><a href="#securite" role="tab" data-toggle="tab">Sécurité</a></li>#}
+                    {#<li role="presentation"><a href="#remarque" role="tab" data-toggle="tab">Remarques</a></li>#}
+                    {#<li role="presentation"><a href="#gestion" role="tab" data-toggle="tab">Gestion</a></li>#}
+                    {#<li role="presentation"><a href="#photos" role="tab" data-toggle="tab">Photos</a></li>#}
+		</ul>
+            </div>
+                
+<div class="tab-content">
+
+<div id="Generalites" role="tabpanel" class="tab-pane row active"><div class="row"></div>
+<div class="row">
+    <div class="col-sm-2">{{form_label(form.alias)}}{{form_widget(form.alias)}}</div>
+</div>
+<div class="row">
+    <div class="col-sm-2">{{form_label(form.NatureEnveloppe)}}{{form_widget(form.NatureEnveloppe)}}</div>
+</div>
+<div class="row">
+    <div class="col-sm-2">{{form_label(form.Poids)}}{{form_widget(form.Poids)}}</div>
+    <div class="col-sm-2">{{form_label(form.UniteMasse)}}{{form_widget(form.UniteMasse)}}</div>
+</div>
+</div>
+{#<div class="row"><div class="col-sm-2">{{form_label(form.SystemGuidage)}}</div><div class="col-sm-1">{{form_widget(form.SystemGuidage)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.TypeGuidage)}}</div><div class="col-sm-6">{{form_widget(form.TypeGuidage)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.PropulsionAdditionnelle)}}</div><div class="col-sm-1">{{form_widget(form.PropulsionAdditionnelle)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.CopieExistante)}}</div><div class="col-sm-6">{{form_widget(form.CopieExistante)}}</div></div>#}
+{#<div id="Chargement" role="tabpanel" class="tab-pane row container-fluid"><div class="row"></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.NatureChargeMili)}}</div><div class="col-sm-7">{{form_widget(form.NatureChargeMili)}}</div></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.PoidsChargeMili)}}</div><div class="col-sm-2">{{form_widget(form.PoidsChargeMili)}}</div><div class="col-sm-2">{{form_widget(form.UniteQMA)}}</div></div>
+{#<div class="row"><div class="col-sm-3">{{form_label(form.PoidsChargeCalcule)}}</div><div class="col-sm-6">{{form_widget(form.PoidsChargeCalcule)}}</div></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.NatureChargeDispersion)}}</div><div class="col-sm-7">{{form_widget(form.NatureChargeDispersion)}}</div></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.PoidsChargeDispersion)}}</div><div class="col-sm-2">{{form_widget(form.PoidsChargeDispersion)}}</div></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.EffetChargement)}}</div><div class="col-sm-6">{{form_widget(form.EffetChargement)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.NatureChargePropu)}}</div><div class="col-sm-6">{{form_widget(form.NatureChargePropu)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.PoidsChargePropu)}}</div><div class="col-sm-3">{{form_widget(form.PoidsChargePropu)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.NatureChargeTandem)}}</div><div class="col-sm-6">{{form_widget(form.NatureChargeTandem)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.PoidsChargeTandem)}}</div><div class="col-sm-3">{{form_widget(form.PoidsChargeTandem)}}</div></div></div>#}
+
+<div id="Aspect-Dimensions" role="tabpanel" class="tab-pane row container-fluid"><div class="row"></div>
+<div class="row"><hr /><div class="col-sm-2"><b>Généralités</b></div>
+    <div class="col-sm-2">{{form_label(form.FormeCorps)}}{{form_widget(form.FormeCorps)}}</div>
+    <div class="col-sm-2">{{form_label(form.LgTotavecFusee)}}{{form_widget(form.LgTotavecFusee)}}</div>
+    <div class="col-sm-2">{{form_label(form.LgTotsansFusee)}}{{form_widget(form.LgTotsansFusee)}}</div>
+    <div class="col-sm-2">{{form_label(form.Diametre)}}{{form_widget(form.Diametre)}}</div>
+</div>
+<div class="row"><hr /><div class="col-sm-2"><b>Empennage</b></div>
+    <div class="col-sm-2">{{form_label(form.TypeEmpennage)}}{{form_widget(form.TypeEmpennage)}}</div>
+    <div class="col-sm-2">{{form_label(form.LongEmpennage)}}{{form_widget(form.LongEmpennage)}}</div>
+</div>
+</div>
+{#<div class="row"><div class="col-sm-2">{{form_label(form.FormeOgive)}}</div><div class="col-sm-2">{{form_widget(form.FormeOgive)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.PuitsDeFusee)}}</div><div class="col-sm-1">{{form_widget(form.PuitsDeFusee)}}</div><div class="col-sm-2">{{form_label(form.Bague)}}</div><div class="col-sm-1">{{form_widget(form.Bague)}}</div><div class="col-sm-2">{{form_label(form.TypeBague)}}</div><div class="col-sm-2">{{form_widget(form.TypeBague)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.SystemeOgive)}}</div><div class="col-sm-3">{{form_widget(form.SystemeOgive)}}</div></div>#}
+{#<div class="row"><div class="col-sm-2 col-sm-offset-2">{{form_label(form.TypeAccrochage)}}</div><div class="col-sm-2">{{form_widget(form.TypeAccrochage)}}</div><div class="col-sm-2">{{form_label(form.NombreAnneaux)}}</div><div class="col-sm-2">{{form_widget(form.NombreAnneaux)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-2">{{form_label(form.DistanceAnneaux)}}</div><div class="col-sm-2">{{form_widget(form.DistanceAnneaux)}}</div><div class="col-sm-2">{{form_label(form.LargeurAnneaux)}}</div><div class="col-sm-2">{{form_widget(form.LargeurAnneaux)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-2">{{form_label(form.DistRingCulot)}}</div><div class="col-sm-2">{{form_widget(form.DistRingCulot)}}</div><div class="col-sm-2">{{form_label(form.NombrePuitsLateraux)}}</div><div class="col-sm-2">{{form_widget(form.NombrePuitsLateraux)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.FormeCulot)}}</div><div class="col-sm-3">{{form_widget(form.FormeCulot)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-2">{{form_label(form.TypePlaque)}}</div><div class="col-sm-3">{{form_widget(form.TypePlaque)}}</div></div>#}
+{#<div class="row"><div class="col-sm-2 col-sm-offset-2">{{form_label(form.NbAilettes)}}</div><div class="col-sm-2">{{form_widget(form.NbAilettes)}}</div><div class="col-sm-2">{{form_label(form.LongAilette)}}</div><div class="col-sm-1">{{form_widget(form.LongAilette)}}</div><div class="col-sm-2">{{form_label(form.LargAilette)}}</div><div class="col-sm-1">{{form_widget(form.LargAilette)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-2">{{form_label(form.TypeAilette)}}</div><div class="col-sm-2">{{form_widget(form.TypeAilette)}}</div><div class="col-sm-2">{{form_label(form.FormeAilette)}}</div><div class="col-sm-2">{{form_widget(form.FormeAilette)}}</div></div>
+<div class="row"><div class="col-sm-2">{{form_label(form.NombreOrifice)}}</div><div class="col-sm-2">{{form_widget(form.NombreOrifice)}}</div><div class="col-sm-2">{{form_label(form.PositionOrifice)}}</div><div class="col-sm-3">{{form_widget(form.PositionOrifice)}}</div><div class="col-sm-2">{{form_label(form.DistJonction)}}</div><div class="col-sm-1">{{form_widget(form.DistJonction)}}</div></div>
+<div class="row"><hr /><div class="col-sm-2"><b>Système de guidage et Elements aérodynamiques</b></div><div class="col-sm-3">{{form_label(form.TypeElemAeroAV)}}</div><div class="col-sm-4">{{form_widget(form.TypeElemAeroAV)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-2">{{form_label(form.FormeElemAeroAV)}}</div><div class="col-sm-4">{{form_widget(form.FormeElemAeroAV)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-2">{{form_label(form.PositionElemAeroAV)}}</div><div class="col-sm-4">{{form_widget(form.PositionElemAeroAV)}}</div></div>#}
+
+<div id="Marquages" role="tabpanel" class="tab-pane row container-fluid"><div class="row"></div>
+<div class="row"><hr /><div class="col-sm-2"><b>Corps</b></div>
+    <div class="col-sm-3">{{form_label(form.CouleurCorps)}}{{form_widget(form.CouleurCorps)}}</div>
+</div>
+</div>
+{#<div class="row"><hr /><div class="col-sm-2"><b>Ogive</b></div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.CouleurOgive)}}</div><div class="col-sm-4">{{form_widget(form.CouleurOgive)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.SymboleOgive)}}</div><div class="col-sm-4">{{form_widget(form.SymboleOgive)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.TypeInscOgive)}}</div><div class="col-sm-4">{{form_widget(form.TypeInscOgive)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.CouleurInscOgive)}}</div><div class="col-sm-4">{{form_widget(form.CouleurInscOgive)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.InscriptionOgive)}}</div><div class="col-sm-4">{{form_widget(form.InscriptionOgive)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.MarquageFroidOgive)}}</div><div class="col-sm-4">{{form_widget(form.MarquageFroidOgive)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.NbBandesOgive)}}</div><div class="col-sm-2">{{form_widget(form.NbBandesOgive)}}</div><div class="col-sm-2">{{form_label(form.CouleurBandeOgive1)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeOgive1)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.CouleurBandeOgive2)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeOgive2)}}</div><div class="col-sm-2">{{form_label(form.CouleurBandeOgive3)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeOgive3)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.CouleurBandeOgive4)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeOgive4)}}</div></div>#}
+{#<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.SymboleCorps)}}</div><div class="col-sm-4">{{form_widget(form.SymboleCorps)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.TypeInscCorps)}}</div><div class="col-sm-4">{{form_widget(form.TypeInscCorps)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.CouleurInscCorps)}}</div><div class="col-sm-4">{{form_widget(form.CouleurInscCorps)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.InscriptionCorps)}}</div><div class="col-sm-4">{{form_widget(form.InscriptionCorps)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.MarquageFroidCorps)}}</div><div class="col-sm-4">{{form_widget(form.MarquageFroidCorps)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.NbBandesCorps)}}</div><div class="col-sm-1">{{form_widget(form.NbBandesCorps)}}</div><div class="col-sm-2">{{form_label(form.CouleurBandeCorps1)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeCorps1)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.CouleurBandeCorps2)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeCorps2)}}</div><div class="col-sm-2">{{form_label(form.CouleurBandeCorps3)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeCorps3)}}</div></div>
+<div class="row">    <div class="col-sm-2 col-sm-offset-1">{{form_label(form.CouleurBandeCorps4)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeCorps4)}}</div></div>#}
+{#<div class="row"><hr /><div class="col-sm-2"><b>Empennage</b></div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.CouleurEmp)}}</div><div class="col-sm-4">{{form_widget(form.CouleurEmp)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.SymboleEmp)}}</div><div class="col-sm-4">{{form_widget(form.SymboleEmp)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.TypeInscEmp)}}</div><div class="col-sm-4">{{form_widget(form.TypeInscEmp)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.CouleurInscEmp)}}</div><div class="col-sm-4">{{form_widget(form.CouleurInscEmp)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.InscriptionEmp)}}</div><div class="col-sm-4">{{form_widget(form.InscriptionEmp)}}</div></div>
+<div class="row"><div class="col-sm-3 col-sm-offset-1">{{form_label(form.MarquageFroidBase)}}</div><div class="col-sm-4">{{form_widget(form.MarquageFroidBase)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.NbBandesEmp)}}</div><div class="col-sm-1">{{form_widget(form.NbBandesEmp)}}</div><div class="col-sm-2">{{form_label(form.CouleurBandeEmp1)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeEmp1)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.CouleurBandeEmp2)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeEmp2)}}</div><div class="col-sm-2">{{form_label(form.CouleurBandeEmp3)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeEmp3)}}</div></div>
+<div class="row"><div class="col-sm-2 col-sm-offset-1">{{form_label(form.CouleurBandeEmp4)}}</div><div class="col-sm-2">{{form_widget(form.CouleurBandeEmp4)}}</div>
+</div>#}
+{#<div id="Fusees" role="tabpanel" class="tab-pane row"><div class="row"></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.PositionFusees)}}</div><div class="col-sm-6">{{form_widget(form.PositionFusees)}}</div></div>
+<div class="row"><div class="col-sm-3">{{form_label(form.TypeFusee)}}</div><div class="col-sm-6">{{form_widget(form.TypeFusee)}}</div></div>
+</div>#}
+                
+{#<div id="fonctionnement" role="tabpanel" class="tab-pane row container-fluid">
+                    <div class="">
+                        {{form_label(form.fonctionnement)}}{{form_widget(form.fonctionnement)}}
+                    </div>
+                </div>#}
+
+
+
+
+                {#<div id="conditionnement" role="tabpanel" class="tab-pane row container-fluid">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {{form_label(form.conditionnementTypeEmballage)}}{{form_widget(form.conditionnementTypeEmballage)}}
+                        </div>
+                        <div class="col-sm-3 col-lg-offset-1">
+                            {{form_label(form.conditionnementQteEmballage)}}{{form_widget(form.conditionnementQteEmballage)}}
+                        </div>
+                        <div class="col-sm-2 col-lg-offset-1">
+                            {{form_label(form.coupComplet)}}{{form_widget(form.coupComplet)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {{form_label(form.conditionnementMarquageEmballage)}}{{form_widget(form.conditionnementMarquageEmballage)}}
+                        </div>
+                        <div class="col-sm-6 col-lg-offset-1">
+                            {{form_label(form.conditionnementTypeCloisonnement)}}{{form_widget(form.conditionnementTypeCloisonnement)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3" onchange="volumeCalc('feodbundle_bombes_conditionnementDimEmballageHaut','feodbundle_bombes_conditionnementDimEmballageLarg','feodbundle_bombes_conditionnementDimEmballageLong','feodbundle_bombes_conditionnementVolumeEmballage')">
+                            {{form_label(form.conditionnementDimEmballageHaut)}}{{form_widget(form.conditionnementDimEmballageHaut)}}
+                        </div>
+                        <div class="col-sm-3" onchange="volumeCalc('feodbundle_bombes_conditionnementDimEmballageHaut','feodbundle_bombes_conditionnementDimEmballageLarg','feodbundle_bombes_conditionnementDimEmballageLong','feodbundle_bombes_conditionnementVolumeEmballage')">
+                            {{form_label(form.conditionnementDimEmballageLarg)}}{{form_widget(form.conditionnementDimEmballageLarg)}}
+                        </div>
+                        <div class="col-sm-3" onchange="volumeCalc('feodbundle_bombes_conditionnementDimEmballageHaut','feodbundle_bombes_conditionnementDimEmballageLarg','feodbundle_bombes_conditionnementDimEmballageLong','feodbundle_bombes_conditionnementVolumeEmballage')">
+                            {{form_label(form.conditionnementDimEmballageLong)}}{{form_widget(form.conditionnementDimEmballageLong)}}
+                        </div>
+                        <div class="col-sm-3">
+                            {{form_label(form.conditionnementVolumeEmballage)}}{{form_widget(form.conditionnementVolumeEmballage)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {{form_label(form.conditionnementClasseDangerStockage)}}{{form_widget(form.conditionnementClasseDangerStockage)}}
+                        </div>
+                        <div class="col-sm-3 col-md-offset-3">
+                            {{form_label(form.conditionnementGroupeComptabiliteStockage)}}{{form_widget(form.conditionnementGroupeComptabiliteStockage)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {{form_label(form.conditionnementPoidsEmballage)}}{{form_widget(form.conditionnementPoidsEmballage)}}
+                        </div>
+                        <div class="col-sm-3 col-md-offset-3">
+                            {{form_label(form.conditionnementPoidsTotal)}}{{form_widget(form.conditionnementPoidsTotal)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {{form_label(form.conditionnementTempStockMin)}}{{form_widget(form.conditionnementTempStockMin)}}
+                        </div>
+                        <div class="col-sm-3 col-md-offset-3">
+                            {{form_label(form.conditionnementTempStockMax)}}{{form_widget(form.conditionnementTempStockMax)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {{form_label(form.conditionnementTempUtilMin)}}{{form_widget(form.conditionnementTempUtilMin)}}
+                        </div>
+                        <div class="col-sm-3 col-md-offset-3">
+                            {{form_label(form.conditionnementTempUtilMax)}}{{form_widget(form.conditionnementTempUtilMax)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" onchange="colorField('feodbundle_bombes_DRAM')">
+                            {{form_label(form.DRAM)}}{{form_widget(form.DRAM)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" onchange="colorField('feodbundle_bombes_DREP')">
+                            {{form_label(form.DREP)}}{{form_widget(form.DREP)}}
+                        </div>
+                    </div>
+                </div>#}
+
+
+
+
+                {#<div id="lanceur" role="tabpanel" class="tab-pane row container-fluid">
+                    <div class="">
+                        {{form_label(form.lanceur)}}{{form_widget(form.lanceur)}}
+                    </div>
+                </div>#}
+
+
+
+
+                {#<div id="historique" role="tabpanel" class="tab-pane row container-fluid">
+                    <div class="">
+                        {{form_label(form.historique)}}{{form_widget(form.historique)}}
+                    </div>
+                </div>#}
+
+
+
+
+                {#<div id="securite" role="tabpanel" class="tab-pane row container-fluid">
+                    <div class="">
+                        {{form_label(form.securite)}}{{form_widget(form.securite)}}
+                    </div>
+                    <div class="">
+                        {{form_label(form.NEDE)}}{{form_widget(form.NEDE)}}
+                    </div>
+                    <div class="">
+                        {{form_label(form.dementelement)}}{{form_widget(form.dementelement)}}
+                    </div>
+                    <div class="">
+                        {{form_label(form.demilitarisationConnue)}}{{form_widget(form.demilitarisationConnue)}}
+                    </div>
+                </div>#}
+
+
+
+
+                {#<div id="remarque" role="tabpanel" class="tab-pane row container-fluid">
+                    <div class="">
+                        {{form_label(form.remarques)}}{{form_widget(form.remarques)}}
+                    </div>
+                </div>#}
+
+
+
+
+                {#<div id="gestion" role="tabpanel" class="tab-pane row container-fluid">
+                    <center><FONT color="red"><I>Les champs Source, Fiabilité, Cohérence doivent être remplis</I> </FONT></center>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {% if entity.createurFiche is not null %}
+                                <p>Fiche créé par: {{entity.createurFiche}}</p>
+                            {% else %}
+                                <p>Pas de Créateur</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-5 col-lg-offset-1">
+                            {% if entity is defined and entity.dateCreation is defined %}
+                                Date de création : {{entity.dateCreation|date("d/m/Y")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {% if entity.modificateurFiche is not null %}
+                            <p>Fiche modifiée par: {{entity.modificateurFiche}}</p>
+                            {% else %}
+                            <p>Pas de modificateur<p>
+                                {% endif %}
+                        </div>
+                        <div class="col-sm-5 col-lg-offset-1">
+                            {% if entity is defined and entity.dateMAJ is defined %}
+                                Date de dernière mise à jour : {{entity.dateMAJ|date("d/m/Y")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {% if entity.validateur is not null %}
+                                <p>Fiche validée par: {{entity.validateur}}</p>
+                            {% else %}
+                                <p>Pas de validateur</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-5 col-lg-offset-1">
+                            {% if entity is defined and entity.dateValidation is defined %}
+                                {% if entity.dateValidation is not null %}
+                                    Date de validation : {{entity.dateValidation|date("d/m/Y")}}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            {{form_label(form.origineInfos)}}{{form_widget(form.origineInfos)}}
+                        </div>
+                        <div class="col-lg-offset-1 col-sm-2">
+                            {{form_label(form.fiabiliteSource)}}{{form_widget(form.fiabiliteSource)}}
+                        </div>
+                        <div class="col-lg-offset-1 col-sm-2">
+                            {{form_label(form.coherenceInformation)}}{{form_widget(form.coherenceInformation)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-lg-offset-2">
+                            {{form_label(form.collectionTravail)}}{{form_widget(form.collectionTravail)}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-lg-offset-2">
+                            {{form_label(form.collectionTerrain)}}{{form_widget(form.collectionTerrain)}}
+                        </div>
+                    </div>
+                </div>
+                <div id="photos" role="tabpanel" class="tab-pane">
+                    <div class="images form-group" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}">
+                        {% for image in form.images %}
+                            <div class="col-sm-3">
+                                {{ form_widget(image) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>#}
+                <br><br/>
+            </div>
+            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary fixed'}}) }}
+            <div class="hidden">{{ form_rest(form) }}</div>
+            {{ form_end(form) }}
+        </div>
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path("munition",{"type":"bombes"}) }}">
+                    Retour
+                </a>
+            </li>
+        </ul>
+    </div>
+                    
+    {% javascripts
+    "@FeodBundle/Resources/js/new.js"
+    "@FeodBundle/Resources/js/collection.js"
+    "@FeodBundle/Resources/js/script.js"
+    "@FeodBundle/Resources/js/launch.js"%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

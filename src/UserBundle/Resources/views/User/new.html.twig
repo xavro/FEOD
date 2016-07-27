@@ -1,0 +1,124 @@
+{% extends "UserBundle::layout4.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<style>
+        #btnCreer {height: 33px; margin-left: 100px;}
+        div.panel-heading input[type="checkbox"] { float: left; margin: 2px 22px 0px 14px;}
+        select#admin_userbundle_usertype_groups { height: 200px;   width: 300px;}
+        input#admin_userbundle_usertype_enabled { margin-bottom: 20px; }
+        a[data-parent="#accordion"] {color: inherit;}
+    </style>
+{% endblock %}
+
+{% block sousMenu %}
+{{ parent() }} - Création d'un utilisateur</h4>
+{% endblock %} 
+
+{% block fos_user_content %} 
+
+<div class="well col-sm-10 col-sm-offset-2">
+    <h4><center><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Création d'un utilisateur</center></h4>
+    <hr>
+    <form action="{{ path('admin_user_create') }}" method="post" {{ form_enctype(form) }}>
+        <!--Customisation du formulaire pour l'affichage dans un tableau-->
+    
+        <table>
+            <div class="row">
+			<div class="col-sm-1 col-sm-offset-2"><b>{{form_label(form.grade)}}</b>{{form_widget(form.grade)}}</div>
+			<div class="col-sm-3"><b>{{form_label(form.nom)}}</b>{{form_widget(form.nom)}}</div>
+			<div class="col-sm-3"><b>{{form_label(form.prenom)}}</b>{{form_widget(form.prenom)}}</div>
+			<div class="col-sm-2">{{form_label(form.trigramme)}}{{form_widget(form.trigramme)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-3 col-sm-offset-3 text-right"><b>{{form_label(form.username)}}</b></div><div class="col-sm-3">{{form_widget(form.username)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2"><b>{{form_label(form.email)}}</b>{{form_widget(form.email)}}</div>
+			<div class="col-sm-3">{{form_label(form.armee)}}{{form_widget(form.armee)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2"><b>{{form_label(form.unite)}}</b>{{form_widget(form.unite)}}</div>
+			<div class="col-sm-4"><b>{{form_label(form.fonction)}}</b>{{form_widget(form.fonction)}}</div>
+		</div>
+		<br>
+                <hr>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2"><b>{{form_label(form.qualifications.qualif1)}}</b>{{form_widget(form.qualifications.qualif1)}}</div>
+			<div class="col-sm-3 col-sm-offset-1 datepicker"><b>{{form_label(form.qualifications.date1)}}</b>{{form_widget(form.qualifications.date1)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif2)}}{{form_widget(form.qualifications.qualif2)}}</div>
+			<div class="col-sm-3 col-sm-offset-1 datepicker">{{form_label(form.qualifications.date2)}}{{form_widget(form.qualifications.date2)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif3)}}{{form_widget(form.qualifications.qualif3)}}</div>
+			<div class="col-sm-3 col-sm-offset-1 datepicker">{{form_label(form.qualifications.date3)}}{{form_widget(form.qualifications.date3)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif4)}}{{form_widget(form.qualifications.qualif4)}}</div>
+			<div class="col-sm-3 col-sm-offset-1 datepicker">{{form_label(form.qualifications.date4)}}{{form_widget(form.qualifications.date4)}}</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-2">{{form_label(form.qualifications.qualif5)}}{{form_widget(form.qualifications.qualif5)}}</div>
+			<div class="col-sm-3 col-sm-offset-1 datepicker">{{form_label(form.qualifications.date5)}}{{form_widget(form.qualifications.date5)}}</div>
+		</div>
+                <hr>
+        </table>
+        <table>
+            <tr>
+                <h4>{{ form_label(form.roles)}} : </h4>
+
+                    <div class="panel-group col-sm-9 col-sm-offset-1" id="accordion">
+                    {% for role in form.roles %}
+                            {% set foo = loop.index %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#role{{loop.index}}" >
+                                <h4 class="panel-title">
+                                    {{ form_widget(role)}}
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#role{{loop.index}}" > {{ form_label(role)}}  </a>
+                                </h4>   
+                            </div>
+                            <div id="role{{loop.index}}" class="panel-collapse collapse">
+                                <!--description roles-->
+                                {% include "UserBundle::User/Roles/roles.html.twig" %}
+                                <!--Fin-->
+                            </div>
+                                                      
+                         </div>                                
+                     {% endfor %}
+                                                               <hr>
+                    </div>
+            </tr>
+        </table>
+                <div class="row">
+			<div class="col-sm-4 col-sm-offset-4"><b>{{form_label(form.password)}}</b>{{form_widget(form.password)}}</div>
+		</div>
+                <hr>
+            <!--reste du formulaire-->
+{{ form_widget(form)}}
+            <p>
+                <button id="btnCreer" type="submit" class="btn btn-primary center-block"><i class="glyphicon glyphicon-ok"></i> Créer</button>
+            </p>
+            
+            <br>
+
+        <div class="hidden">{{ form_rest(form) }}</div>
+            {{ form_end(form) }}
+        </form>
+
+            <a class="btn" href="{{ path('admin_user') }}">
+                <i class="icon-backward"></i> Retour à la liste
+            </a>
+
+        </div>
+
+{% endblock %}
+

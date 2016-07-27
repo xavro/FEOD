@@ -1,0 +1,59 @@
+amorcage:
+    path:     /
+    defaults: { _controller: "FeodBundle:Amorcage:index" }
+
+amorcage_new:
+    path:     /new
+    defaults: { _controller: "FeodBundle:Amorcage:new" }
+
+amorcage_create:
+    path:     /create
+    defaults: { _controller: "FeodBundle:Amorcage:create" }
+    methods:  POST
+
+amorcage_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FeodBundle:Amorcage:edit" }
+
+amorcage_update:
+    path:     /{id}/update
+    defaults: { _controller: "FeodBundle:Amorcage:update" }
+    methods:  [POST, PUT]
+
+amorcage_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FeodBundle:Amorcage:delete" }
+    methods:  [POST, DELETE]
+
+amorcage_tampon:
+    path:    /{statut}/tampon
+    defaults: { _controller: "FeodBundle:Amorcage:tampon" }
+    requirements:
+        statut: 0|1|2|3
+
+amorcage_suite:
+    path:    /{id}/suite
+    defaults: { _controller: "FeodBundle:Amorcage:suite" }
+
+amorcage_search:
+    path:    /search
+    defaults: { _controller: "FeodBundle:Amorcage:search" }
+
+amorcage_lire:
+    path:    /{id}/lire
+    defaults: { _controller: "FeodBundle:Lire:lire" }
+    
+amorcage_fiche:
+    path:    /{id}/fiche
+    defaults: { _controller: "FeodBundle:Amorcage:fiche" }
+
+amorcage_recherche:
+    path:     /amorcagerecherche
+    defaults: { _controller: "FeodBundle:Amorcage:recherche" }
+
+amorcage_createrecherche:
+    path:     /createrecherche
+    defaults: { _controller: "FeodBundle:Amorcage:createrecherche" }
+    methods:  POST
+
+

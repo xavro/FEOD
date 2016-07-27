@@ -1,0 +1,33 @@
+<?php
+
+namespace FeodBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AccrochageAeronef
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class AccrochageAeronef
+
+{
+
+   /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+   /**
+     * @var string
+     *
+     * @ORM\Column(name="AccrochageAeronef", type="string", length=50)
+     */
+    private $AccrochageAeronef;
+    
+}

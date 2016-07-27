@@ -1,0 +1,67 @@
+{% extends 'FeodBundle:Munition:table.html.twig' %}
+
+{% set str_statut = {0: 'cours de modification ou création', 1:'attente de vérification',
+2:'attente de validation', 3:'validée'} %}
+{% set str_suite = {0: 'Demander vérification', 1:'Vérifier (demander validation)',
+2:'Valider', 3:''} %}
+
+{% block ttitle %}
+
+<div class="row">
+{% set str_statut = {0: 'en cours de modification', 1:'en attente de vérification',
+2:'en attente de validation', 3:'validées'} %}
+<h1 style="text-align:center;">Fiches {{str_statut[statut]}}</h1>
+</div>
+<br>
+<ul class="nav nav-pills">
+  <li role="presentation" {% if type=='munition' %}class="active" {% endif %} ><a href="{{path('munition_tampon',{'type':'munition' ,'statut':statut})}}">TOUT<span class="badge">{{count['munition'] + count['amorcage'] + count['explosif'] + count['chimique'] }}</span></a></li>
+  {% for type_m in ['artillerie','mortier','mines','grenades','roquettes','bombes','missiles'] %}
+  <li role="presentation" {% if type_m==type %}class="active" {% endif %}><a href="{{path('munition_tampon',{'type':type_m ,'statut':statut})}}">{{type_m|upper}}<span class="badge">{{count[type_m]}}</span></a></li>
+  {% endfor %}
+  <li role="presentation" {% if type=='sousMunitions' %}class="active" {% endif %}><a href="{{path('munition_tampon',{'type':'sousMunitions','statut':statut })}}">SOUS-MUNITIONS<span class="badge">{{count['sousMunitions']}}</span></a></li>
+  <li role="presentation" {% if type=='minesMarines' %}class="active" {% endif %}><a href="{{path('munition_tampon',{'type':'minesMarines','statut':statut })}}">MINES-MARINES<span class="badge">{{count['minesMarines']}}</span></a></li>
+  <li role="presentation" {% if type=='amorcage' %}class="active" {% endif %}><a href="{{path('amorcage_tampon',{'type':'amorcage','statut':statut })}}">AMORÇAGE<span class="badge">{{count['amorcage']}}</span></a></li>
+  <li role="presentation" {% if type=='explosif' %}class="active" {% endif %}><a href="{{path('explosif_tampon',{'type':'explosif','statut':statut })}}">EXPLOSIF<span class="badge">{{count['explosif']}}</span></a></li>
+  <li role="presentation" {% if type=='chimique' %}class="active" {% endif %}><a href="{{path('chimique_tampon',{'type':'chimique','statut':statut })}}">CHIMIQUE<span class="badge">{{count['chimique']}}</span></a></li>
+</ul>
+{% endblock %}
+
+{% block button %}
+    {# si on veut rajouter des boutons pour voire#}
+
+{#<a class="btn btn-info" href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-sunglasses"></span> Lire</a>#}
+{% if statut == 2 or statut == 0 or statut == 1 %}
+    {% if type=='amorcage' %}
+    <a class="btn btn-success" href="{{ path('amorcage_suite', { 'id': entity.id, 'statut': statut,'type':'amorcage' }) }}"><span class="glyphicon glyphicon-ok"></span> {{str_suite[statut]}}</a>
+    {% elseif type=='explosif' %}
+    <a class="btn btn-success" href="{{ path('explosif_suite', { 'id': entity.id, 'statut': statut,'type':'explosif' }) }}"><span class="glyphicon glyphicon-ok"></span> {{str_suite[statut]}}</a>
+    {% elseif type=='chimique' %}
+    <a class="btn btn-success" href="{{ path('chimique_suite', { 'id': entity.id, 'statut': statut,'type':'chimique' }) }}"><span class="glyphicon glyphicon-ok"></span> {{str_suite[statut]}}</a>
+    {% else %}
+    <a class="btn btn-success" href="{{ path('munition_suite', { 'id': entity.id, 'statut': statut,'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-ok"></span> {{str_suite[statut]}}</a>
+    {% endif %}
+{% else %}
+{% endif %}
+{% if type=='amorcage' %}
+<a class="btn btn-primary" href="{{ path('amorcage_fiche', { 'id': entity.id, 'type':'amorcage' }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% elseif type=='explosif' %}
+<a class="btn btn-primary disabled" href="{{ path('explosif_fiche', { 'id': entity.id, 'type':'explosif' }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% elseif type=='chimique' %}
+<a class="btn btn-primary disabled" href="{{ path('chimique_fiche', { 'id': entity.id, 'type':'chimique' }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% else %}
+<a class="btn btn-primary" href="{{ path('munition_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+{% endif %}
+{% if type=='amorcage' %}
+<a class="btn btn-warning" href="{{ path('amorcage_edit', { 'id': entity.id, 'type':'amorcage' }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+{% elseif type=='explosif' %}
+<a class="btn btn-warning" href="{{ path('explosif_edit', { 'id': entity.id, 'type':'explosif' }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>  
+{% elseif type=='chimique' %}
+<a class="btn btn-warning" href="{{ path('chimique_edit', { 'id': entity.id, 'type':'chimique' }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+{% else %}
+<a class="btn btn-warning" href="{{ path('munition_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+{% endif %}
+{#{% if is_granted("ROLE_ADMIN") %}
+<a class="btn btn-danger" href="{{ path('munition_delete', { 'id': entity.id, 'type':entity.className|lower }) }}">Supprimer</a>
+{% else %}
+{% endif %}#}
+{% endblock %}

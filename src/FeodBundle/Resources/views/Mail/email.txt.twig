@@ -1,0 +1,8 @@
+{% set str_statut = {0: '', 1:' en attente de vérification',
+2:'en attente de validation', 3:'validée'} %}
+
+Bonjour,
+
+La munition {{entity.nomine}} est {{str_statut[entity.statut]}}
+
+Merci.

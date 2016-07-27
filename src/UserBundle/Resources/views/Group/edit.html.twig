@@ -1,0 +1,49 @@
+{% extends "AdminUserBundle::layout.html.twig" %}
+{% block title %}
+Modif groupe - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        select#admin_userbundle_grouptype_roles { height: 107px; }        
+        #btnSupprimer {height: 33px; margin-bottom: -15px;}
+        #btnModifier {height: 33px; margin-left: 100px;}
+        input[type="checkbox"] { float: left; margin: 4px 10px 0;}
+        label {display: block;} 
+    </style>
+{% endblock %}
+
+{% block sousMenu %}
+{{ parent() }} - Modification d'un groupe</h4>
+{% endblock %} 
+
+{% block fos_user_content %}
+
+<div class="well">
+<form action="{{ path('admin_group_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <!--Customisation du formulaire pour l'affichage dans un tableau-->
+    {% form_theme edit_form ':Form:customForm.html.twig' %}    
+    {{ form_widget(edit_form) }}
+        <br/>
+        <p>
+            <button id="btnModifier" type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Modifier</button>
+        </p>
+</form> 
+</div>
+<br/>
+<ul class="nav nav-pills">
+    <li>
+        <a class="btn" href="{{ path('admin_group') }}">
+            <i class="icon-backward"></i> Retour à la liste
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('admin_group_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+                <button id="btnSupprimer" type="submit" class="btn"><i class="icon-remove"></i> Supprimer</button>
+        </form>
+    </li>
+</ul> 
+
+{% endblock %}

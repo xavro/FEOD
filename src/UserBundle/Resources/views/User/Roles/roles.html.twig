@@ -1,0 +1,13 @@
+<div class="panel-body">
+    {% if foo == 1 %}
+        {% include "UserBundle::User/Roles/roleAdmin.html.twig" %}
+    {% elseif  foo == 2 %}
+        {% include "UserBundle::User/Roles/roleOfficier_Nedex.html.twig" %}
+    {% elseif  foo == 3 %}
+        {% include "UserBundle::User/Roles/roleClient.html.twig" %}
+    {% elseif  foo == 4 %}
+        {% include "UserBundle::User/Roles/roleExpert.html.twig" %}
+    {% elseif  foo == 5 %}
+        {% include "UserBundle::User/Roles/roleValidateur.html.twig" %}
+    {% endif %}
+</div>

@@ -1,0 +1,186 @@
+{%extends '::base.html.twig'%}
+
+
+{%block sidebar %}
+<div class="col-md-2 col-md-offset-2">
+<table class="table table-bordered">
+    <thead>
+        {% if mortier0 != 0 or mortier1 != 0 or mortier2 != 0 or artillerie0 != 0 or artillerie1 != 0 or artillerie2 != 0 or mines0 != 0 or mines1 != 0 or mines2 != 0 or missiles0 != 0 or missiles1 != 0 or missiles2 != 0 or roquettes0 != 0 or roquettes1 != 0 or roquettes2 != 0
+        or bombes0 != 0 or bombes1 != 0 or bombes2 != 0 or grenades0 != 0 or grenades1 != 0 or grenades2 != 0 or sousMunitions0 != 0 or sousMunitions1 != 0 or sousMunitions2 != 0 or amorcage0 != 0 or amorcage1 != 0 or amorcage2 != 0 or explosif0 != 0 or explosif1 != 0 or explosif2 != 0
+			or chimique0 != 0 or chimique1 != 0 or chimique2 != 0 or minesMarines0 != 0 or minesMarines1 != 0 or minesMarines2 != 0 %}
+        <tr class="active">
+            <th class='text-center'>Famille</th>
+            <th class='text-center'>Modification</th>
+            {% if is_granted("ROLE_EXPERT") %}<th class='text-center'>Vérification</th>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<th class='text-center'>Validation</th>{% endif %}
+        </tr>
+        {% endif %}
+    </thead>
+    <tbody>
+        
+            {% if artillerie0 != 0 or artillerie1 != 0 or artillerie2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>ARTILLERIE</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'artillerie'})}}"><h4><span class="label label-warning">{% if artillerie0 != 0 %}{{artillerie0}}{%elseif artillerie0 ==0%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'artillerie'})}}"><h4><span class="label label-warning">{% if artillerie1 != 0 %}{{artillerie1}}{%elseif artillerie1 ==0%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'artillerie'})}}"><h4><span class="label label-success">{% if artillerie2 != 0 %}{{artillerie2}}{%elseif artillerie2 ==0%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if mortier0 != 0 or mortier1 != 0 or mortier2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>MORTIER</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'mortier'})}}"><h4><span class="label label-warning">{% if mortier0 != 0 %}{{mortier0}}{%elseif mortier0 == 0 %}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'mortier'})}}"><h4><span class="label label-warning">{% if mortier1 != 0 %}{{mortier1}}{%elseif mortier1 == 0 %}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'mortier'})}}"><h4><span class="label label-success">{% if mortier2 != 0 %}{{mortier2}}{%elseif mortier2 == 0 %}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if mines0 != 0 or mines1 != 0 or mines2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>MINES</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'mines'})}}"><h4><span class="label label-warning">{% if mines0 != 0 %}{{mines0}}{%elseif mines0 ==0%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'mines'})}}"><h4><span class="label label-warning">{% if mines1 != 0 %}{{mines1}}{%elseif mines1 ==0%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'mines'})}}"><h4><span class="label label-success">{% if mines2 != 0 %}{{mines2}}{%elseif mines2 ==0%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if grenades0 != 0 or grenades1 != 0 or grenades2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>GRENADES</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'grenades'})}}"><h4><span class="label label-warning">{% if grenades0 != 0 %}{{grenades0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'grenades'})}}"><h4><span class="label label-warning">{% if grenades1 != 0 %}{{grenades1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'grenades'})}}"><h4><span class="label label-success">{% if grenades2 != 0 %}{{grenades2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if roquettes0 != 0 or roquettes1 != 0 or roquettes2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>ROQUETTES</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'roquettes'})}}"><h4><span class="label label-warning">{% if roquettes0 != 0 %}{{roquettes0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'roquettes'})}}"><h4><span class="label label-warning">{% if roquettes1 != 0 %}{{roquettes1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'roquettes'})}}"><h4><span class="label label-success">{% if roquettes2 != 0 %}{{roquettes2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if bombes0 != 0 or bombes1 != 0 or bombes2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>BOMBES</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'bombes'})}}"><h4><span class="label label-warning">{% if bombes0 != 0 %}{{bombes0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'bombes'})}}"><h4><span class="label label-warning">{% if bombes1 != 0 %}{{bombes1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+           {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'bombes'})}}"><h4><span class="label label-success">{% if bombes2 != 0 %}{{bombes2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if missiles0 != 0 or missiles1 != 0 or missiles2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>MISSILES</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'missiles'})}}"><h4><span class="label label-warning">{% if missiles0 != 0 %}{{missiles0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'missiles'})}}"><h4><span class="label label-warning">{% if missiles1 != 0 %}{{missiles1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'missiles'})}}"><h4><span class="label label-success">{% if missiles2 != 0 %}{{missiles2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+
+            {% if sousMunitions0 != 0 or sousMunitions1 != 0 or sousMunitions2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>SOUS-MUNITIONS</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'sousMunitions'})}}"><h4><span class="label label-warning">{% if sousMunitions0 != 0 %}{{sousMunitions0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'sousMunitions'})}}"><h4><span class="label label-warning">{% if sousMunitions1 != 0 %}{{sousMunitions1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'sousMunitions'})}}"><h4><span class="label label-success">{% if sousMunitions2 != 0 %}{{sousMunitions2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+			
+			{% if minesMarines0 != 0 or minesMarines1 != 0 or minesMarines2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>MINES-MARINES</I></strong></td>
+            <td class="warning text-center"><a href="{{path('munition_tampon',{'statut':0, 'type': 'minesMarines'})}}"><h4><span class="label label-warning">{% if minesMarines0 != 0 %}{{minesMarines0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('munition_tampon',{'statut':1, 'type': 'minesMarines'})}}"><h4><span class="label label-warning">{% if sousMunitions1 != 0 %}{{minesMarines1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('munition_tampon',{'statut':2, 'type': 'minesMarines'})}}"><h4><span class="label label-success">{% if minesMarines2 != 0 %}{{minesMarines2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+            {% if amorcage0 != 0 or amorcage1 != 0 or amorcage2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>AMORÇAGE</I></strong></td>
+            <td class="warning text-center"><a href="{{path('amorcage_tampon',{'statut':0, 'type': 'amorcage'})}}"><h4><span class="label label-warning">{% if amorcage0 != 0 %}{{amorcage0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('amorcage_tampon',{'statut':1, 'type': 'amorcage'})}}"><h4><span class="label label-warning">{% if amorcage1 != 0 %}{{amorcage1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('amorcage_tampon',{'statut':2, 'type': 'amorcage'})}}"><h4><span class="label label-success">{% if amorcage2 != 0 %}{{amorcage2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+			
+			 {% if explosif0 != 0 or explosif1 != 0 or explosif2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>EXPLOSIF</I></strong></td>
+            <td class="warning text-center"><a href="{{path('explosif_tampon',{'statut':0, 'type': 'explosif'})}}"><h4><span class="label label-warning">{% if explosif0 != 0 %}{{explosif0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('explosif_tampon',{'statut':1, 'type': 'explosif'})}}"><h4><span class="label label-warning">{% if explosif1 != 0 %}{{explosif1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+           {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('explosif_tampon',{'statut':2, 'type': 'explosif'})}}"><h4><span class="label label-success">{% if explosif2 != 0 %}{{explosif2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+			
+			 {% if chimique0 != 0 or chimique1 != 0 or chimique2 != 0 %}
+            <tr>
+                <td style="vertical-align: middle;"><strong><I>CHIMIQUE</I></strong></td>
+            <td class="warning text-center"><a href="{{path('chimique_tampon',{'statut':0, 'type': 'chimique'})}}"><h4><span class="label label-warning">{% if chimique0 != 0 %}{{chimique0}}{%else%}{%endif%}</span></h4></a></td>
+            {% if is_granted("ROLE_EXPERT") %}<td class="warning text-center"><a href="{{path('chimique_tampon',{'statut':1, 'type': 'chimique'})}}"><h4><span class="label label-warning">{% if chimique1 != 0 %}{{chimique1}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('chimique_tampon',{'statut':2, 'type': 'chimique'})}}"><h4><span class="label label-success">{% if chimique2 != 0 %}{{chimique2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
+            </tr>
+            {% endif %}
+            
+    </tbody>
+</table>
+</div>	              
+{%endblock%}
+{% block body %}
+
+
+<div class="col-md-10 col-md-offset-0">    
+<div class="jumbotron jumbotron-fluid alert-danger" style="text-align: center; background-image: salomon">
+<h2><strong><span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;Avertissement</strong></h2>
+<p>Cette base est un outil d'aide à l'identification et au traitement des munitions.</br>
+Les munitions ne peuvent être traitées qu'en fonction du niveau de qualification détenu.</br>
+Les informations contenues dans cette base ne doivent pas être communiquées
+à un tiers et ne doivent en aucun cas sortir du MINDEF.<br/>
+Pour toute demande particulière, s'adresser au <strong>PIAM</strong></p>
+ <hr class="m-y-2">
+
+  <!--*************************************************-->
+<DIV>
+<DIV style="TEXT-ALIGN: center; "><BR>
+<EMBED id=tagcloud height=500 name=tagcloud type=application/x-shockwave-flash width=500 
+src="{{app.request.basepath}}/tagcloud.swf" quality="high" 
+flashvars="tcolor=&amp;mode=tags&amp;distr=true&amp;tspeed=300&amp;tagcloud=<tags>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'missiles'})}}' style='20' color='0x04baef' hicolor='0xAE0B1B'>Missiles</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'artillerie'})}}' style='12' color='0x174405' hicolor='0xAE0B1B'>Artillerie</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'grenades'})}}' style='13' color='0x031700' hicolor='0xAE0B1B'>Grenades</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'mortiers'})}}' style='12' color='0x3e7429' hicolor='0xAE0B1B'>Mortiers</a>
+<a href='http://feod.intradef.gouv.fr{{path('amorcage_tampon',{'statut':3, 'type': 'amorcage'})}}' style='12' color='0xff0000' hicolor='0xAE0B1B'>Amorçage</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'bombes'})}}' style='12' color='0x2e4adc' hicolor='0xAE0B1B'>Bombes</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'roquettes'})}}' style='12' color='0x3cb00e' hicolor='0xAE0B1B'>Roquettes</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'mines'})}}' style='15' color='0x008e14' hicolor='0xAE0B1B'>Mines</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'sousMunitions'})}}' style='12' color='0x0b7af8' hicolor='0xAE0B1B'>Sous-Munitions</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'minesMarines'})}}' style='12' color='0x0012ff' hicolor='0xAE0B1B'>Mines-Marines</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('explosif_tampon',{'statut':3, 'type': 'explosif'})}}' style='12' color='0xe6d404' hicolor='0xAE0B1B'>Explosifs</a>&#10;
+<a href='http://feod.intradef.gouv.fr{{path('chimique_tampon',{'statut':3, 'type': 'chimique'})}}' style='12' color='0x01ff73' hicolor='0xAE0B1B'>Chimique</a>&#10;</tags>" 
+bgcolor="#f2dede" allowscriptaccess="always"></EMBED></DIV>
+</DIV>
+<!--*************************************************-->
+<p class="lead">
+    <a class="btn btn-primary btn-lg" href="{{path('stat_last')}}" role="button">Accès aux dernières Fiches</a>
+  </p>
+</div>
+</div>
+  
+<div class="col-md-10 col-md-offset-0"> 
+	<div class="jumbotron jumbotron-fluid alert-warning" style="text-align: center; background-image: salomon">
+		<h3><strong>En développement</strong></h3>
+		<p>
+		- Recherche et résolution des bugs.<br/>
+		- Mise en place de formulaires de <strong>"Recherche Avancés"</strong><br/>
+		- Ajout d'un suivi des modifications.<br/>
+		- Préparation des tables : Explosifs; Chimiques; Containers; Munitions ASM;
+		</p>
+
+	</div>
+</div>
+
+{% endblock %}

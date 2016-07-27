@@ -1,0 +1,65 @@
+munition:
+    path:     /
+    defaults: { _controller: "FeodBundle:Munition:index" }
+
+munition_new:
+    path:     /new
+    defaults: { _controller: "FeodBundle:Munition:new" }
+
+munition_create:
+    path:     /create
+    defaults: { _controller: "FeodBundle:Munition:create" }
+    methods:  POST
+
+munition_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FeodBundle:Munition:edit" }
+
+munition_update:
+    path:     /{id}/update
+    defaults: { _controller: "FeodBundle:Munition:update" }
+    methods:  [POST, PUT]
+
+munition_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FeodBundle:Munition:delete" }
+    methods:  [POST, DELETE]
+
+munition_tampon:
+    path:    /{statut}/tampon
+    defaults: { _controller: "FeodBundle:Munition:tampon" }
+    requirements:
+        statut: 0|1|2|3
+        
+munition_amorcage:
+    path:    /{statut}/tampon
+    defaults: { _controller: "FeodBundle:Amorcage:tampon" }
+    requirements:
+        statut: 0|1|2|3
+
+munition_suite:
+    path:    /{id}/suite
+    defaults: { _controller: "FeodBundle:Munition:suite" }
+
+munition_search:
+    path:    /search
+    defaults: { _controller: "FeodBundle:Munition:search" }
+
+munition_lire:
+    path:    /{id}/lire
+    defaults: { _controller: "FeodBundle:Lire:lire" }
+    
+munition_fiche:
+    path:    /{id}/fiche
+    defaults: { _controller: "FeodBundle:Munition:fiche" }
+
+munition_recherche:
+    path:     /munitionrecherche
+    defaults: { _controller: "FeodBundle:Munition:recherche" }
+
+munition_createrecherche:
+    path:     /createrecherche
+    defaults: { _controller: "FeodBundle:Munition:createrecherche" }
+    methods:  POST
+
+

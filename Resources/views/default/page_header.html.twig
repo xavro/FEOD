@@ -1,0 +1,369 @@
+{% set str_statut = {0: 'cours de modification ou création', 1:'attente de vérification',
+2:'attente de validation', 3:'validée'} %}
+
+{% block page_header %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{path('feod_warn')}}">
+                <img alt="FEOD" src="{{ asset('25x25.jpg') }}">
+            </a>
+            <a class="navbar-brand" href="{{path('feod_warn')}}"title="Accueil FEOD">
+                FEOD
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {% if is_granted("ROLE_ADMIN") %}
+                    <li><a href="{{path('admin_user')}}">Administration</a></li>
+                    {%else%}
+                    <li><a href="{{ path('admin_password', { 'id': app.user.id }) }}">Profil</a></li>
+                    {% endif %}
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistiques<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{path('stat')}}">Nombre total de fiches et par famille</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{path('stat_statut')}}">Nombre de fiches en cours de création, vérification, validation</a></li>
+                        <li class="divider"></li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                        <li><a href="{{path('admin_stat')}}">Statistiques d'administration</a></li>
+                        {% endif %}
+                    </ul>
+                    <li><a href="{{path('feod_search')}}">Recherche Globale</a></li>
+                    <li><a href="{{path('feod_search2')}}">Recherche</a></li>
+                    <li><a href="#">Aide</a></li>
+
+                {% endif %}
+            </ul>
+            
+        
+        
+            <div class="navbar-form pull-right" style="color: white; padding-top: 10px">
+                <a class="btn btn-info" style="padding: 0 15px; margin: 0 20px;" href="mailto:piam.rens.fct@intradef.gouv.fr?subject= Demande de renseignement&body= Votre demande ici" title="Demande d'informations PIAM">{{'Contact'|trans}}</a>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a class="btn btn-info" style="padding: 0 15px; margin: 0 20px;" href="javascript:history.back();" title="Accéder à la page précédente">{{'Précédent'|trans}}</a>
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username},'FOSUserBundle') }} |
+                <a id="linkdeco" href="{{ path('fos_user_security_logout') }}" style="color: white;">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+                {% endif %}
+            </div><!-- /.navbar-collapse -->
+            </div>
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+            
+<div class="page-header">
+    <div class="row"> 
+        <div class="row" style="text-align: center; background-image: radial-gradient(white, black)">
+            <br>
+            <h1><strong>FEOD</strong></h1>
+            <h3>Base de données techniques Française sur les munitions et explosifs.<br/>
+                French Explosives <small>&</small> Ordnances Database.</h3>
+            <h3 style="color: red">{{'Diffusion restreinte.'|trans}}</h3>
+            
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} 
+            <div class="row">
+                <div class="btn-group">
+                    <a type="button" href="{{path('munition_tampon',{'statut':3, 'type':'munition'})}}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-menu-hamburger"></span> Tout</a>
+                    <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span><span class="sr-only">Toggle Dropdown></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                     <li><a href="{{path('stat_last')}}">100 dernières fiches</a></li>
+                     <li class="divider"></li>
+                     <li><a href="{{path('stat_last_fam')}}">10 dernières fiches par famille</a></li>   
+                    </ul>
+                </div>
+                <div class="btn-group btn-lg">  
+                </div>
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Artillerie</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'artillerie'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'artillerie'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'artillerie'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'artillerie'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'artillerie'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'artillerie'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                
+               <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Mortier</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'mortier'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'mortier'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'mortier'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'mortier'})}}">Modification</a></li>
+                <li class="divider"></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'mortier'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'mortier'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Mines</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'mines'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'mines'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'mines'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'mines'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'mines'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'mines'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Grenades</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'grenades'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'grenades'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'grenades'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'grenades'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'grenades'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'grenades'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Roquettes</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'roquettes'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'roquettes'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'roquettes'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'roquettes'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'roquettes'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'roquettes'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Bombes</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'bombes'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'bombes'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'bombes'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'bombes'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'bombes'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'bombes'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Missiles</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'missiles'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'missiles'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'missiles'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'missiles'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'missiles'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'missiles'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Sous-Munitions</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'sousMunitions'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'sousMunitions'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'sousMunitions'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'sousMunitions'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'sousMunitions'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'sousMunitions'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+				{% if app.user.username == "mathieu.menesguen" or app.user.username == "xavier.admin.coupillaud" or app.user.username == "renaud.dubuisson" or app.user.username == "philippe.admin.blanc" %}
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Mines-Marines</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('munition_tampon',{'statut':3, 'type':'minesMarines'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_new',{'type':'minesMarines'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_recherche',{'type':'minesMarines'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'minesMarines'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'minesMarines'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'minesMarines'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+				{% else %}
+				<div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle disabled" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger"></span> Mines-Marines</a>
+				</div>
+				{% endif %}
+                
+                <div class="btn btn-group">
+                </div>
+                
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" style="color:red"></span> Amorçage</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('amorcage_tampon',{'statut':3, 'type':'amorcage'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('amorcage_new',{'type':'amorcage'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('amorcage_recherche',{'type':'amorcage'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('amorcage_tampon',{'statut':0, 'type': 'amorcage'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('amorcage_tampon',{'statut':1, 'type': 'amorcage'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('amorcage_tampon',{'statut':2, 'type': 'amorcage'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+                
+				{% if is_granted("ROLE_VALIDATEUR") %}
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" style="color:orange"></span> Explosifs</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('explosif_tampon',{'statut':3, 'type':'explosif'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('explosif_new',{'type':'explosif'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('explosif_recherche',{'type':'explosif'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('explosif_tampon',{'statut':0, 'type': 'explosif'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('explosif_tampon',{'statut':1, 'type': 'explosif'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('explosif_tampon',{'statut':2, 'type': 'explosif'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+				{% else %}
+				<div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle disabled" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" style="color:orange"></span> Explosifs</a>
+				</div>
+				{% endif %}
+                
+				{% if is_granted("ROLE_VALIDATEUR") %}
+                <div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" style="color:green"></span> Chimique</a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="{{path('chimique_tampon',{'statut':3, 'type':'chimique'})}}">Liste</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('chimique_new',{'type':'chimique'})}}">Création</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('chimique_recherche',{'type':'chimique'})}}">Recherche</a></li>
+                <li class="divider"></li>
+                <li><a href="{{path('chimique_tampon',{'statut':0, 'type': 'chimique'})}}">Modification</a></li>
+                {% if is_granted("ROLE_EXPERT") %}
+                <li class="divider"></li>
+                <li><a href="{{path('chimique_tampon',{'statut':1, 'type': 'chimique'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('chimique_tampon',{'statut':2, 'type': 'chimique'})}}">Validation</a></li>
+                {% endif %}
+                </ul>
+                </div>
+				{% else %}
+				<div class="btn-group">
+                <a type="button" href="#" class="btn btn-default btn-lg dropdown-toggle disabled" data-toggle="dropdown"><span class="glyphicon glyphicon-menu-hamburger" style="color:green"></span> Chimique</a>
+				</div>
+				{% endif %}
+
+            </div>
+            {% endif %}
+
+<br>
+</div>        
+</div>
+        
+        
+    </div>
+            
+{% endblock %}

@@ -1,0 +1,34 @@
+                    <div id="carousel6" class="carousel slide" data-ride="carousel" data-interval="false">
+                        <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                    {% for image in form.imagesConditionnement %}
+                        {% if loop.index == 1 %}    
+                            <li data-target="#carousel6" data-slide-to="{{loop.index}}-1" class="active"></li>
+                            {% else %}
+                            <li data-target="#carousel6" data-slide-to="{{loop.index}}-1"></li>
+                            {% endif %}
+                    {% endfor %}   
+                    </ol>
+
+                        <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                    {% for image in form.imagesConditionnement %}
+                        {% if loop.index == 1 %}
+                            <li class="item active" style="height: auto;">
+                            {% else %}
+                            <li class="item" style="height: auto;">
+                                {% endif %}    
+                                {{ form_widget(image) }}
+                            </li>
+                    {% endfor %}
+                    </li>
+                            
+                        <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel6" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel6" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                    </div>
+                    </div>

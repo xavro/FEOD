@@ -1,0 +1,29 @@
+{% extends '::base2.html.twig' %}
+
+{% block body %}
+<h2>Nombre de fiches en cours de création, vérification, validation</h2>
+
+<div class="col-sm-6">
+<ul class="list-group">
+    <li class="list-group-item">
+        <span class="badge">{{creation}}</span>
+        Création
+    </li>
+    <li class="list-group-item">
+        <span class="badge">{{verification}}</span>
+        Vérification
+    </li>
+    <li class="list-group-item">
+        <span class="badge">{{validation}}</span>
+        Validation
+    </li>
+    <li class="list-group-item">
+        <span class="badge">{{valide}}</span>
+        Validée
+    </li>
+</ul>
+</div>
+<div class="col-sm-3">
+<canvas id="stat"></canvas>
+</div>
+{% endblock %}

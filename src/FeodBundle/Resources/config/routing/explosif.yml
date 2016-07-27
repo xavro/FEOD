@@ -1,0 +1,59 @@
+explosif:
+    path:     /
+    defaults: { _controller: "FeodBundle:Explosif:index" }
+
+explosif_new:
+    path:     /new
+    defaults: { _controller: "FeodBundle:Explosif:new" }
+
+explosif_create:
+    path:     /create
+    defaults: { _controller: "FeodBundle:Explosif:create" }
+    methods:  POST
+
+explosif_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FeodBundle:Explosif:edit" }
+
+explosif_update:
+    path:     /{id}/update
+    defaults: { _controller: "FeodBundle:Explosif:update" }
+    methods:  [POST, PUT]
+
+explosif_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FeodBundle:Explosif:delete" }
+    methods:  [POST, DELETE]
+
+explosif_tampon:
+    path:    /{statut}/tampon
+    defaults: { _controller: "FeodBundle:Explosif:tampon" }
+    requirements:
+        statut: 0|1|2|3
+
+explosif_suite:
+    path:    /{id}/suite
+    defaults: { _controller: "FeodBundle:Explosif:suite" }
+
+explosif_search:
+    path:    /search
+    defaults: { _controller: "FeodBundle:Explosif:search" }
+
+explosif_lire:
+    path:    /{id}/lire
+    defaults: { _controller: "FeodBundle:Lire:lire" }
+    
+explosif_fiche:
+    path:    /{id}/fiche
+    defaults: { _controller: "FeodBundle:Explosif:fiche" }
+
+explosif_recherche:
+    path:     /explosifrecherche
+    defaults: { _controller: "FeodBundle:Explosif:recherche" }
+
+explosif_createrecherche:
+    path:     /createrecherche
+    defaults: { _controller: "FeodBundle:Explosif:createrecherche" }
+    methods:  POST
+
+

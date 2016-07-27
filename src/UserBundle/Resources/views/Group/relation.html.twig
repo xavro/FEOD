@@ -1,0 +1,156 @@
+{% extends "AdminUserBundle::layout.html.twig" %}
+{% block title %}
+Relation - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/dataTables.jqueryui.css') }}" type="text/css" />
+    <style>
+        select#admin_userbundle_grouptype_roles { height: 107px; }
+        th {padding-right: 10px; text-align: center; padding-left: 100px;}
+        #btnSupprimer {height: 33px; margin-bottom: -15px;}
+        #btnModifier {height: 33px; margin-left: 100px;}
+        input[type="checkbox"] { float: left; margin: 4px 10px 0;}
+        label select{width: 80px}
+        tr td ul { margin-bottom: 3px; margin-top: 3px;}
+    </style>
+{% endblock %}
+
+{% block sousMenu %}
+{{ parent() }} - Relation du groupe {{ entity.name }} avec les utilisateurs</h4>
+{% endblock %} 
+
+{% block fos_user_content %}
+
+<div class="well">
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Nom du groupe : </th>
+            <td>{{ entity.name }}</td>
+            <th>Roles : </th>
+            <td><ul>
+                {% for role in entity.roles %} 
+                        <li>{{role}}</li>
+                {% endfor %}</ul>
+            </td>
+        </tr>
+    </table>
+</div>
+    
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="listeUser" width="100%">
+        <thead>
+            <tr>
+                <th>Login</th>            
+                <th>Email</th>            
+                <th>Activé</th>
+                <th>Role(s)</th>
+                <th>Dernière connexion</th>
+                <th>Connecté</th>  
+                <th>Affecté au groupe</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for user in users %}
+                <tr>
+                    <td class="center"><a href="{{ path('admin_user_show', { 'id': user.id }) }}">{{ user.username }}</a></td>            
+                    <td>{{ user.email }}</td>            
+                    <td class="center">{% if user.enabled  %} oui {% else %} non {% endif %}</td>
+                    <td><ul>
+                        {% for role in user.roles if role != "ROLE_USER" %} 
+                                <li>{{role}}</li>
+                        {% endfor %}</ul>
+                    </td>
+                    <td class="center">{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td class="center">{% if user.locked  %} oui {% else %} non {% endif %}</td>                    
+                    <td>
+                        {% if entity.name in  user.groups %}
+                        <input type="checkbox" id="affecte" class="affectCheck" value="{{ user.id }}"  checked="checked" />oui
+                        {% else %}
+                        <input type="checkbox" id="affecte" class="affectNotCheck" value="{{ user.id }}" />non
+                        {% endif %}                        
+                    </td>
+                </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+<br/>    
+
+<ul class="nav nav-pills">
+    <li>
+        <a class="btn" href="{{ path('admin_group') }}">
+            <i class="icon-backward"></i> Retour à la liste
+        </a>
+    </li>   
+</ul> 
+
+{% endblock %}
+
+{% block javascripts %}
+        {# Ajoutez ces javascripts si vous comptez vous servir des
+        fonctionnalités du bootstrap Twitter #}    
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/dataTables.jqueryui.js')}}"></script>
+        <script type="text/javascript" charset="utf-8">
+        var oTable;    
+        $(document).ready(function() {
+            oTable = $('#listeUser').dataTable({
+                    "oLanguage": {
+                        "sSearch": "Recherche globale:",
+                        "sLengthMenu": "Afficher _MENU_ enregistrements par page.",
+                        "sZeroRecords": "Aucun ciblage trouvé - désolé",
+                        "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ enregistrement(s)",
+                        "sInfoEmpty": "Aucun résultat",
+                        "sInfoFiltered": "(filtré sur _MAX_ total enregistrements)"
+                                },
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                });
+        } );
+        $(function initcheck() {
+            $('.affectNotCheck').click(function(event) {
+                // on récupére la position de la cellule contenant la checkbox (ligne, colonne, ???)
+                var aPos = oTable.fnGetPosition( this.parentNode );
+                // on prépare la modification à apporter à l'affichage
+                var changement="<input type='checkbox' id='affecte' class='affectCheck' value='"+this.getAttribute('value')+"'  checked='checked' />oui";
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{path('admin_group_relation_update')}}',
+                    data: {groupId: {{ entity.id }}, userId: this.value, affect: true},
+                    {#timeout: 3000,#}
+                    success: function() {                                
+                        // mise à jour de la cellule du tableau
+                        oTable.fnUpdate(changement, aPos[0], aPos[1] );
+                        // on réaffecte la fonction qui ecoute l'evenement coche-decoche
+                        $(document).ready(initcheck);
+                        },                    
+                    error: function() {
+                        alert('La requête n\'a pas abouti'); }
+                    });            
+            });
+            $('.affectCheck').click(function(event) {
+                // on récupére la position de la cellule contenant la checkbox (ligne, colonne, ???)
+                var aPos = oTable.fnGetPosition( this.parentNode );
+                // on prépare la modification à apporter à l'affichage
+                var changement="<input type='checkbox' id='affecte' class='affectNotCheck' value='"+this.getAttribute('value')+"'/>non";
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{path('admin_group_relation_update')}}',
+                    data: {groupId: {{ entity.id }}, userId: this.value, affect: false},
+                    {#timeout: 3000,#}
+                    success: function() {
+                        // mise à jour de la cellule du tableau
+                        oTable.fnUpdate(changement, aPos[0], aPos[1] );
+                        // on réaffecte la fonction qui ecoute l'evenement coche-decoche
+                        $(document).ready(initcheck);
+                        },                    
+                    error: function() {
+                        alert('La requête n\'a pas abouti'); }
+                    });            
+            });
+        });
+        </script>
+{% endblock %}

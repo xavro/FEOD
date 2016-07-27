@@ -1,0 +1,113 @@
+{% extends '::base2.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}" type="text/css" />
+    {#<link rel="stylesheet" href="{{ asset('css/buttons.dataTables.min.css') }}" type="text/css" />#}
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}" type="text/css" />
+{% endblock %}
+
+{% set str_statut = {0: 'Modification', 1:'Vérification',
+2:'Validation', 3:'Validée'} %}
+
+{% block body %}
+<h1 style="text-align:center;">Recherche avancée</h1>
+<table id="table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th class="text-center" style="width: 10%">Photos</th>
+            <th class="text-center">Noms</th>
+            {% for key in data|keys %}
+            <th>{{key|capitalize}}</th>
+            {% endfor %}
+            <th class="text-center">Pays d'Origine</th>
+            {#<th class="text-center">Calibre</th>#}
+            <th class="text-center">Date MAJ</th>
+            <th class="text-center">Statut</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in results %}
+        <tr>
+            <td>{% if entity.images is defined %}{% for images in entity.images%}{% if loop.index == 1 %}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/{{images.name}}">{%endif%}{%else%}<img width=80% src="{{app.request.basepath}}/uploads/{{ entity.className }}/no_photo.jpg">{%endfor%}{% endif %}</td>
+            <td><a href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}">{{ entity.nomine }}</a></td>
+            {% for key in data|keys %}
+            <td>
+            {% if attribute(entity, key) is iterable %}
+            {% for a in attribute(entity, key) %}
+                {{a}}
+            {% endfor %}
+            {% else %}
+            {{attribute(entity, key)}}
+            {% endif %}
+            </td>
+            {% endfor %}
+            <td>{% for munition in entity.pays %}{{munition.pays}}<br>{%endfor%}</td>
+            {#<td>{% if type=='artillerie' %}{%if entity.calibre > 1%}{{ entity.calibre }}{{ entity.uniteDistance}}{%endif%}{%elseif type=='bombes'%}{%if entity.Diametre > 1%}{{entity.Diametre}}mm{%endif%}{%elseif type=='mortier'%}{%if entity.calibre > 1%}{{entity.calibre}}{{ entity.uniteCalibre}}{%endif%}{%elseif type=='mines'%}{%if entity.Diametre > 1%}{{entity.Diametre}}mm{%endif%}{%elseif type=='grenades'%}{%if entity.DiametreGrenade >1 %}{{entity.DiametreGrenade}}mm{%endif%}{%elseif type=='roquettes'%}{%if entity.calibre >1%}{{entity.calibre}}{{ entity.uniteCalibre}}{%endif%}{%elseif type=='missiles'%}{%if entity.CalibreDiametre > 1%}{{entity.CalibreDiametre}}{{ entity.uniteCalibre}}{%endif%}{%elseif type=='sousMunitions'%}{%if entity.DiametreNonLargue >1%}{{entity.DiametreNonLargue}}mm{%endif%}{%elseif type=='fusees'%}{%if entity.DiametreFusee > 1%}{{entity.DiametreFusee}}mm{%endif%}{%endif%}
+                </td>#}
+            <td>{{ entity.dateMAJ|date('Y-m-d') }}</td>
+            <td>{{str_statut[entity.statut]}}</td>
+            <td class="text-center">
+                {% if entity.className=='Amorcage' %}
+                {#<a class="btn btn-info" href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-sunglasses"></span> Lire</a>#}
+                <a class="btn btn-primary" href="{{ path('amorcage_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+                {% else %}
+                <a class="btn btn-primary" href="{{ path('munition_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+                {% endif %}
+                {% if entity.className=='Amorcage' %}
+                <a class="btn btn-warning" href="{{ path('amorcage_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+                {% else %}
+                <a class="btn btn-warning" href="{{ path('munition_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% javascripts
+    '@FeodBundle/Resources/js/jquery-1.12.0.min.js'
+    '@FeodBundle/Resources/js/jquery.dataTables.min.js'
+    '@FeodBundle/Resources/js/dataTables.bootstrap.min.js'
+    %}
+<script type="text/javascript" src="{{ asset('js/jquery-1.12.0.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{ asset_url }}"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    var table = $('#table').DataTable({
+        "oLanguage": {
+                    "sSearch": "Recherche globale:",
+                    "sLengthMenu": "Afficher _MENU_ enregistrements par page.",
+                    "sZeroRecords": "Aucune fiche trouvée - désolé",
+                    "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ enregistrement(s)",
+                    "sInfoEmpty": "Aucun résultat",
+                    "sInfoFiltered": "(filtré sur _MAX_ total enregistrements)"
+                    },
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                "order": [[3, 'desc']],
+                "displayLength": 50,
+                "responsive": true,
+                
+                "columnDefs": [
+            {
+                "targets": [ 0, 3, 4, 5 ],
+                "visible": true,
+                "searchable": false
+            }
+  ],
+    });
+} );
+</script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+$(".clickable-row").click(function(){
+        window.document.location = $(this).data("href");
+});
+    });
+</script>
+    {% endjavascripts %}
+    
+{% endblock %}

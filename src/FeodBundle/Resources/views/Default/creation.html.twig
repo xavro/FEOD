@@ -1,0 +1,17 @@
+{%extends '::base.html.twig'%}
+{% block body %}
+<div class="alert alert-danger">
+<h5>Pensez à vérifier que la munition n'a pas déjà fais l'objet d'une fiche</h5>
+</div>
+<div class="row">
+<h2>Creation d'une nouvelle fiche</h2>
+<a type="button" href="{{path('munition_new',{'type':'mortier'})}}" class="btn btn-primary">Mortier</a>
+<a type="button" href="{{path('munition_new',{'type':'artillerie'})}}" class="btn btn-primary">Artillerie</a>
+<a type="button" href="{{path('munition_new',{'type':'mines'})}}" class="btn btn-primary">Mines</a>
+<a type="button" href="{{path('munition_new',{'type':'missiles'})}}" class="btn btn-primary">Missiles</a>
+<a type="button" href="{{path('munition_new',{'type':'roquettes'})}}" class="btn btn-primary">Roquettes</a>
+<a type="button" href="{{path('munition_new',{'type':'bombes'})}}" class="btn btn-primary">Bombes</a>
+<a type="button" href="{{path('munition_new',{'type':'grenades'})}}" class="btn btn-primary">Grenades</a>
+<a type="button" href="{{path('munition_new',{'type':'sousMunitions'})}}" class="btn btn-primary">Sous-munitions</a>
+</div>
+{% endblock %}

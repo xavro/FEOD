@@ -1,0 +1,152 @@
+{% extends "UserBundle::layout4.html.twig" %}
+{% block title %}
+Détails - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        th {padding-right: 10px; text-align: right; width: 170px;}
+        #btnSupprimer {height: 33px; margin-bottom: -15px;}
+        table.record_properties tbody tr td ul { margin-bottom: 3px; margin-top: 3px;}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <br>
+<div class="well col-md-6 col-md-offset-2">
+    <h4><center><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Détails de l'utilisateur : <I>{{ user.username }}</I></center></h4>
+<br>
+<table class="well table-condensed center-block">
+    <tbody>
+        <tr>
+            <th>Login : </th>
+            <td>{{ user.username }}</td>
+        </tr>       
+        <tr>
+            <th>Email : </th>
+            <td>{{ user.email }}</td>
+        </tr>       
+        <tr>
+            <th>Activé : </th>
+            <td>{% if user.locked  %}<span class="label label-danger">Non</span>{% else %}<span class="label label-success">Oui</span>{% endif %}</td>
+        </tr>        
+        <tr>
+            <th>Dernière connexion : </th>
+            <td>{% if user.lastLogin != null  %} {{ user.lastLogin|date('d-m-Y à H:i:s') }} 
+                {% else %} Jamais connecté. {% endif %}</td>
+        </tr>
+        {#<tr>
+            <th>Connecté : </th>
+            <td>{% if user.connected  %} Oui, ce compte est actuellement connecté. 
+                {% else %} Non, ce compte n'est pas connecté actuellement. {% endif %}</td>
+        </tr>#}
+        {#<tr>
+            <th>Expire : </th>
+            <td>{{ user.expired }}</td>
+        </tr>#}
+        {#<tr>
+            <th>Expire le : </th>
+            <td>{{ user.expiresAt|date('d-m-Y') }}</td>
+        </tr>#}
+        <tr>
+            <th>Groupes : </th>
+            <td>{{ user.armee }}</td>
+        </tr>
+        <tr>
+		<bt>
+            <th>Qualifications : </th>
+            <td>{{ user.qualifications.qualif1 }} &nbsp;&nbsp;{% if user.qualifications.date1 is not null %}- &nbsp;&nbsp;{{ user.qualifications.date1|date('d/m/Y') }}{% endif %}</td>
+        </tr>
+		<tr>
+			<th></th>
+			<td>{{ user.qualifications.qualif2 }} &nbsp;&nbsp;{% if user.qualifications.date2 is not null %}- &nbsp;&nbsp;{{ user.qualifications.date2|date('d/m/Y') }}{% endif %}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>{{ user.qualifications.qualif3 }} &nbsp;&nbsp;{% if user.qualifications.date3 is not null %}- &nbsp;&nbsp;{{ user.qualifications.date3|date('d/m/Y') }}{% endif %}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>{{ user.qualifications.qualif4 }} &nbsp;&nbsp;{% if user.qualifications.date4 is not null %}- &nbsp;&nbsp;{{ user.qualifications.date4|date('d/m/Y') }}{% endif %}</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>{{ user.qualifications.qualif5 }} &nbsp;&nbsp;{% if user.qualifications.date5 is not null %}- &nbsp;&nbsp;{{ user.qualifications.date5|date('d/m/Y') }}{% endif %}</td>
+		</tr>
+        <tr>
+            <th>Roles : </th>
+            <td><ul>
+                {% for role in user.roles  %} 
+                        <li>{{role}}</li>
+                {% endfor %}</ul>
+            </td>
+        </tr>
+        {#<tr>
+            <th>Langue(s) : </th>
+            <td><ul>
+                {% for langue in user.langues %} 
+                    <li>{{langue.nom}}</li>
+                {% else %}
+                    <li>Aucune langue.</li>       
+                {% endfor %}</ul>
+            </td>
+        </tr>#}
+        <tr>
+            <th>Les fonctionnalités de l'utilisateur :</th>
+            <td>
+				{% for role in user.roles  if role == "ROLE_USER" %} 
+                        {% include "UserBundle::User/Roles/roleUser.html.twig" %}
+                {% endfor %}
+                {% for role in user.roles  if role == "ROLE_ADMIN" %} 
+                        {% include "UserBundle::User/Roles/roleAdmin.html.twig" %}
+                {% endfor %}
+                {% for role in user.roles  if role == "ROLE_CLIENT" %} 
+                        {% include "UserBundle::User/Roles/roleClient.html.twig" %}
+                {% endfor %}
+                {% for role in user.roles  if role == "ROLE_EXPERT" %} 
+                        {% include "UserBundle::User/Roles/roleExpert.html.twig" %}
+                {% endfor %}
+                {% for role in user.roles  if role == "ROLE_ELECTRONICIEN" %} 
+                        {% include "UserBundle::User/Roles/roleOfficier_Nedex.html.twig" %}
+                {% endfor %}
+                {% for role in user.roles  if role == "ROLE_VALIDATEUR" %} 
+                        {% include "UserBundle::User/Roles/roleValidateur.html.twig" %}
+                {% endfor %}            
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+
+<ul class="nav nav-pills col-md-offset-4">
+    <li>
+        <form>
+        <a class="btn btn-primary" href="{{ path('admin_user_edit', { 'id': user.id }) }}">
+            <i class="glyphicon glyphicon-edit"></i> Modifier
+        </a>
+        </form>
+    </li>
+    {% if is_granted("ROLE_ADMIN") %}
+    <li>
+        <form action="{{ path('admin_user_delete', { 'id': user.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+                <button id="btnSupprimer" type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Supprimer</button>
+        </form>
+    </li>
+    {%endif%}
+</ul>
+
+
+        <br>
+        {% if is_granted("ROLE_ADMIN") %}
+            <a class="btn" href="{{ path('admin_user') }}">
+                <i class="icon-backward"></i> Retour à la liste
+            </a>
+        {%endif%}
+
+                    </div>
+
+{% endblock %}
+    
+    

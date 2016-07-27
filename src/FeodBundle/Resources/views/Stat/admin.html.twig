@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<h2>Statistiques d'administration</h2>
+
+<div class="col-sm-6">
+<ul class="list-group">
+    <li class="list-group-item">
+        <span class="badge">{{lastMonth}}</span>
+        Fiches modifiées le mois dernier
+    </li>
+</ul>
+</div>
+{% endblock %}

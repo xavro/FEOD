@@ -1,0 +1,6 @@
+<form action="{{ path('feod_recherche') }}" method="POST" class="navbar-form form-search pull-right">
+    {{ form_widget(form.recherche) }}
+    {{ form_widget(form.type) }}
+    <button type="submit" class="btn">Rechercher</button>
+    {{ form_widget(form) }}
+</form>

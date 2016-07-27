@@ -1,0 +1,27 @@
+<div class="tabbable well well-small sidebar-nav"   id="myTabMenuGauche">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <ul class="nav nav-list">
+        
+    {% if is_granted("ROLE_ADMIN") %}
+        <li class="nav-header">Utilisateur</li>
+        <li>
+            <a href="{{ path('admin_user_new') }}"><i class="icon-user"></i> Créer un compte</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_user') }}"><i class="icon-list"></i> Liste des utilisateurs</a>
+        </li>  
+     {% endif %}
+     <hr>
+     {% if is_granted("ROLE_USER") %}
+        <li class="nav-header">VOTRE PROFIL</li>
+        <li>
+            <a href="{{ path('admin_user_show', { 'id': app.user.id }) }}"><i class="icon-info-sign"></i> Voir son compte</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_password', { 'id': app.user.id }) }}"><i class="icon-lock"></i> Mot de passe</a>
+        </li>
+     {% endif %} 
+		
+    </ul>    
+    {% endif %} 
+</div>

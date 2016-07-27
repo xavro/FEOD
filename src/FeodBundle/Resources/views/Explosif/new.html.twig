@@ -1,0 +1,196 @@
+{% extends '::base2.html.twig' %}
+
+{% block body -%}
+
+<h1 style="text-align:center;"><strong>Explosifs</strong> - {{entity.nomine}}</h1>
+{% if error is defined and error is not null %}
+<div class="flash-notice alert alert-danger">
+        {{error}}
+</div>
+{% endif %}
+
+    <div class="well container-fluid">
+
+            {{ form_start(form, {'attr': {'class': 'form-horizontal','role': 'form', 'id':'form'}}) }}
+
+            <div class="row">
+                <div class="col-sm-5">{{form_label(form.nomine)}}{{form_widget(form.nomine)}}</div>
+
+                <div class="col-sm-4">{{form_label(form.TypeExplosif)}}{{form_widget(form.TypeExplosif)}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">{{form_label(form.ExploFormule)}}{{form_widget(form.ExploFormule)}}</div>
+            </div>
+<div class="row">
+<br>
+                <ul class="nav nav-tabs">
+                    <li role="presentation"><a href="#generalite" role="tab" data-toggle="tab">Généralités</a></li>
+                    {#<li role="presentation"><a href="#chargement" role="tab" data-toggle="tab">Chargement</a></li>#}
+                    {#<li role="presentation"><a href="#aspectDimensions" role="tab" data-toggle="tab">Aspect-Dimensions</a></li>#}
+                    {#<li role="presentation"><a href="#marquage" role="tab" data-toggle="tab">Marquages</a></li>#}
+                    {#<li role="presentation"><a href="#amorçage" role="tab" data-toggle="tab">Amorçage</a></li>#}
+                    {#<li role="presentation"><a href="#fonctionnement" role="tab" data-toggle="tab">Fonctionnement</a></li>#}
+                    {#<li role="presentation"><a href="#conditionnement" role="tab" data-toggle="tab">Conditionnement</a></li>#}
+                    {#<li role="presentation"><a href="#lanceur" role="tab" data-toggle="tab">Vecteur</a></li>#}
+                    {#<li role="presentation"><a href="#historique" role="tab" data-toggle="tab">Historique</a></li>#}
+                    {#<li role="presentation"><a href="#securite" role="tab" data-toggle="tab">Sécurité</a></li>#}
+                    {#<li role="presentation"><a href="#traitement" role="tab" data-toggle="tab">Traitement</a></li>#}
+                    {#<li role="presentation"><a href="#remarque" role="tab" data-toggle="tab">Remarques</a></li>#}
+                    {#<li role="presentation"><a href="#gestion" role="tab" data-toggle="tab">Gestion</a></li>#}
+                </ul>
+            </div>
+            
+            
+            <div class="tab-content">
+
+                <div id="generalite" role="tabpanel" class="tab-pane container-fluid active"><br>
+                    <div class="col-sm-12">
+                        <br>
+                    <h3 class="center"> <I>Photos</I></h3>
+                    <div class="imagesExplosif" data-prototype11="{{ form_widget(form.ExplosifImage.vars.prototype)|e }}">
+                        {% if entity.ExplosifImage is not empty %}
+                        {% for image in form.ExplosifImage %}
+
+                            {% block carousel %}
+                            {% include ":default:CarousselExplosifImage.html.twig" %}
+                            {% endblock %}
+
+                        {%endfor%}
+                        {%endif%}
+                        <br>
+                    </div>
+                    <hr>
+                    <br>
+                   
+    
+                    </div>
+            </div>
+
+                    
+                <div id="chargement" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+				</div>
+                </div>
+
+
+
+
+                <div id="aspectDimensions" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+				</div>
+                </div>
+
+
+
+
+                <div id="marquage" role="tabpanel" class="tab-pane row container-fluid"><br>
+                    <div class="col-md-12">
+                        
+                        </div>
+                        </div>
+
+
+                <div id="amorçage" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+                </div>
+				</div>
+
+
+
+
+                <div id="fonctionnement" role="tabpanel" class="tab-pane row container-fluid"><br>
+                    <div class="col-md-12">
+                    
+                </div>
+				</div>
+
+
+
+
+	<div id="conditionnement" role="tabpanel" class="tab-pane row container-fluid"><br>
+		<div class="col-md-12">
+			
+		</div>
+	</div>
+                    
+
+                <div id="lanceur" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+				</div>
+                </div>
+                    
+
+
+
+
+
+                <div id="historique" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+                </div>
+                </div>
+
+
+
+
+                <div id="securite" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+				</div>
+				</div>
+				
+				
+				<div id="traitement" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+                </div>
+				</div>
+
+
+
+
+                <div id="remarque" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">                    
+                                          
+                </div>
+                </div>
+
+
+
+
+                <div id="gestion" role="tabpanel" class="tab-pane row container-fluid"><br>
+				<div class="col-sm-12">
+                    
+                    </div>
+                </div>
+				</div>
+                        <br>
+
+{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary fixed'}}) }}
+
+            <div class="hidden">{{ form_rest(form) }}</div>
+            {{ form_end(form) }}
+            
+</div>
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('explosif',{'type':'explosif'}) }}">
+                    Retour à la liste
+                </a>
+            </li>
+        </ul>
+		
+		{% javascripts
+    '@FeodBundle/Resources/js/new.js'
+    '@FeodBundle/Resources/js/collection.js'
+    '@FeodBundle/Resources/js/script.js'
+    '@FeodBundle/Resources/js/launch.js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock body %}

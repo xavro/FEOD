@@ -1,0 +1,83 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/index.html.twig #}
+{% extends "AdminUserBundle::layout.html.twig" %}
+{% block title %}
+Liste groupes - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/dataTables.jqueryui.css') }}" type="text/css" />
+<style>
+</style>
+{% endblock %}
+
+{% block sousMenu %}
+    {{ parent() }} - Liste des groupes</h4>
+{% endblock %} 
+
+{% block fos_user_content %} 
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="listeGroup" width="100%">
+    <thead>
+        <tr>
+            <th>Nom du groupe</th>
+            <th>Role(s)</th>            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td class="center"><a href="{{ path('admin_group_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+            <td>
+                <ul>
+                {% for role in entity.roles %} 
+                        <li>{{role}}</li>
+                {% endfor %} 
+                </ul>        
+            </td>                       
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_group_show', { 'id': entity.id }) }}">Détails</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_group_edit', { 'id': entity.id }) }}">Modifier</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_group_relation', { 'id': entity.id }) }}">Utilisateurs</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+    
+{% endblock %}
+
+{% block javascripts %}
+        {# Ajoutez ces javascripts si vous comptez vous servir des
+        fonctionnalités du bootstrap Twitter #}    
+       {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/dataTables.jqueryui.js')}}"></script>
+        <script type="text/javascript" charset="utf-8">          
+        $(document).ready(function() {
+            oTable = $('#listeGroup').dataTable({
+                "oLanguage": {
+                    "sSearch": "Recherche globale:",
+                    "sLengthMenu": "Afficher _MENU_ enregistrements par page.",
+                    "sZeroRecords": "Aucun groupe trouvé - désolé",
+                    "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ enregistrement(s)",
+                    "sInfoEmpty": "Aucun résultat",
+                    "sInfoFiltered": "(filtré sur _MAX_ total enregistrements)"
+                            },
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+            });
+        } );
+         </script>
+{% endblock %}    
+
+    

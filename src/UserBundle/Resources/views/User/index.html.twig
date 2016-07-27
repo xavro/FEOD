@@ -1,0 +1,165 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/index.html.twig #}
+{% extends "::base2.html.twig" %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}" type="text/css" />
+{% endblock %}
+
+{% block sousMenu %}
+    {{ parent() }} - Liste des utilisateurs
+{% endblock sousMenu%}
+
+
+{% block body %}
+        <div id="menu" class="col-md-2" style="visibility:visible">
+        <!--menu gauche-->
+        {% include "UserBundle::Menu/menu_gauche.html.twig" %}
+        <!--Fin menu gauche-->
+    </div> 
+        
+    <div class="col-md-10">
+<div class="table-responsive">
+    <table id="datatable" class="table table-striped table-bordered table-hover display nowrap" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Login</th>            
+                <th>Email</th>            
+                <th>Activé</th>
+                <th>Role(s)</th>
+                <th>Groupes</th>
+                <th>Dernière connexion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for user in users if user.username != 'superadmin' %}
+                <tr id="{{user.id}}">
+                    <td class="center"><a href="{{ path('admin_user_show', { 'id': user.id }) }}">{{ user.username }}</a></td>            
+                    <td>{{ user.email }}</td>            
+                    <td class="text-center">{% if user.locked  %}<span class="label label-danger">Non</span>{% else %}<span class="label label-success">Oui</span>{% endif %}</td>
+                    <td><ul>
+                        {% for role in user.roles if role != "ROLE_USER" %} 
+                                <li>{{role}}</li>
+                        {% endfor %}</ul>
+                    </td>
+                    <td class="center">{{ user.armee }}</td> 
+                    <td class="center">{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_user_show', { 'id': user.id }) }}">Détails</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_user_edit', { 'id': user.id }) }}">Modifier</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_password', { 'id': user.id }) }}">Password</a>
+                            </li>                            
+                        </ul>
+                    </td>
+                </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+</div>
+    </div>
+
+
+            {% javascripts        
+    '@FeodBundle/Resources/js/jquery-1.12.0.min.js'
+    '@FeodBundle/Resources/js/jquery.dataTables.min.js'
+    '@FeodBundle/Resources/js/dataTables.bootstrap.min.js'
+    %}
+<script type="text/javascript" src="{{ asset('js/jquery-1.12.0.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{ asset_url }}"></script>         
+        <script type="text/javascript" charset="utf-8">
+        function activationCheckBox(element){
+            {# récupération attribut id et name de la checkbox #}
+            old_id=element.getAttribute('id');
+            old_name=element.getAttribute('name');
+            {# test si coché ou non pour réaffichage pendant le traitement et éviter la réinitialisation #}
+            if (element.getAttribute('value')==1){
+                element.setAttribute('value',0);
+                element.checked=0;
+                }
+            else{
+                element.setAttribute('value',1);
+                element.checked=1;
+            };
+            {# position de la colonne contenant la checkbox dans le tableau #}
+            aPos = $('#listeUser').dataTable().fnGetPosition( element.parentNode );
+            {# tableau des lignes #}
+            nRows = $('#listeUser').dataTable().fnGetNodes();
+            
+            {# affichage du message de traitement #}
+            //affichageBlockUI(element, document.getElementById('listeUser').clientWidth);
+            
+            {# mise à jour des données #}
+            $.ajax({
+                type: "POST",
+                {# récupération de l'adresse de laction du controleur pour modifier la donnée en BDD #}
+                url: '{{path("admin_user_activation")}}',
+                {# envoi des paramètres #}
+                data: { "row_id": element.parentNode.parentNode.getAttribute('id'),
+                        "id": element.getAttribute('id'),
+                        "value":element.getAttribute('value')},
+                {# action à réaliser en cas de succés de la modiication avec retour d'un message texte du controleur #}
+                success: function(Texte) {
+                    {# remplacement de la checkbox pour éviter le rechargement de la page #}
+                    if (Texte=="'1'"){
+                        changement ="<input type='checkbox' checked='checked' value='1' name='"+old_name+"' id='"+old_id+"' onClick='javascript:activationCheckBox(this);' />";
+                        changement =changement+" oui";
+                    }
+                    else{
+                        changement ="<input type='checkbox' value='0' name='"+old_name+"' id='"+old_id+"'  onClick='javascript:activationCheckBox(this);' />";
+                        changement =changement+" non";
+                    }
+                    //alert(element.getAttribute('id'));
+                    //alert("MAJ ligne "+aPos[0]+" cellule "+aPos[1]);
+                    
+                    {# mise à jour de la checkbox dans la cellule et pas de redessinage du tableau #}
+                    $('#listeUser').dataTable().fnUpdate(changement, aPos[0], aPos[1], false );
+                    //oTable.fnSetColumnVis(aPos[0],true,true);
+                },
+                {# action à réaliser en cas d'échec de la mise à jour #}
+                error: function() {
+                    alert('La requête n\'a pas abouti veuillez réessayer, si le problème persiste contacter la 785 CGE'); }
+            }); 
+                return false; {# empêche le changement de page #}
+                //$.unblockUI(); 
+            };
+        </script>
+        <script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    var table = $('#datatable').DataTable({
+           
+        "oLanguage": {
+                    "sSearch": "Recherche globale:",
+                    "sLengthMenu": "Afficher _MENU_ enregistrements par page.",
+                    "sZeroRecords": "Aucun utilisateur trouvé - désolé",
+                    "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ enregistrement(s)",
+                    "sInfoEmpty": "Aucun résultat",
+                    "sInfoFiltered": "(filtré sur _MAX_ total enregistrements)"
+                    },
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                "order": [[5, 'desc']],
+                "displayLength": 10,
+                "responsive": true,
+                
+                "columnDefs": [
+            {
+                "targets": [ 2, 5, 6 ],
+                "visible": true,
+                "searchable": false
+            }
+  ],
+        });      
+} );
+</script>
+{% endjavascripts %}
+{% endblock %}

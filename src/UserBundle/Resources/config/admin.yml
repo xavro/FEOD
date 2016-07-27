@@ -1,0 +1,17 @@
+services:
+    sonata.admin.user:
+        class: UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "User", label: "User" }
+        arguments:
+            - ~
+            - UserBundle\Entity\User
+            - ~
+        calls:
+            - [ setTranslationDomain, [CithareUserBundle]]
+
+    sonata.block.service.back:
+        class: UserBundle\Block\BackBlockService
+        arguments: [ "sonata.block.service.back", @templating ]
+        tags:
+            - { name: sonata.block }

@@ -1,0 +1,217 @@
+{% extends 'FeodBundle:Munition:tablesearch.html.twig' %}
+
+{% set str_statut = {0: 'Modification', 1:'Vérification',
+2:'Validation', 3:'Validée'} %}
+
+{% block ttitle %}
+    <div class="formsearch">
+  <div class="panel panel-search">
+  <div class="panel-heading panel-search">
+      <h1 class="panel-title" style="text-align:center;"><span class="glyphicon glyphicon-search"></span>&nbsp;Recherche</h1>
+  </div>
+      <div class="panel-body">
+{{ form_start(form, {'attr': {'class': 'form-horizontal','role': 'form', 'id':'form'}}) }}
+<ul class="nav nav-tabs">
+<li role="presentation"><a href="#Artillerie" role="tab" data-toggle="tab">Artillerie</a></li>
+<li role="presentation"><a href="#Mortier" role="tab" data-toggle="tab">Mortier</a></li>
+<li role="presentation"><a href="#Mines" role="tab" data-toggle="tab">Mines</a></li>
+<li role="presentation"><a href="#Grenades" role="tab" data-toggle="tab">Grenades</a></li>
+<li role="presentation"><a href="#Roquettes" role="tab" data-toggle="tab">Roquettes</a></li>
+<li role="presentation"><a href="#Bombes" role="tab" data-toggle="tab">Bombes</a></li>
+<li role="presentation"><a href="#Missiles" role="tab" data-toggle="tab">Missiles</a></li>
+<li role="presentation"><a href="#Sous-Munitions" role="tab" data-toggle="tab">Sous-Munitions</a></li>
+<li role="presentation"><a href="#Mines-Marines" role="tab" data-toggle="tab">Mines-Marines</a></li>
+<li role="presentation"><a href="#Amorçage" role="tab" data-toggle="tab">Amorçage</a></li>
+<li role="presentation"><a href="#Explosif" role="tab" data-toggle="tab">Explosif</a></li>
+<li role="presentation"><a href="#Chimique" role="tab" data-toggle="tab">Chimique</a></li>
+</ul>
+
+<div class="tab-content">
+<div id="Artillerie" role="tabpanel" class="tab-pane container-fluid"><br>
+  <div class="form-group">
+      <label class="control-label col-sm-1"><b><I>Nom :</I></b></label>
+    <div class="col-sm-3">
+      {{form_widget(form.recherchenomartillerie)}}
+    </div>
+    <label class="control-label col-sm-1">Pays :</label>
+    <div class="col-sm-3"> 
+      {{form_widget(form.recherchepaysartillerie)}}
+    </div>
+  </div>
+    <hr>
+  <div class="form-group">
+    <label class="control-label col-sm-1">Calibre :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchecalibreartillerie)}}
+    </div>
+    <label class="control-label col-sm-1">Poids :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchepoidsartillerie)}}
+    </div>
+    <label class="control-label col-sm-1">Dimensions :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchedimartillerie)}}
+    </div>
+  </div>
+    <hr>
+  <div class="form-group">
+    <label class="control-label col-sm-1">Couleur :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchecouleurartillerie)}}
+    </div>
+    <label class="control-label col-sm-1">Forme :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.rechercheformeartillerie)}}
+    </div>
+  </div>
+</div>
+
+
+<div id="Mortier" role="tabpanel" class="tab-pane container-fluid"><br> 
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenommortier)}}{{form_widget(form.recherchenommortier)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepoidsmortier)}}{{form_widget(form.recherchepoidsmortier)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurmortier)}}{{form_widget(form.recherchecouleurmortier)}}</div>
+</div>
+</div>
+
+<div id="Mines" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenommines)}}{{form_widget(form.recherchenommines)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepoidsmines)}}{{form_widget(form.recherchepoidsmines)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurmines)}}{{form_widget(form.recherchecouleurmines)}}</div>
+</div>
+</div>
+
+<div id="Grenades" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenomgrenades)}}{{form_widget(form.recherchenomgrenades)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepaysgrenades)}}{{form_widget(form.recherchepaysgrenades)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurgrenades)}}{{form_widget(form.recherchecouleurgrenades)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidsgrenades)}}{{form_widget(form.recherchepoidsgrenades)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibregrenades)}}{{form_widget(form.recherchecalibregrenades)}}</div>
+</div>
+</div>
+
+<div id="Roquettes" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenomroquettes)}}{{form_widget(form.recherchenomroquettes)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepaysroquettes)}}{{form_widget(form.recherchepaysroquettes)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurroquettes)}}{{form_widget(form.recherchecouleurroquettes)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidsroquettes)}}{{form_widget(form.recherchepoidsroquettes)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibreroquettes)}}{{form_widget(form.recherchecalibreroquettes)}}</div>
+</div>
+</div>
+
+<div id="Bombes" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenombombes)}}{{form_widget(form.recherchenombombes)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepaysbombes)}}{{form_widget(form.recherchepaysbombes)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurbombes)}}{{form_widget(form.recherchecouleurbombes)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidsbombes)}}{{form_widget(form.recherchepoidsbombes)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibrebombes)}}{{form_widget(form.recherchecalibrebombes)}}</div>
+</div>
+</div>
+
+<div id="Missiles" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenommissiles)}}{{form_widget(form.recherchenommissiles)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepaysmissiles)}}{{form_widget(form.recherchepaysmissiles)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurmissiles)}}{{form_widget(form.recherchecouleurmissiles)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidsmissiles)}}{{form_widget(form.recherchepoidsmissiles)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibremissiles)}}{{form_widget(form.recherchecalibremissiles)}}</div>
+</div>
+</div>
+
+<div id="Sous-Munitions" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenomsousmun)}}{{form_widget(form.recherchenomsousmun)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepayssousmun)}}{{form_widget(form.recherchepayssousmun)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleursousmun)}}{{form_widget(form.recherchecouleursousmun)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidssousmun)}}{{form_widget(form.recherchepoidssousmun)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibresousmun)}}{{form_widget(form.recherchecalibresousmun)}}</div>
+</div>
+</div>
+
+<div id="Mines-Marines" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenomminesmar)}}{{form_widget(form.recherchenomminesmar)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepaysminesmar)}}{{form_widget(form.recherchepaysminesmar)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleurminesmar)}}{{form_widget(form.recherchecouleurminesmar)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidsminesmar)}}{{form_widget(form.recherchepoidsminesmar)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibreminesmar)}}{{form_widget(form.recherchecalibreminesmar)}}</div>
+</div>
+</div>
+
+<div id="Amorçage" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+<div class="col-sm-4">{{form_label(form.recherchenomamorcage)}}{{form_widget(form.recherchenomamorcage)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchepaysamorcage)}}{{form_widget(form.recherchepaysamorcage)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecouleuramorcage)}}{{form_widget(form.recherchecouleuramorcage)}}</div>
+</div>
+<div  class="row">
+<div class="col-sm-3">{{form_label(form.recherchepoidsamorcage)}}{{form_widget(form.recherchepoidsamorcage)}}</div>
+<div class="col-sm-3">{{form_label(form.recherchecalibreamorcage)}}{{form_widget(form.recherchecalibreamorcage)}}</div>
+</div>
+</div>
+
+<div id="Explosif" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+</div>
+</div>
+
+<div id="Chimique" role="tabpanel" class="tab-pane container-fluid"><br>                    
+<div  class="row">
+</div>
+</div>
+
+<br>
+<div class="row" style="text-align:center;"> 
+    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-search'}}) }}
+</div>
+
+</div>
+</div>
+{{ form_rest(form) }}
+{{ form_end(form) }}
+<br>
+</div>
+    </div>
+<br>
+{% endblock %}
+
+{% block button %}
+{#<a class="btn btn-info" href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-sunglasses"></span> Lire</a>#}
+{#<a class="btn btn-info" href="{{ path('munition_lire', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-sunglasses"></span> Lire</a>#}
+				{% if entity.className=='Amorcage' %}
+                <a class="btn btn-primary" href="{{ path('amorcage_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+				{% elseif entity.className=='Explosif' %}
+                <a class="btn btn-primary" href="{{ path('explosif_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+				{% elseif entity.className=='Chimique' %}
+                <a class="btn btn-primary" href="{{ path('chimique_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+                {% else %}
+                <a class="btn btn-primary" href="{{ path('munition_fiche', { 'id': entity.id, 'type':entity.className|lower }) }}" target="_blank"><span class="glyphicon glyphicon-file"></span> Fiche Simplifiée</a>
+                {% endif %}
+
+                {% if entity.className=='Amorcage' %}
+                <a class="btn btn-warning" href="{{ path('amorcage_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+				{% elseif entity.className=='Explosif' %}
+                <a class="btn btn-warning" href="{{ path('explosif_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+				{% elseif entity.className=='Chimique' %}
+                <a class="btn btn-warning" href="{{ path('chimique_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
+                {% else %}
+                <a class="btn btn-warning" href="{{ path('munition_edit', { 'id': entity.id, 'type':entity.className|lower }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>{% endif %}
+
+                {% endblock %}

@@ -1,0 +1,64 @@
+
+{% block sidebar %}
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+<div class="sidebar-nav">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="visible-xs navbar-brand">Tableau de Bord</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+            <ul class="sidebar nav nav-pills nav-stacked">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tableau de bord<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{path('stat_last')}}">100 dernières fiches</a></li>
+                        <li><a href="{{path('stat_last_fam')}}">10 dernières fiches par famille</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{path('stat')}}">Nombre total de fiches et par famille</a></li>
+                        <li><a href="{{path('stat_statut')}}">Nombre de fiches en cours de création, vérification, validation</a></li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                        <li><a href="{{path('admin_stat')}}">Statistiques d'administration</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li><a href="{{path('feod_search')}}">Recherche</a></li>
+                <li><a href="{{path('feod_search1')}}">Recherche avancée</a></li>
+
+                {% if is_granted("ROLE_CLIENT") %}
+                <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestion des fiches<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            {#<span class="badge"> {{creation}} </span>#}
+                        <li><a href="{{path('feod_creation')}}">Création</a></li>
+                            <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':0, 'type': 'munition'})}}">Modification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_EXPERT") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':1, 'type': 'munition'})}}">Vérification</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_VALIDATEUR") %}
+                    <li class="divider"></li>
+                <li><a href="{{path('munition_tampon',{'statut':2, 'type': 'munition'})}}">Validation</a></li>
+                {% endif %}
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li><a href="{{path('sonata_admin_dashboard')}}">Gestion des utlilisateurs</a></li>
+                {% endif %}
+
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

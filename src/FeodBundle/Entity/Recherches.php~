@@ -1,0 +1,2699 @@
+<?php
+
+namespace FeodBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use FeodBundle\Entity\Munition;
+
+/**
+ * Recherches
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="FeodBundle\Repository\MunitionRepository")
+ */
+class Recherches
+{
+	
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeRoquette")
+	 */
+	private $TypeRoquette;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TechnologieGuidage")
+	 */
+	private $Guidage;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LgTotavecFusee", type="float")
+     */
+    private $LgTotavecFusee;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LgTotsansFusee", type="float")
+     */
+    private $LgTotsansFusee;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PoidsRoq", type="float")
+     */
+    private $PoidsRoq;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="DiametreTeteMili", type="float")
+     */
+    private $DiametreTeteMili;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="DiametreChargePropu", type="float")
+     */
+    private $DiametreChargePropu;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\UniteDistance")
+	 */
+	private $UniteCalibre;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="Calibre", type="float")
+     */
+    private $Calibre;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="CalibreCalcul", type="float")
+     */
+    private $CalibreCalcul;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="CalibreReel", type="float")
+     */
+    private $CalibreReel;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PorteePratique", type="float")
+     */
+    private $PorteePratique;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PorteeMax", type="float")
+     */
+    private $PorteeMax;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="IndicateurArmement", type="boolean")
+     */
+    private $IndicateurArmement;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="AutoDestruction", type="boolean")
+     */
+    private $AutoDestruction;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="CopieExistante", type="string", length=255)
+     */
+    private $CopieExistante;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\NatureEnveloppe")
+	 */
+	private $NatureEnveloppe;
+        
+	/**
+	 * @ORM\ManyToMany(targetEntity="FeodBundle\Entity\NatureChargeMili")
+         * @ORM\JoinTable(name="roquettes_naturechargemili",
+         *  joinColumns={@ORM\JoinColumn(name="roquettes_id", referencedColumnName="id")},
+         *  inverseJoinColumns={@ORM\JoinColumn(name="naturechargemili_id", referencedColumnName="id", unique=true )}
+         * )
+	 */
+	private $NatureChargeMili;
+        
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\NatureChargeMili")
+	 */
+	private $NatureChargeHE;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PoidsChargeMili", type="float")
+     */
+    private $PoidsChargeMili;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\UnitesMasseVolume")
+	 */
+	private $UniteQMA;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PoidsChargeCalcule", type="float")
+     */
+    private $PoidsChargeCalcule;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="ChargeTandem", type="boolean")
+     */
+    private $ChargeTandem;
+    
+        
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PoidsChargeTandem", type="float")
+     */
+    private $PoidsChargeTandem;
+    
+	/**
+	 * @ORM\ManyToMany(targetEntity="FeodBundle\Entity\EffetChargement")
+         * @ORM\JoinTable(name="roquettes_effetchargement",
+         *  joinColumns={@ORM\JoinColumn(name="roquettes_id", referencedColumnName="id")},
+         *  inverseJoinColumns={@ORM\JoinColumn(name="effetchargement_id", referencedColumnName="id", unique=true )}
+         * )
+	 */
+	private $EffetChargement;
+        
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\Chargement")
+	 */
+	private $Chargement;
+
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PoidsChargePropu", type="float")
+     */
+    private $PoidsChargePropu;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeCP")
+	 */
+	private $TypeChargePropu;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="ChargeEjection", type="boolean")
+     */
+    private $ChargeEjection;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="PoidsChargeEjection", type="float")
+     */
+    private $PoidsChargeEjection;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeCP")
+	 */
+	private $TypeChargeEjection;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\RoquettesFixationChargeEjection")
+	 */
+	private $FixationChargeEjection;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\RoquettesTypeCorps")
+	 */
+	private $TypeCorps;
+	/**
+     * @var integer
+     *
+	 * @ORM\Column(nullable=true, name="NbTuyereAvant", type="integer")
+     */
+    private $NbTuyereAvant;
+	/**
+     * @var integer
+     *
+	 * @ORM\Column(nullable=true, name="NbTuyereArriere", type="integer")
+     */
+    private $NbTuyereArriere;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LongueurTeteMili", type="float")
+     */
+    private $LongueurTeteMili;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LongueurChargePropu", type="float")
+     */
+    private $LongueurChargePropu;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LongueurPropu", type="float")
+     */
+    private $LongueurPropu;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeOgive")
+	 */
+	private $FormeOgive;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="Coiffe", type="boolean")
+     */
+    private $Coiffe;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeCoiffe")
+	 */
+	private $TypeCoiffe;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="PuitsDeFusee", type="boolean")
+     */
+    private $PuitsDeFusee;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="DiametreOeil", type="float")
+     */
+    private $DiametreOeil;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeCorps")
+	 */
+	private $FormeCorps;
+	/**
+     * @var boolean
+     *
+	 * @ORM\Column(nullable=true, name="Empennage", type="boolean")
+     */
+    private $Empennage;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\ModeStabilisation")
+	 */
+	private $ModeStabilisation;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeEmpennage")
+	 */
+	private $TypeEmpennage;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LongEmp", type="float")
+     */
+    private $LongEmp;
+	/**
+     * @var integer
+     *
+	 * @ORM\Column(nullable=true, name="NbAilettes", type="integer")
+     */
+    private $NbAilettes;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeAilettes")
+	 */
+	private $TypeAilette;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeAilettes")
+	 */
+	private $FormeAilette;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LongAilette", type="float")
+     */
+    private $LongAilette;
+	/**
+     * @var float
+     *
+	 * @ORM\Column(nullable=true, name="LargAilette", type="float")
+     */
+    private $LargAilette;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\ElementsAerodynamiques")
+	 */
+	private $TypeElemAeroAV;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeElemAero")
+	 */
+	private $FormeElemAeroAV;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurOgive;
+        
+	/**
+	 * @ORM\ManyToMany(targetEntity="FeodBundle\Entity\SymboleOgive")
+         * @ORM\JoinTable(name="roquettes_symboleogive",
+         *  joinColumns={@ORM\JoinColumn(name="roquettes_id", referencedColumnName="id")},
+         *  inverseJoinColumns={@ORM\JoinColumn(name="symboleogive_id", referencedColumnName="id", unique=true )}
+         * )
+	 */
+	private $SymboleOgive;
+        
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="InscriptionOgive", type="string", length=255)
+     */
+    private $InscriptionOgive;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurInscOgive;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeMarquage")
+	 */
+	private $TypeInscOgive;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="MarquageFroidOgive", type="string", length=255)
+     */
+    private $MarquageFroidOgive;
+	/**
+     * @var integer
+     *
+	 * @ORM\Column(nullable=true, name="NbBandesOgive", type="integer")
+     */
+    private $NbBandesOgive;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeOgive1;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeOgive2;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeOgive3;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeOgive4;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeOgive5;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurCorps;
+        
+	/**
+	 * @ORM\ManyToMany(targetEntity="FeodBundle\Entity\SymboleOgive")
+	 * @ORM\JoinTable(name="roquettes_symbolecorps",
+         *  joinColumns={@ORM\JoinColumn(name="roquettes_id", referencedColumnName="id")},
+         *  inverseJoinColumns={@ORM\JoinColumn(name="symboleogive_id", referencedColumnName="id", unique=true )}
+         * )
+	 */
+	private $SymboleCorps;
+        
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="InscriptionCorps", type="string", length=255)
+     */
+    private $InscriptionCorps;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurInscCorps;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\TypeMarquage")
+	 */
+	private $TypeInscCorps;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="MarquageFroidCorps", type="string", length=255)
+     */
+    private $MarquageFroidCorps;
+	/**
+     * @var integer
+     *
+	 * @ORM\Column(nullable=true, name="NbBandesCorps", type="integer")
+     */
+    private $NbBandesCorps;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeCorps1;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeCorps2;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeCorps3;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandeCorps4;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurPropu;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="SymbolePropu", type="string", length=255)
+     */
+    private $SymbolePropu;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="InscripPropu", type="string", length=255)
+     */
+    private $InscripPropu;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="MarqFroidEmpennage", type="string", length=255)
+     */
+    private $MarqFroidEmpennage;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurInscPropu;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurBandePropu;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\CouleurFond")
+	 */
+	private $CouleurEmpennage;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="MarquageFroidPropulseur", type="string", length=255)
+     */
+    private $MarquageFroidPropulseur;
+    
+	/**
+	 * @ORM\ManyToMany(targetEntity="FeodBundle\Entity\PositionFusee")
+         * @ORM\JoinTable(name="roquettes_positionfusee",
+         *  joinColumns={@ORM\JoinColumn(name="roquettes_id", referencedColumnName="id")},
+         *  inverseJoinColumns={@ORM\JoinColumn(name="positionfusee_id", referencedColumnName="id", unique=true )}
+         * )
+	 */
+	private $PositionFusee;
+        
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="TypeFusee", type="string", length=255)
+     */
+    private $TypeFusee;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="NomFusee", type="string", length=255)
+     */
+    private $NomFusee;
+	/**
+	 * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\Piezo")
+	 */
+	private $Piezo;
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="Marquage", type="string", length=255)
+     */
+	 
+	/**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="SystemeArme", type="string", length=255)
+     */
+    private $SystemeArme;
+	
+	/**
+     * @var string
+     *
+		* @ORM\Column(nullable=true, name="NomSousMunition", type="string", length=255)
+     */
+    private $NomSousMunition;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->NatureChargeMili = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->EffetChargement = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->SymboleOgive = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->SymboleCorps = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->PositionFusee = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set LgTotavecFusee
+     *
+     * @param float $lgTotavecFusee
+     * @return Recherches
+     */
+    public function setLgTotavecFusee($lgTotavecFusee)
+    {
+        $this->LgTotavecFusee = $lgTotavecFusee;
+
+        return $this;
+    }
+
+    /**
+     * Get LgTotavecFusee
+     *
+     * @return float 
+     */
+    public function getLgTotavecFusee()
+    {
+        return $this->LgTotavecFusee;
+    }
+
+    /**
+     * Set LgTotsansFusee
+     *
+     * @param float $lgTotsansFusee
+     * @return Recherches
+     */
+    public function setLgTotsansFusee($lgTotsansFusee)
+    {
+        $this->LgTotsansFusee = $lgTotsansFusee;
+
+        return $this;
+    }
+
+    /**
+     * Get LgTotsansFusee
+     *
+     * @return float 
+     */
+    public function getLgTotsansFusee()
+    {
+        return $this->LgTotsansFusee;
+    }
+
+    /**
+     * Set PoidsRoq
+     *
+     * @param float $poidsRoq
+     * @return Recherches
+     */
+    public function setPoidsRoq($poidsRoq)
+    {
+        $this->PoidsRoq = $poidsRoq;
+
+        return $this;
+    }
+
+    /**
+     * Get PoidsRoq
+     *
+     * @return float 
+     */
+    public function getPoidsRoq()
+    {
+        return $this->PoidsRoq;
+    }
+
+    /**
+     * Set DiametreTeteMili
+     *
+     * @param float $diametreTeteMili
+     * @return Recherches
+     */
+    public function setDiametreTeteMili($diametreTeteMili)
+    {
+        $this->DiametreTeteMili = $diametreTeteMili;
+
+        return $this;
+    }
+
+    /**
+     * Get DiametreTeteMili
+     *
+     * @return float 
+     */
+    public function getDiametreTeteMili()
+    {
+        return $this->DiametreTeteMili;
+    }
+
+    /**
+     * Set DiametreChargePropu
+     *
+     * @param float $diametreChargePropu
+     * @return Recherches
+     */
+    public function setDiametreChargePropu($diametreChargePropu)
+    {
+        $this->DiametreChargePropu = $diametreChargePropu;
+
+        return $this;
+    }
+
+    /**
+     * Get DiametreChargePropu
+     *
+     * @return float 
+     */
+    public function getDiametreChargePropu()
+    {
+        return $this->DiametreChargePropu;
+    }
+
+    /**
+     * Set Calibre
+     *
+     * @param float $calibre
+     * @return Recherches
+     */
+    public function setCalibre($calibre)
+    {
+        $this->Calibre = $calibre;
+
+        return $this;
+    }
+
+    /**
+     * Get Calibre
+     *
+     * @return float 
+     */
+    public function getCalibre()
+    {
+        return $this->Calibre;
+    }
+
+    /**
+     * Set CalibreCalcul
+     *
+     * @param float $calibreCalcul
+     * @return Recherches
+     */
+    public function setCalibreCalcul($calibreCalcul)
+    {
+        $this->CalibreCalcul = $calibreCalcul;
+
+        return $this;
+    }
+
+    /**
+     * Get CalibreCalcul
+     *
+     * @return float 
+     */
+    public function getCalibreCalcul()
+    {
+        return $this->CalibreCalcul;
+    }
+
+    /**
+     * Set CalibreReel
+     *
+     * @param float $calibreReel
+     * @return Recherches
+     */
+    public function setCalibreReel($calibreReel)
+    {
+        $this->CalibreReel = $calibreReel;
+
+        return $this;
+    }
+
+    /**
+     * Get CalibreReel
+     *
+     * @return float 
+     */
+    public function getCalibreReel()
+    {
+        return $this->CalibreReel;
+    }
+
+    /**
+     * Set PorteePratique
+     *
+     * @param float $porteePratique
+     * @return Recherches
+     */
+    public function setPorteePratique($porteePratique)
+    {
+        $this->PorteePratique = $porteePratique;
+
+        return $this;
+    }
+
+    /**
+     * Get PorteePratique
+     *
+     * @return float 
+     */
+    public function getPorteePratique()
+    {
+        return $this->PorteePratique;
+    }
+
+    /**
+     * Set PorteeMax
+     *
+     * @param float $porteeMax
+     * @return Recherches
+     */
+    public function setPorteeMax($porteeMax)
+    {
+        $this->PorteeMax = $porteeMax;
+
+        return $this;
+    }
+
+    /**
+     * Get PorteeMax
+     *
+     * @return float 
+     */
+    public function getPorteeMax()
+    {
+        return $this->PorteeMax;
+    }
+
+    /**
+     * Set IndicateurArmement
+     *
+     * @param boolean $indicateurArmement
+     * @return Recherches
+     */
+    public function setIndicateurArmement($indicateurArmement)
+    {
+        $this->IndicateurArmement = $indicateurArmement;
+
+        return $this;
+    }
+
+    /**
+     * Get IndicateurArmement
+     *
+     * @return boolean 
+     */
+    public function getIndicateurArmement()
+    {
+        return $this->IndicateurArmement;
+    }
+
+    /**
+     * Set AutoDestruction
+     *
+     * @param boolean $autoDestruction
+     * @return Recherches
+     */
+    public function setAutoDestruction($autoDestruction)
+    {
+        $this->AutoDestruction = $autoDestruction;
+
+        return $this;
+    }
+
+    /**
+     * Get AutoDestruction
+     *
+     * @return boolean 
+     */
+    public function getAutoDestruction()
+    {
+        return $this->AutoDestruction;
+    }
+
+    /**
+     * Set CopieExistante
+     *
+     * @param string $copieExistante
+     * @return Recherches
+     */
+    public function setCopieExistante($copieExistante)
+    {
+        $this->CopieExistante = $copieExistante;
+
+        return $this;
+    }
+
+    /**
+     * Get CopieExistante
+     *
+     * @return string 
+     */
+    public function getCopieExistante()
+    {
+        return $this->CopieExistante;
+    }
+
+    /**
+     * Set PoidsChargeMili
+     *
+     * @param float $poidsChargeMili
+     * @return Recherches
+     */
+    public function setPoidsChargeMili($poidsChargeMili)
+    {
+        $this->PoidsChargeMili = $poidsChargeMili;
+
+        return $this;
+    }
+
+    /**
+     * Get PoidsChargeMili
+     *
+     * @return float 
+     */
+    public function getPoidsChargeMili()
+    {
+        return $this->PoidsChargeMili;
+    }
+
+    /**
+     * Set PoidsChargeCalcule
+     *
+     * @param float $poidsChargeCalcule
+     * @return Recherches
+     */
+    public function setPoidsChargeCalcule($poidsChargeCalcule)
+    {
+        $this->PoidsChargeCalcule = $poidsChargeCalcule;
+
+        return $this;
+    }
+
+    /**
+     * Get PoidsChargeCalcule
+     *
+     * @return float 
+     */
+    public function getPoidsChargeCalcule()
+    {
+        return $this->PoidsChargeCalcule;
+    }
+
+    /**
+     * Set ChargeTandem
+     *
+     * @param boolean $chargeTandem
+     * @return Recherches
+     */
+    public function setChargeTandem($chargeTandem)
+    {
+        $this->ChargeTandem = $chargeTandem;
+
+        return $this;
+    }
+
+    /**
+     * Get ChargeTandem
+     *
+     * @return boolean 
+     */
+    public function getChargeTandem()
+    {
+        return $this->ChargeTandem;
+    }
+
+    /**
+     * Set PoidsChargeTandem
+     *
+     * @param float $poidsChargeTandem
+     * @return Recherches
+     */
+    public function setPoidsChargeTandem($poidsChargeTandem)
+    {
+        $this->PoidsChargeTandem = $poidsChargeTandem;
+
+        return $this;
+    }
+
+    /**
+     * Get PoidsChargeTandem
+     *
+     * @return float 
+     */
+    public function getPoidsChargeTandem()
+    {
+        return $this->PoidsChargeTandem;
+    }
+
+    /**
+     * Set PoidsChargePropu
+     *
+     * @param float $poidsChargePropu
+     * @return Recherches
+     */
+    public function setPoidsChargePropu($poidsChargePropu)
+    {
+        $this->PoidsChargePropu = $poidsChargePropu;
+
+        return $this;
+    }
+
+    /**
+     * Get PoidsChargePropu
+     *
+     * @return float 
+     */
+    public function getPoidsChargePropu()
+    {
+        return $this->PoidsChargePropu;
+    }
+
+    /**
+     * Set ChargeEjection
+     *
+     * @param boolean $chargeEjection
+     * @return Recherches
+     */
+    public function setChargeEjection($chargeEjection)
+    {
+        $this->ChargeEjection = $chargeEjection;
+
+        return $this;
+    }
+
+    /**
+     * Get ChargeEjection
+     *
+     * @return boolean 
+     */
+    public function getChargeEjection()
+    {
+        return $this->ChargeEjection;
+    }
+
+    /**
+     * Set PoidsChargeEjection
+     *
+     * @param float $poidsChargeEjection
+     * @return Recherches
+     */
+    public function setPoidsChargeEjection($poidsChargeEjection)
+    {
+        $this->PoidsChargeEjection = $poidsChargeEjection;
+
+        return $this;
+    }
+
+    /**
+     * Get PoidsChargeEjection
+     *
+     * @return float 
+     */
+    public function getPoidsChargeEjection()
+    {
+        return $this->PoidsChargeEjection;
+    }
+
+    /**
+     * Set NbTuyereAvant
+     *
+     * @param integer $nbTuyereAvant
+     * @return Recherches
+     */
+    public function setNbTuyereAvant($nbTuyereAvant)
+    {
+        $this->NbTuyereAvant = $nbTuyereAvant;
+
+        return $this;
+    }
+
+    /**
+     * Get NbTuyereAvant
+     *
+     * @return integer 
+     */
+    public function getNbTuyereAvant()
+    {
+        return $this->NbTuyereAvant;
+    }
+
+    /**
+     * Set NbTuyereArriere
+     *
+     * @param integer $nbTuyereArriere
+     * @return Recherches
+     */
+    public function setNbTuyereArriere($nbTuyereArriere)
+    {
+        $this->NbTuyereArriere = $nbTuyereArriere;
+
+        return $this;
+    }
+
+    /**
+     * Get NbTuyereArriere
+     *
+     * @return integer 
+     */
+    public function getNbTuyereArriere()
+    {
+        return $this->NbTuyereArriere;
+    }
+
+    /**
+     * Set LongueurTeteMili
+     *
+     * @param float $longueurTeteMili
+     * @return Recherches
+     */
+    public function setLongueurTeteMili($longueurTeteMili)
+    {
+        $this->LongueurTeteMili = $longueurTeteMili;
+
+        return $this;
+    }
+
+    /**
+     * Get LongueurTeteMili
+     *
+     * @return float 
+     */
+    public function getLongueurTeteMili()
+    {
+        return $this->LongueurTeteMili;
+    }
+
+    /**
+     * Set LongueurChargePropu
+     *
+     * @param float $longueurChargePropu
+     * @return Recherches
+     */
+    public function setLongueurChargePropu($longueurChargePropu)
+    {
+        $this->LongueurChargePropu = $longueurChargePropu;
+
+        return $this;
+    }
+
+    /**
+     * Get LongueurChargePropu
+     *
+     * @return float 
+     */
+    public function getLongueurChargePropu()
+    {
+        return $this->LongueurChargePropu;
+    }
+
+    /**
+     * Set LongueurPropu
+     *
+     * @param float $longueurPropu
+     * @return Recherches
+     */
+    public function setLongueurPropu($longueurPropu)
+    {
+        $this->LongueurPropu = $longueurPropu;
+
+        return $this;
+    }
+
+    /**
+     * Get LongueurPropu
+     *
+     * @return float 
+     */
+    public function getLongueurPropu()
+    {
+        return $this->LongueurPropu;
+    }
+
+    /**
+     * Set Coiffe
+     *
+     * @param boolean $coiffe
+     * @return Recherches
+     */
+    public function setCoiffe($coiffe)
+    {
+        $this->Coiffe = $coiffe;
+
+        return $this;
+    }
+
+    /**
+     * Get Coiffe
+     *
+     * @return boolean 
+     */
+    public function getCoiffe()
+    {
+        return $this->Coiffe;
+    }
+
+    /**
+     * Set PuitsDeFusee
+     *
+     * @param boolean $puitsDeFusee
+     * @return Recherches
+     */
+    public function setPuitsDeFusee($puitsDeFusee)
+    {
+        $this->PuitsDeFusee = $puitsDeFusee;
+
+        return $this;
+    }
+
+    /**
+     * Get PuitsDeFusee
+     *
+     * @return boolean 
+     */
+    public function getPuitsDeFusee()
+    {
+        return $this->PuitsDeFusee;
+    }
+
+    /**
+     * Set DiametreOeil
+     *
+     * @param float $diametreOeil
+     * @return Recherches
+     */
+    public function setDiametreOeil($diametreOeil)
+    {
+        $this->DiametreOeil = $diametreOeil;
+
+        return $this;
+    }
+
+    /**
+     * Get DiametreOeil
+     *
+     * @return float 
+     */
+    public function getDiametreOeil()
+    {
+        return $this->DiametreOeil;
+    }
+
+    /**
+     * Set Empennage
+     *
+     * @param boolean $empennage
+     * @return Recherches
+     */
+    public function setEmpennage($empennage)
+    {
+        $this->Empennage = $empennage;
+
+        return $this;
+    }
+
+    /**
+     * Get Empennage
+     *
+     * @return boolean 
+     */
+    public function getEmpennage()
+    {
+        return $this->Empennage;
+    }
+
+    /**
+     * Set LongEmp
+     *
+     * @param float $longEmp
+     * @return Recherches
+     */
+    public function setLongEmp($longEmp)
+    {
+        $this->LongEmp = $longEmp;
+
+        return $this;
+    }
+
+    /**
+     * Get LongEmp
+     *
+     * @return float 
+     */
+    public function getLongEmp()
+    {
+        return $this->LongEmp;
+    }
+
+    /**
+     * Set NbAilettes
+     *
+     * @param integer $nbAilettes
+     * @return Recherches
+     */
+    public function setNbAilettes($nbAilettes)
+    {
+        $this->NbAilettes = $nbAilettes;
+
+        return $this;
+    }
+
+    /**
+     * Get NbAilettes
+     *
+     * @return integer 
+     */
+    public function getNbAilettes()
+    {
+        return $this->NbAilettes;
+    }
+
+    /**
+     * Set LongAilette
+     *
+     * @param float $longAilette
+     * @return Recherches
+     */
+    public function setLongAilette($longAilette)
+    {
+        $this->LongAilette = $longAilette;
+
+        return $this;
+    }
+
+    /**
+     * Get LongAilette
+     *
+     * @return float 
+     */
+    public function getLongAilette()
+    {
+        return $this->LongAilette;
+    }
+
+    /**
+     * Set LargAilette
+     *
+     * @param float $largAilette
+     * @return Recherches
+     */
+    public function setLargAilette($largAilette)
+    {
+        $this->LargAilette = $largAilette;
+
+        return $this;
+    }
+
+    /**
+     * Get LargAilette
+     *
+     * @return float 
+     */
+    public function getLargAilette()
+    {
+        return $this->LargAilette;
+    }
+
+    /**
+     * Set InscriptionOgive
+     *
+     * @param string $inscriptionOgive
+     * @return Recherches
+     */
+    public function setInscriptionOgive($inscriptionOgive)
+    {
+        $this->InscriptionOgive = $inscriptionOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get InscriptionOgive
+     *
+     * @return string 
+     */
+    public function getInscriptionOgive()
+    {
+        return $this->InscriptionOgive;
+    }
+
+    /**
+     * Set MarquageFroidOgive
+     *
+     * @param string $marquageFroidOgive
+     * @return Recherches
+     */
+    public function setMarquageFroidOgive($marquageFroidOgive)
+    {
+        $this->MarquageFroidOgive = $marquageFroidOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get MarquageFroidOgive
+     *
+     * @return string 
+     */
+    public function getMarquageFroidOgive()
+    {
+        return $this->MarquageFroidOgive;
+    }
+
+    /**
+     * Set NbBandesOgive
+     *
+     * @param integer $nbBandesOgive
+     * @return Recherches
+     */
+    public function setNbBandesOgive($nbBandesOgive)
+    {
+        $this->NbBandesOgive = $nbBandesOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get NbBandesOgive
+     *
+     * @return integer 
+     */
+    public function getNbBandesOgive()
+    {
+        return $this->NbBandesOgive;
+    }
+
+    /**
+     * Set InscriptionCorps
+     *
+     * @param string $inscriptionCorps
+     * @return Recherches
+     */
+    public function setInscriptionCorps($inscriptionCorps)
+    {
+        $this->InscriptionCorps = $inscriptionCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get InscriptionCorps
+     *
+     * @return string 
+     */
+    public function getInscriptionCorps()
+    {
+        return $this->InscriptionCorps;
+    }
+
+    /**
+     * Set MarquageFroidCorps
+     *
+     * @param string $marquageFroidCorps
+     * @return Recherches
+     */
+    public function setMarquageFroidCorps($marquageFroidCorps)
+    {
+        $this->MarquageFroidCorps = $marquageFroidCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get MarquageFroidCorps
+     *
+     * @return string 
+     */
+    public function getMarquageFroidCorps()
+    {
+        return $this->MarquageFroidCorps;
+    }
+
+    /**
+     * Set NbBandesCorps
+     *
+     * @param integer $nbBandesCorps
+     * @return Recherches
+     */
+    public function setNbBandesCorps($nbBandesCorps)
+    {
+        $this->NbBandesCorps = $nbBandesCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get NbBandesCorps
+     *
+     * @return integer 
+     */
+    public function getNbBandesCorps()
+    {
+        return $this->NbBandesCorps;
+    }
+
+    /**
+     * Set SymbolePropu
+     *
+     * @param string $symbolePropu
+     * @return Recherches
+     */
+    public function setSymbolePropu($symbolePropu)
+    {
+        $this->SymbolePropu = $symbolePropu;
+
+        return $this;
+    }
+
+    /**
+     * Get SymbolePropu
+     *
+     * @return string 
+     */
+    public function getSymbolePropu()
+    {
+        return $this->SymbolePropu;
+    }
+
+    /**
+     * Set InscripPropu
+     *
+     * @param string $inscripPropu
+     * @return Recherches
+     */
+    public function setInscripPropu($inscripPropu)
+    {
+        $this->InscripPropu = $inscripPropu;
+
+        return $this;
+    }
+
+    /**
+     * Get InscripPropu
+     *
+     * @return string 
+     */
+    public function getInscripPropu()
+    {
+        return $this->InscripPropu;
+    }
+
+    /**
+     * Set MarqFroidEmpennage
+     *
+     * @param string $marqFroidEmpennage
+     * @return Recherches
+     */
+    public function setMarqFroidEmpennage($marqFroidEmpennage)
+    {
+        $this->MarqFroidEmpennage = $marqFroidEmpennage;
+
+        return $this;
+    }
+
+    /**
+     * Get MarqFroidEmpennage
+     *
+     * @return string 
+     */
+    public function getMarqFroidEmpennage()
+    {
+        return $this->MarqFroidEmpennage;
+    }
+
+    /**
+     * Set MarquageFroidPropulseur
+     *
+     * @param string $marquageFroidPropulseur
+     * @return Recherches
+     */
+    public function setMarquageFroidPropulseur($marquageFroidPropulseur)
+    {
+        $this->MarquageFroidPropulseur = $marquageFroidPropulseur;
+
+        return $this;
+    }
+
+    /**
+     * Get MarquageFroidPropulseur
+     *
+     * @return string 
+     */
+    public function getMarquageFroidPropulseur()
+    {
+        return $this->MarquageFroidPropulseur;
+    }
+
+    /**
+     * Set TypeFusee
+     *
+     * @param string $typeFusee
+     * @return Recherches
+     */
+    public function setTypeFusee($typeFusee)
+    {
+        $this->TypeFusee = $typeFusee;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeFusee
+     *
+     * @return string 
+     */
+    public function getTypeFusee()
+    {
+        return $this->TypeFusee;
+    }
+
+    /**
+     * Set NomFusee
+     *
+     * @param string $nomFusee
+     * @return Recherches
+     */
+    public function setNomFusee($nomFusee)
+    {
+        $this->NomFusee = $nomFusee;
+
+        return $this;
+    }
+
+    /**
+     * Get NomFusee
+     *
+     * @return string 
+     */
+    public function getNomFusee()
+    {
+        return $this->NomFusee;
+    }
+
+    /**
+     * Set SystemeArme
+     *
+     * @param string $systemeArme
+     * @return Recherches
+     */
+    public function setSystemeArme($systemeArme)
+    {
+        $this->SystemeArme = $systemeArme;
+
+        return $this;
+    }
+
+    /**
+     * Get SystemeArme
+     *
+     * @return string 
+     */
+    public function getSystemeArme()
+    {
+        return $this->SystemeArme;
+    }
+
+    /**
+     * Set NomSousMunition
+     *
+     * @param string $nomSousMunition
+     * @return Recherches
+     */
+    public function setNomSousMunition($nomSousMunition)
+    {
+        $this->NomSousMunition = $nomSousMunition;
+
+        return $this;
+    }
+
+    /**
+     * Get NomSousMunition
+     *
+     * @return string 
+     */
+    public function getNomSousMunition()
+    {
+        return $this->NomSousMunition;
+    }
+
+    /**
+     * Set TypeRoquette
+     *
+     * @param \FeodBundle\Entity\TypeRoquette $typeRoquette
+     * @return Recherches
+     */
+    public function setTypeRoquette(\FeodBundle\Entity\TypeRoquette $typeRoquette = null)
+    {
+        $this->TypeRoquette = $typeRoquette;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeRoquette
+     *
+     * @return \FeodBundle\Entity\TypeRoquette 
+     */
+    public function getTypeRoquette()
+    {
+        return $this->TypeRoquette;
+    }
+
+    /**
+     * Set Guidage
+     *
+     * @param \FeodBundle\Entity\TechnologieGuidage $guidage
+     * @return Recherches
+     */
+    public function setGuidage(\FeodBundle\Entity\TechnologieGuidage $guidage = null)
+    {
+        $this->Guidage = $guidage;
+
+        return $this;
+    }
+
+    /**
+     * Get Guidage
+     *
+     * @return \FeodBundle\Entity\TechnologieGuidage 
+     */
+    public function getGuidage()
+    {
+        return $this->Guidage;
+    }
+
+    /**
+     * Set UniteCalibre
+     *
+     * @param \FeodBundle\Entity\UniteDistance $uniteCalibre
+     * @return Recherches
+     */
+    public function setUniteCalibre(\FeodBundle\Entity\UniteDistance $uniteCalibre = null)
+    {
+        $this->UniteCalibre = $uniteCalibre;
+
+        return $this;
+    }
+
+    /**
+     * Get UniteCalibre
+     *
+     * @return \FeodBundle\Entity\UniteDistance 
+     */
+    public function getUniteCalibre()
+    {
+        return $this->UniteCalibre;
+    }
+
+    /**
+     * Set NatureEnveloppe
+     *
+     * @param \FeodBundle\Entity\NatureEnveloppe $natureEnveloppe
+     * @return Recherches
+     */
+    public function setNatureEnveloppe(\FeodBundle\Entity\NatureEnveloppe $natureEnveloppe = null)
+    {
+        $this->NatureEnveloppe = $natureEnveloppe;
+
+        return $this;
+    }
+
+    /**
+     * Get NatureEnveloppe
+     *
+     * @return \FeodBundle\Entity\NatureEnveloppe 
+     */
+    public function getNatureEnveloppe()
+    {
+        return $this->NatureEnveloppe;
+    }
+
+    /**
+     * Add NatureChargeMili
+     *
+     * @param \FeodBundle\Entity\NatureChargeMili $natureChargeMili
+     * @return Recherches
+     */
+    public function addNatureChargeMili(\FeodBundle\Entity\NatureChargeMili $natureChargeMili)
+    {
+        $this->NatureChargeMili[] = $natureChargeMili;
+
+        return $this;
+    }
+
+    /**
+     * Remove NatureChargeMili
+     *
+     * @param \FeodBundle\Entity\NatureChargeMili $natureChargeMili
+     */
+    public function removeNatureChargeMili(\FeodBundle\Entity\NatureChargeMili $natureChargeMili)
+    {
+        $this->NatureChargeMili->removeElement($natureChargeMili);
+    }
+
+    /**
+     * Get NatureChargeMili
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNatureChargeMili()
+    {
+        return $this->NatureChargeMili;
+    }
+
+    /**
+     * Set NatureChargeHE
+     *
+     * @param \FeodBundle\Entity\NatureChargeMili $natureChargeHE
+     * @return Recherches
+     */
+    public function setNatureChargeHE(\FeodBundle\Entity\NatureChargeMili $natureChargeHE = null)
+    {
+        $this->NatureChargeHE = $natureChargeHE;
+
+        return $this;
+    }
+
+    /**
+     * Get NatureChargeHE
+     *
+     * @return \FeodBundle\Entity\NatureChargeMili 
+     */
+    public function getNatureChargeHE()
+    {
+        return $this->NatureChargeHE;
+    }
+
+    /**
+     * Set UniteQMA
+     *
+     * @param \FeodBundle\Entity\UnitesMasseVolume $uniteQMA
+     * @return Recherches
+     */
+    public function setUniteQMA(\FeodBundle\Entity\UnitesMasseVolume $uniteQMA = null)
+    {
+        $this->UniteQMA = $uniteQMA;
+
+        return $this;
+    }
+
+    /**
+     * Get UniteQMA
+     *
+     * @return \FeodBundle\Entity\UnitesMasseVolume 
+     */
+    public function getUniteQMA()
+    {
+        return $this->UniteQMA;
+    }
+
+    /**
+     * Add EffetChargement
+     *
+     * @param \FeodBundle\Entity\EffetChargement $effetChargement
+     * @return Recherches
+     */
+    public function addEffetChargement(\FeodBundle\Entity\EffetChargement $effetChargement)
+    {
+        $this->EffetChargement[] = $effetChargement;
+
+        return $this;
+    }
+
+    /**
+     * Remove EffetChargement
+     *
+     * @param \FeodBundle\Entity\EffetChargement $effetChargement
+     */
+    public function removeEffetChargement(\FeodBundle\Entity\EffetChargement $effetChargement)
+    {
+        $this->EffetChargement->removeElement($effetChargement);
+    }
+
+    /**
+     * Get EffetChargement
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEffetChargement()
+    {
+        return $this->EffetChargement;
+    }
+
+    /**
+     * Set Chargement
+     *
+     * @param \FeodBundle\Entity\Chargement $chargement
+     * @return Recherches
+     */
+    public function setChargement(\FeodBundle\Entity\Chargement $chargement = null)
+    {
+        $this->Chargement = $chargement;
+
+        return $this;
+    }
+
+    /**
+     * Get Chargement
+     *
+     * @return \FeodBundle\Entity\Chargement 
+     */
+    public function getChargement()
+    {
+        return $this->Chargement;
+    }
+
+    /**
+     * Set TypeChargePropu
+     *
+     * @param \FeodBundle\Entity\TypeCP $typeChargePropu
+     * @return Recherches
+     */
+    public function setTypeChargePropu(\FeodBundle\Entity\TypeCP $typeChargePropu = null)
+    {
+        $this->TypeChargePropu = $typeChargePropu;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeChargePropu
+     *
+     * @return \FeodBundle\Entity\TypeCP 
+     */
+    public function getTypeChargePropu()
+    {
+        return $this->TypeChargePropu;
+    }
+
+    /**
+     * Set TypeChargeEjection
+     *
+     * @param \FeodBundle\Entity\TypeCP $typeChargeEjection
+     * @return Recherches
+     */
+    public function setTypeChargeEjection(\FeodBundle\Entity\TypeCP $typeChargeEjection = null)
+    {
+        $this->TypeChargeEjection = $typeChargeEjection;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeChargeEjection
+     *
+     * @return \FeodBundle\Entity\TypeCP 
+     */
+    public function getTypeChargeEjection()
+    {
+        return $this->TypeChargeEjection;
+    }
+
+    /**
+     * Set FixationChargeEjection
+     *
+     * @param \FeodBundle\Entity\RoquettesFixationChargeEjection $fixationChargeEjection
+     * @return Recherches
+     */
+    public function setFixationChargeEjection(\FeodBundle\Entity\RoquettesFixationChargeEjection $fixationChargeEjection = null)
+    {
+        $this->FixationChargeEjection = $fixationChargeEjection;
+
+        return $this;
+    }
+
+    /**
+     * Get FixationChargeEjection
+     *
+     * @return \FeodBundle\Entity\RoquettesFixationChargeEjection 
+     */
+    public function getFixationChargeEjection()
+    {
+        return $this->FixationChargeEjection;
+    }
+
+    /**
+     * Set TypeCorps
+     *
+     * @param \FeodBundle\Entity\RoquettesTypeCorps $typeCorps
+     * @return Recherches
+     */
+    public function setTypeCorps(\FeodBundle\Entity\RoquettesTypeCorps $typeCorps = null)
+    {
+        $this->TypeCorps = $typeCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeCorps
+     *
+     * @return \FeodBundle\Entity\RoquettesTypeCorps 
+     */
+    public function getTypeCorps()
+    {
+        return $this->TypeCorps;
+    }
+
+    /**
+     * Set FormeOgive
+     *
+     * @param \FeodBundle\Entity\FormeOgive $formeOgive
+     * @return Recherches
+     */
+    public function setFormeOgive(\FeodBundle\Entity\FormeOgive $formeOgive = null)
+    {
+        $this->FormeOgive = $formeOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get FormeOgive
+     *
+     * @return \FeodBundle\Entity\FormeOgive 
+     */
+    public function getFormeOgive()
+    {
+        return $this->FormeOgive;
+    }
+
+    /**
+     * Set TypeCoiffe
+     *
+     * @param \FeodBundle\Entity\TypeCoiffe $typeCoiffe
+     * @return Recherches
+     */
+    public function setTypeCoiffe(\FeodBundle\Entity\TypeCoiffe $typeCoiffe = null)
+    {
+        $this->TypeCoiffe = $typeCoiffe;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeCoiffe
+     *
+     * @return \FeodBundle\Entity\TypeCoiffe 
+     */
+    public function getTypeCoiffe()
+    {
+        return $this->TypeCoiffe;
+    }
+
+    /**
+     * Set FormeCorps
+     *
+     * @param \FeodBundle\Entity\FormeCorps $formeCorps
+     * @return Recherches
+     */
+    public function setFormeCorps(\FeodBundle\Entity\FormeCorps $formeCorps = null)
+    {
+        $this->FormeCorps = $formeCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get FormeCorps
+     *
+     * @return \FeodBundle\Entity\FormeCorps 
+     */
+    public function getFormeCorps()
+    {
+        return $this->FormeCorps;
+    }
+
+    /**
+     * Set ModeStabilisation
+     *
+     * @param \FeodBundle\Entity\ModeStabilisation $modeStabilisation
+     * @return Recherches
+     */
+    public function setModeStabilisation(\FeodBundle\Entity\ModeStabilisation $modeStabilisation = null)
+    {
+        $this->ModeStabilisation = $modeStabilisation;
+
+        return $this;
+    }
+
+    /**
+     * Get ModeStabilisation
+     *
+     * @return \FeodBundle\Entity\ModeStabilisation 
+     */
+    public function getModeStabilisation()
+    {
+        return $this->ModeStabilisation;
+    }
+
+    /**
+     * Set TypeEmpennage
+     *
+     * @param \FeodBundle\Entity\TypeEmpennage $typeEmpennage
+     * @return Recherches
+     */
+    public function setTypeEmpennage(\FeodBundle\Entity\TypeEmpennage $typeEmpennage = null)
+    {
+        $this->TypeEmpennage = $typeEmpennage;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeEmpennage
+     *
+     * @return \FeodBundle\Entity\TypeEmpennage 
+     */
+    public function getTypeEmpennage()
+    {
+        return $this->TypeEmpennage;
+    }
+
+    /**
+     * Set TypeAilette
+     *
+     * @param \FeodBundle\Entity\TypeAilettes $typeAilette
+     * @return Recherches
+     */
+    public function setTypeAilette(\FeodBundle\Entity\TypeAilettes $typeAilette = null)
+    {
+        $this->TypeAilette = $typeAilette;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeAilette
+     *
+     * @return \FeodBundle\Entity\TypeAilettes 
+     */
+    public function getTypeAilette()
+    {
+        return $this->TypeAilette;
+    }
+
+    /**
+     * Set FormeAilette
+     *
+     * @param \FeodBundle\Entity\FormeAilettes $formeAilette
+     * @return Recherches
+     */
+    public function setFormeAilette(\FeodBundle\Entity\FormeAilettes $formeAilette = null)
+    {
+        $this->FormeAilette = $formeAilette;
+
+        return $this;
+    }
+
+    /**
+     * Get FormeAilette
+     *
+     * @return \FeodBundle\Entity\FormeAilettes 
+     */
+    public function getFormeAilette()
+    {
+        return $this->FormeAilette;
+    }
+
+    /**
+     * Set TypeElemAeroAV
+     *
+     * @param \FeodBundle\Entity\ElementsAerodynamiques $typeElemAeroAV
+     * @return Recherches
+     */
+    public function setTypeElemAeroAV(\FeodBundle\Entity\ElementsAerodynamiques $typeElemAeroAV = null)
+    {
+        $this->TypeElemAeroAV = $typeElemAeroAV;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeElemAeroAV
+     *
+     * @return \FeodBundle\Entity\ElementsAerodynamiques 
+     */
+    public function getTypeElemAeroAV()
+    {
+        return $this->TypeElemAeroAV;
+    }
+
+    /**
+     * Set FormeElemAeroAV
+     *
+     * @param \FeodBundle\Entity\FormeElemAero $formeElemAeroAV
+     * @return Recherches
+     */
+    public function setFormeElemAeroAV(\FeodBundle\Entity\FormeElemAero $formeElemAeroAV = null)
+    {
+        $this->FormeElemAeroAV = $formeElemAeroAV;
+
+        return $this;
+    }
+
+    /**
+     * Get FormeElemAeroAV
+     *
+     * @return \FeodBundle\Entity\FormeElemAero 
+     */
+    public function getFormeElemAeroAV()
+    {
+        return $this->FormeElemAeroAV;
+    }
+
+    /**
+     * Set CouleurOgive
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurOgive
+     * @return Recherches
+     */
+    public function setCouleurOgive(\FeodBundle\Entity\CouleurFond $couleurOgive = null)
+    {
+        $this->CouleurOgive = $couleurOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurOgive
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurOgive()
+    {
+        return $this->CouleurOgive;
+    }
+
+    /**
+     * Add SymboleOgive
+     *
+     * @param \FeodBundle\Entity\SymboleOgive $symboleOgive
+     * @return Recherches
+     */
+    public function addSymboleOgive(\FeodBundle\Entity\SymboleOgive $symboleOgive)
+    {
+        $this->SymboleOgive[] = $symboleOgive;
+
+        return $this;
+    }
+
+    /**
+     * Remove SymboleOgive
+     *
+     * @param \FeodBundle\Entity\SymboleOgive $symboleOgive
+     */
+    public function removeSymboleOgive(\FeodBundle\Entity\SymboleOgive $symboleOgive)
+    {
+        $this->SymboleOgive->removeElement($symboleOgive);
+    }
+
+    /**
+     * Get SymboleOgive
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSymboleOgive()
+    {
+        return $this->SymboleOgive;
+    }
+
+    /**
+     * Set CouleurInscOgive
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurInscOgive
+     * @return Recherches
+     */
+    public function setCouleurInscOgive(\FeodBundle\Entity\CouleurFond $couleurInscOgive = null)
+    {
+        $this->CouleurInscOgive = $couleurInscOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurInscOgive
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurInscOgive()
+    {
+        return $this->CouleurInscOgive;
+    }
+
+    /**
+     * Set TypeInscOgive
+     *
+     * @param \FeodBundle\Entity\TypeMarquage $typeInscOgive
+     * @return Recherches
+     */
+    public function setTypeInscOgive(\FeodBundle\Entity\TypeMarquage $typeInscOgive = null)
+    {
+        $this->TypeInscOgive = $typeInscOgive;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeInscOgive
+     *
+     * @return \FeodBundle\Entity\TypeMarquage 
+     */
+    public function getTypeInscOgive()
+    {
+        return $this->TypeInscOgive;
+    }
+
+    /**
+     * Set CouleurBandeOgive1
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeOgive1
+     * @return Recherches
+     */
+    public function setCouleurBandeOgive1(\FeodBundle\Entity\CouleurFond $couleurBandeOgive1 = null)
+    {
+        $this->CouleurBandeOgive1 = $couleurBandeOgive1;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeOgive1
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeOgive1()
+    {
+        return $this->CouleurBandeOgive1;
+    }
+
+    /**
+     * Set CouleurBandeOgive2
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeOgive2
+     * @return Recherches
+     */
+    public function setCouleurBandeOgive2(\FeodBundle\Entity\CouleurFond $couleurBandeOgive2 = null)
+    {
+        $this->CouleurBandeOgive2 = $couleurBandeOgive2;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeOgive2
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeOgive2()
+    {
+        return $this->CouleurBandeOgive2;
+    }
+
+    /**
+     * Set CouleurBandeOgive3
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeOgive3
+     * @return Recherches
+     */
+    public function setCouleurBandeOgive3(\FeodBundle\Entity\CouleurFond $couleurBandeOgive3 = null)
+    {
+        $this->CouleurBandeOgive3 = $couleurBandeOgive3;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeOgive3
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeOgive3()
+    {
+        return $this->CouleurBandeOgive3;
+    }
+
+    /**
+     * Set CouleurBandeOgive4
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeOgive4
+     * @return Recherches
+     */
+    public function setCouleurBandeOgive4(\FeodBundle\Entity\CouleurFond $couleurBandeOgive4 = null)
+    {
+        $this->CouleurBandeOgive4 = $couleurBandeOgive4;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeOgive4
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeOgive4()
+    {
+        return $this->CouleurBandeOgive4;
+    }
+
+    /**
+     * Set CouleurBandeOgive5
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeOgive5
+     * @return Recherches
+     */
+    public function setCouleurBandeOgive5(\FeodBundle\Entity\CouleurFond $couleurBandeOgive5 = null)
+    {
+        $this->CouleurBandeOgive5 = $couleurBandeOgive5;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeOgive5
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeOgive5()
+    {
+        return $this->CouleurBandeOgive5;
+    }
+
+    /**
+     * Set CouleurCorps
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurCorps
+     * @return Recherches
+     */
+    public function setCouleurCorps(\FeodBundle\Entity\CouleurFond $couleurCorps = null)
+    {
+        $this->CouleurCorps = $couleurCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurCorps
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurCorps()
+    {
+        return $this->CouleurCorps;
+    }
+
+    /**
+     * Add SymboleCorps
+     *
+     * @param \FeodBundle\Entity\SymboleOgive $symboleCorps
+     * @return Recherches
+     */
+    public function addSymboleCorp(\FeodBundle\Entity\SymboleOgive $symboleCorps)
+    {
+        $this->SymboleCorps[] = $symboleCorps;
+
+        return $this;
+    }
+
+    /**
+     * Remove SymboleCorps
+     *
+     * @param \FeodBundle\Entity\SymboleOgive $symboleCorps
+     */
+    public function removeSymboleCorp(\FeodBundle\Entity\SymboleOgive $symboleCorps)
+    {
+        $this->SymboleCorps->removeElement($symboleCorps);
+    }
+
+    /**
+     * Get SymboleCorps
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSymboleCorps()
+    {
+        return $this->SymboleCorps;
+    }
+
+    /**
+     * Set CouleurInscCorps
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurInscCorps
+     * @return Recherches
+     */
+    public function setCouleurInscCorps(\FeodBundle\Entity\CouleurFond $couleurInscCorps = null)
+    {
+        $this->CouleurInscCorps = $couleurInscCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurInscCorps
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurInscCorps()
+    {
+        return $this->CouleurInscCorps;
+    }
+
+    /**
+     * Set TypeInscCorps
+     *
+     * @param \FeodBundle\Entity\TypeMarquage $typeInscCorps
+     * @return Recherches
+     */
+    public function setTypeInscCorps(\FeodBundle\Entity\TypeMarquage $typeInscCorps = null)
+    {
+        $this->TypeInscCorps = $typeInscCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get TypeInscCorps
+     *
+     * @return \FeodBundle\Entity\TypeMarquage 
+     */
+    public function getTypeInscCorps()
+    {
+        return $this->TypeInscCorps;
+    }
+
+    /**
+     * Set CouleurBandeCorps1
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeCorps1
+     * @return Recherches
+     */
+    public function setCouleurBandeCorps1(\FeodBundle\Entity\CouleurFond $couleurBandeCorps1 = null)
+    {
+        $this->CouleurBandeCorps1 = $couleurBandeCorps1;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeCorps1
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeCorps1()
+    {
+        return $this->CouleurBandeCorps1;
+    }
+
+    /**
+     * Set CouleurBandeCorps2
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeCorps2
+     * @return Recherches
+     */
+    public function setCouleurBandeCorps2(\FeodBundle\Entity\CouleurFond $couleurBandeCorps2 = null)
+    {
+        $this->CouleurBandeCorps2 = $couleurBandeCorps2;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeCorps2
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeCorps2()
+    {
+        return $this->CouleurBandeCorps2;
+    }
+
+    /**
+     * Set CouleurBandeCorps3
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeCorps3
+     * @return Recherches
+     */
+    public function setCouleurBandeCorps3(\FeodBundle\Entity\CouleurFond $couleurBandeCorps3 = null)
+    {
+        $this->CouleurBandeCorps3 = $couleurBandeCorps3;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeCorps3
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeCorps3()
+    {
+        return $this->CouleurBandeCorps3;
+    }
+
+    /**
+     * Set CouleurBandeCorps4
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandeCorps4
+     * @return Recherches
+     */
+    public function setCouleurBandeCorps4(\FeodBundle\Entity\CouleurFond $couleurBandeCorps4 = null)
+    {
+        $this->CouleurBandeCorps4 = $couleurBandeCorps4;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandeCorps4
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandeCorps4()
+    {
+        return $this->CouleurBandeCorps4;
+    }
+
+    /**
+     * Set CouleurPropu
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurPropu
+     * @return Recherches
+     */
+    public function setCouleurPropu(\FeodBundle\Entity\CouleurFond $couleurPropu = null)
+    {
+        $this->CouleurPropu = $couleurPropu;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurPropu
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurPropu()
+    {
+        return $this->CouleurPropu;
+    }
+
+    /**
+     * Set CouleurInscPropu
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurInscPropu
+     * @return Recherches
+     */
+    public function setCouleurInscPropu(\FeodBundle\Entity\CouleurFond $couleurInscPropu = null)
+    {
+        $this->CouleurInscPropu = $couleurInscPropu;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurInscPropu
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurInscPropu()
+    {
+        return $this->CouleurInscPropu;
+    }
+
+    /**
+     * Set CouleurBandePropu
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurBandePropu
+     * @return Recherches
+     */
+    public function setCouleurBandePropu(\FeodBundle\Entity\CouleurFond $couleurBandePropu = null)
+    {
+        $this->CouleurBandePropu = $couleurBandePropu;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurBandePropu
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurBandePropu()
+    {
+        return $this->CouleurBandePropu;
+    }
+
+    /**
+     * Set CouleurEmpennage
+     *
+     * @param \FeodBundle\Entity\CouleurFond $couleurEmpennage
+     * @return Recherches
+     */
+    public function setCouleurEmpennage(\FeodBundle\Entity\CouleurFond $couleurEmpennage = null)
+    {
+        $this->CouleurEmpennage = $couleurEmpennage;
+
+        return $this;
+    }
+
+    /**
+     * Get CouleurEmpennage
+     *
+     * @return \FeodBundle\Entity\CouleurFond 
+     */
+    public function getCouleurEmpennage()
+    {
+        return $this->CouleurEmpennage;
+    }
+
+    /**
+     * Add PositionFusee
+     *
+     * @param \FeodBundle\Entity\PositionFusee $positionFusee
+     * @return Recherches
+     */
+    public function addPositionFusee(\FeodBundle\Entity\PositionFusee $positionFusee)
+    {
+        $this->PositionFusee[] = $positionFusee;
+
+        return $this;
+    }
+
+    /**
+     * Remove PositionFusee
+     *
+     * @param \FeodBundle\Entity\PositionFusee $positionFusee
+     */
+    public function removePositionFusee(\FeodBundle\Entity\PositionFusee $positionFusee)
+    {
+        $this->PositionFusee->removeElement($positionFusee);
+    }
+
+    /**
+     * Get PositionFusee
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPositionFusee()
+    {
+        return $this->PositionFusee;
+    }
+
+    /**
+     * Set Piezo
+     *
+     * @param \FeodBundle\Entity\Piezo $piezo
+     * @return Recherches
+     */
+    public function setPiezo(\FeodBundle\Entity\Piezo $piezo = null)
+    {
+        $this->Piezo = $piezo;
+
+        return $this;
+    }
+
+    /**
+     * Get Piezo
+     *
+     * @return \FeodBundle\Entity\Piezo 
+     */
+    public function getPiezo()
+    {
+        return $this->Piezo;
+    }
+}

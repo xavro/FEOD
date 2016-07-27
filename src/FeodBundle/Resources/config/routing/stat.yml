@@ -1,0 +1,17 @@
+stat:
+    path:     /
+    defaults: { _controller: "FeodBundle:Stat:index" }
+
+stat_statut:
+    path:     /statut
+    defaults: { _controller: "FeodBundle:Stat:statut" }
+    options:
+        expose: true
+
+stat_last:
+    path:     /last
+    defaults: { _controller: "FeodBundle:Stat:last" }
+
+stat_last_fam:
+    path:     /lastFam
+    defaults: { _controller: "FeodBundle:Stat:lastFam" }

@@ -1,0 +1,17 @@
+services:
+    feod_user.registration.form.type:
+        class: UserBundle\Form\UserRegistrationType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: feod_user_registration }
+
+    user.admin:
+        class: 'UserBundle\Admin\UserAdmin'
+        calls:
+            - [ setUserManager, ["@fos_user.user_manager"]]
+            
+    myLogger:
+        class: UserBundle\Component\Logging\MyLogging
+        arguments:  ["@logger"]
+        tags:
+            - { name: 'monolog.logger', channel: 'taranis' }
