@@ -16,8 +16,7 @@
         </tr>
         {% endif %}
     </thead>
-    <tbody>
-        
+    <tbody>  
             {% if artillerie0 != 0 or artillerie1 != 0 or artillerie2 != 0 %}
             <tr>
                 <td style="vertical-align: middle;"><strong><I>ARTILLERIE</I></strong></td>
@@ -125,7 +124,6 @@
             {% if is_granted("ROLE_VALIDATEUR") %}<td class="success text-center"><a href="{{path('chimique_tampon',{'statut':2, 'type': 'chimique'})}}"><h4><span class="label label-success">{% if chimique2 != 0 %}{{chimique2}}{%else%}{%endif%}</span></h4></a></td>{% endif %}
             </tr>
             {% endif %}
-            
     </tbody>
 </table>
 </div>	              
@@ -141,11 +139,9 @@ Les munitions ne peuvent être traitées qu'en fonction du niveau de qualificati
 Les informations contenues dans cette base ne doivent pas être communiquées
 à un tiers et ne doivent en aucun cas sortir du MINDEF.<br/>
 Pour toute demande particulière, s'adresser au <strong>PIAM</strong></p>
- <hr class="m-y-2">
+ <hr>
 
   <!--*************************************************-->
-<DIV>
-<DIV style="TEXT-ALIGN: center; "><BR>
 <EMBED id=tagcloud height=500 name=tagcloud type=application/x-shockwave-flash width=500 
 src="{{app.request.basepath}}/tagcloud.swf" quality="high" 
 flashvars="tcolor=&amp;mode=tags&amp;distr=true&amp;tspeed=300&amp;tagcloud=<tags>&#10;
@@ -161,8 +157,7 @@ flashvars="tcolor=&amp;mode=tags&amp;distr=true&amp;tspeed=300&amp;tagcloud=<tag
 <a href='http://feod.intradef.gouv.fr{{path('munition_tampon',{'statut':3, 'type': 'minesMarines'})}}' style='12' color='0x0012ff' hicolor='0xAE0B1B'>Mines-Marines</a>&#10;
 <a href='http://feod.intradef.gouv.fr{{path('explosif_tampon',{'statut':3, 'type': 'explosif'})}}' style='12' color='0xe6d404' hicolor='0xAE0B1B'>Explosifs</a>&#10;
 <a href='http://feod.intradef.gouv.fr{{path('chimique_tampon',{'statut':3, 'type': 'chimique'})}}' style='12' color='0x01ff73' hicolor='0xAE0B1B'>Chimique</a>&#10;</tags>" 
-bgcolor="#f2dede" allowscriptaccess="always"></EMBED></DIV>
-</DIV>
+bgcolor="#f2dede" allowscriptaccess="always"></EMBED>
 <!--*************************************************-->
 <p class="lead">
     <a class="btn btn-primary btn-lg" href="{{path('stat_last')}}" role="button">Accès aux dernières Fiches</a>
@@ -179,7 +174,6 @@ bgcolor="#f2dede" allowscriptaccess="always"></EMBED></DIV>
 		- Ajout d'un suivi des modifications.<br/>
 		- Préparation des tables : Explosifs; Chimiques; Containers; Munitions ASM;
 		</p>
-
 	</div>
 </div>
 

@@ -52,7 +52,7 @@ class MinesMarinesRepository extends EntityRepository
             ->getResult();
     }
     
-    public function recherchepoids($chaine)
+    public function recherchepoidsminesmar($chaine)
     {
 
          $qb = $this->_em->createQueryBuilder();
@@ -68,7 +68,7 @@ class MinesMarinesRepository extends EntityRepository
             ->getResult();
     }
     
-    public function recherchecouleur($chaine)
+    public function recherchecouleurminesmar($chaine)
     {
 
          $qb = $this->_em->createQueryBuilder();
@@ -80,6 +80,54 @@ class MinesMarinesRepository extends EntityRepository
         ->where('LOCATE(UPPER(:chaine),UPPER(c.couleurFond)) != 0')
         ->orWhere('LOCATE(UPPER(:chaine),UPPER(b.couleurFond)) != 0')
         //->orWhere('b.couleurFond like :chaine')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+     public function recherchenomminesmar($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->where('LOCATE(UPPER(:chaine),UPPER(u.nomine)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(u.denominationOTAN)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(u.alias)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchepaysminesmar($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->join('u.pays', 'c')
+        ->leftjoin('u.paysAcquereur', 'p')
+        ->leftjoin('u.retrouveEn', 'r')
+        ->where('LOCATE(UPPER(:chaine),UPPER(c.pays)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(p.pays)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(r.pays)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    
+    public function recherchecalibreminesmar($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:MinesMarines','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.diametre)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.diametreHaut)) != 0')
         ->orderBy('m.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
         

@@ -136,5 +136,124 @@ class AmorcageRepository extends EntityRepository
         return $count;
     }
 
+    public function recherchenomamorcage($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->where('LOCATE(UPPER(:chaine),UPPER(u.nomine)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(u.denominationOTAN)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(u.alias)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchepaysamorcage($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->join('u.pays', 'c')
+        ->leftjoin('u.paysAcquereur', 'p')
+        ->leftjoin('u.retrouveEn', 'r')
+        ->where('LOCATE(UPPER(:chaine),UPPER(c.pays)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(p.pays)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(r.pays)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchepoidsamorcage($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        
+         $qb -> select('a')
+        ->from('FeodBundle:Amorcage','a')
+        //->where('LOCATE(UPPER(:chaine),UPPER(a.poids)) != 0')
+        ->where('a.poids = :chaine')
+        ->orwhere('a.PoidsMunCalcule = :chaine')
+        ->orderBy('a.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchecouleuramorcage($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Amorcage','m')
+        ->Join('m.couleurPrincipale', 'v')
+        ->leftjoin('m.couleurSecondaire', 'x')
+        ->where('LOCATE(UPPER(:chaine),UPPER(v.couleurFond)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchecalibreamorcage($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Amorcage','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.DiametreFusee)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchedimamorcage($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Amorcage','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.lgTotavecFusee)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.lgTotavecFuseeDouille)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.lgTotsansFusee)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.hautProjectile)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function rechercheformeamorcage($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Amorcage','m')
+        ->Join('m.formeCorps', 'f')
+        //->leftjoin('a.couleurOgive', 'x')
+        ->where('LOCATE(UPPER(:chaine),UPPER(f.id)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
 
 }

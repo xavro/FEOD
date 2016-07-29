@@ -92,8 +92,8 @@ class GrenadesRepository extends EntityRepository
          $qb -> select('a')
         ->from('FeodBundle:Grenades','a')
         //->where('LOCATE(UPPER(:chaine),UPPER(a.poids)) != 0')
-        ->where('a.poids = :chaine')
-        ->orwhere('a.poidsProjectile = :chaine')
+        ->where('a.PoidsGrenade = :chaine')
+        //->orwhere('a.PoidsGrenade = :chaine')
         ->orderBy('a.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
         
@@ -108,10 +108,10 @@ class GrenadesRepository extends EntityRepository
         //$qb = $this->createQueryBuilder('u');        
         $qb -> select('m')
         ->from('FeodBundle:Grenades','m')
-        ->Join('m.couleurCorps', 'v')
-        //->leftjoin('a.couleurOgive', 'x')
+        ->Join('m.CouleurHautGrenade', 'v')
+        ->leftjoin('m.CouleurBasGrenade', 'x')
         ->where('LOCATE(UPPER(:chaine),UPPER(v.couleurFond)) != 0')
-        //->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
         ->orderBy('m.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
         
@@ -126,8 +126,8 @@ class GrenadesRepository extends EntityRepository
         //$qb = $this->createQueryBuilder('u');        
         $qb -> select('m')
         ->from('FeodBundle:Grenades','m')
-        ->where('LOCATE(UPPER(:chaine),UPPER(m.calibre)) != 0')
-        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.DiametreGrenade)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
         ->orderBy('m.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
         

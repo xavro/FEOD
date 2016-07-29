@@ -90,7 +90,76 @@ class MortierRepository extends EntityRepository
         ->from('FeodBundle:Mortier','m')
         ->Join('m.couleurCorps', 'v')
         //->leftjoin('a.couleurOgive', 'x')
-        ->where('LOCATE(UPPER(:chaine),UPPER(v.couleurFond)) != 0')
+        ->where('LOCATE(UPPER(:chaine),UPPER(v.id)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function recherchepaysmortier($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->join('u.pays', 'c')
+        ->leftjoin('u.paysAcquereur', 'p')
+        ->leftjoin('u.retrouveEn', 'r')
+        ->where('LOCATE(UPPER(:chaine),UPPER(c.pays)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(p.pays)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(r.pays)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function recherchecalibremortier($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:mortier','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.calibre)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchedimmortier($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:mortier','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.lgTotsansFusee)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.lgTotavecFuseeDouille)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.lgTotsansFusee)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.hautProjectile)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function rechercheformemortier($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:mortier','m')
+        ->Join('m.formeCorps', 'f')
+        //->leftjoin('a.couleurOgive', 'x')
+        ->where('LOCATE(UPPER(:chaine),UPPER(f.id)) != 0')
         //->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
         ->orderBy('m.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);

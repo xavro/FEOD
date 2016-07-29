@@ -106,6 +106,25 @@ class Recherche
      * @ORM\Column(nullable=true, name="recherchedimmortier", type="string", length=255)
      */
     private $recherchedimmortier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchepaysmortier", type="string", length=255)
+     */
+    private $recherchepaysmortier;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchecalibremortier", type="string", length=255)
+     */
+    private $recherchecalibremortier;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeCorps")
+     */
+    private $rechercheformemortier;
     
     /**
      * @var string
@@ -127,6 +146,32 @@ class Recherche
      * @ORM\Column(nullable=true, name="recherchecouleurmines", type="string", length=255)
      */
     private $recherchecouleurmines;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchepaysmines", type="string", length=255)
+     */
+    private $recherchepaysmines;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchecalibremines", type="string", length=255)
+     */
+    private $recherchecalibremines;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchedimmines", type="string", length=255)
+     */
+    private $recherchedimmines;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeMine")
+     */
+    private $rechercheformemines;
     
     /**
      * @var string
@@ -1532,5 +1577,166 @@ class Recherche
     public function getRecherchecalibreamorcage()
     {
         return $this->recherchecalibreamorcage;
+    }
+
+    /**
+     * Set recherchepaysmortier
+     *
+     * @param string $recherchepaysmortier
+     * @return Recherche
+     */
+    public function setRecherchepaysmortier($recherchepaysmortier)
+    {
+        $this->recherchepaysmortier = $recherchepaysmortier;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepaysmortier
+     *
+     * @return string 
+     */
+    public function getRecherchepaysmortier()
+    {
+        return $this->recherchepaysmortier;
+    }
+
+    /**
+     * Set recherchecalibremortier
+     *
+     * @param string $recherchecalibremortier
+     * @return Recherche
+     */
+    public function setRecherchecalibremortier($recherchecalibremortier)
+    {
+        $this->recherchecalibremortier = $recherchecalibremortier;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibremortier
+     *
+     * @return string 
+     */
+    public function getRecherchecalibremortier()
+    {
+        return $this->recherchecalibremortier;
+    }
+
+    /**
+     * Set rechercheformemortier
+     *
+     * @param \FeodBundle\Entity\FormeCorps $rechercheformemortier
+     * @return Recherche
+     */
+    public function setRechercheformemortier(\FeodBundle\Entity\FormeCorps $rechercheformemortier = null)
+    {
+        $this->rechercheformemortier = $rechercheformemortier;
+
+        return $this;
+    }
+
+    /**
+     * Get rechercheformemortier
+     *
+     * @return \FeodBundle\Entity\FormeCorps 
+     */
+    public function getRechercheformemortier()
+    {
+        return $this->rechercheformemortier;
+    }
+
+    /**
+     * Set recherchepaysmines
+     *
+     * @param string $recherchepaysmines
+     * @return Recherche
+     */
+    public function setRecherchepaysmines($recherchepaysmines)
+    {
+        $this->recherchepaysmines = $recherchepaysmines;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepaysmines
+     *
+     * @return string 
+     */
+    public function getRecherchepaysmines()
+    {
+        return $this->recherchepaysmines;
+    }
+
+    /**
+     * Set recherchecalibremines
+     *
+     * @param string $recherchecalibremines
+     * @return Recherche
+     */
+    public function setRecherchecalibremines($recherchecalibremines)
+    {
+        $this->recherchecalibremines = $recherchecalibremines;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibremines
+     *
+     * @return string 
+     */
+    public function getRecherchecalibremines()
+    {
+        return $this->recherchecalibremines;
+    }
+
+    /**
+     * Set recherchedimmines
+     *
+     * @param string $recherchedimmines
+     * @return Recherche
+     */
+    public function setRecherchedimmines($recherchedimmines)
+    {
+        $this->recherchedimmines = $recherchedimmines;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchedimmines
+     *
+     * @return string 
+     */
+    public function getRecherchedimmines()
+    {
+        return $this->recherchedimmines;
+    }
+
+    /**
+     * Set rechercheformemines
+     *
+     * @param \FeodBundle\Entity\FormeMine $rechercheformemines
+     * @return Recherche
+     */
+    public function setRechercheformemines(\FeodBundle\Entity\FormeMine $rechercheformemines = null)
+    {
+        $this->rechercheformemines = $rechercheformemines;
+
+        return $this;
+    }
+
+    /**
+     * Get rechercheformemines
+     *
+     * @return \FeodBundle\Entity\FormeMine 
+     */
+    public function getRechercheformemines()
+    {
+        return $this->rechercheformemines;
     }
 }

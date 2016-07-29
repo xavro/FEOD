@@ -92,7 +92,7 @@ class RoquettesRepository extends EntityRepository
          $qb -> select('a')
         ->from('FeodBundle:Roquettes','a')
         //->where('LOCATE(UPPER(:chaine),UPPER(a.poids)) != 0')
-        ->where('a.poids = :chaine')
+        ->where('a.PoidsRoq = :chaine')
         ->orwhere('a.poidsProjectile = :chaine')
         ->orderBy('a.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
@@ -108,7 +108,7 @@ class RoquettesRepository extends EntityRepository
         //$qb = $this->createQueryBuilder('u');        
         $qb -> select('m')
         ->from('FeodBundle:Roquettes','m')
-        ->Join('m.couleurCorps', 'v')
+        ->Join('m.CouleurCorps', 'v')
         //->leftjoin('a.couleurOgive', 'x')
         ->where('LOCATE(UPPER(:chaine),UPPER(v.couleurFond)) != 0')
         //->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
@@ -126,8 +126,8 @@ class RoquettesRepository extends EntityRepository
         //$qb = $this->createQueryBuilder('u');        
         $qb -> select('m')
         ->from('FeodBundle:Roquettes','m')
-        ->where('LOCATE(UPPER(:chaine),UPPER(m.calibre)) != 0')
-        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.Calibre)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.CalibreCalcul)) != 0')
         ->orderBy('m.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
         

@@ -52,16 +52,81 @@ class SousMunitionsRepository extends EntityRepository
             ->getResult();
     }
     
-    public function recherchepoids($chaine)
+     public function recherchenomsousmun($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->where('LOCATE(UPPER(:chaine),UPPER(u.nomine)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(u.denominationOTAN)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(u.alias)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchepayssousmun($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->join('u.pays', 'c')
+        ->leftjoin('u.paysAcquereur', 'p')
+        ->leftjoin('u.retrouveEn', 'r')
+        ->where('LOCATE(UPPER(:chaine),UPPER(c.pays)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(p.pays)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(r.pays)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    
+    public function recherchepoidssousmun($chaine)
     {
 
          $qb = $this->_em->createQueryBuilder();
         //$qb = $this->createQueryBuilder('u');        
         $qb -> select('a')
         ->from('FeodBundle:SousMunitions','a')
-        //->where('LOWER(:chaine) = LOWER(a.PoidsNonLargue)')
         ->where('a.PoidsNonLargue = :chaine')
         ->orderBy('a.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+     public function recherchecouleursousmun($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:SousMunitions','m')
+        ->Join('m.CouleurPrincipale', 'v')
+        ->leftjoin('m.CouleurSecondaire', 'x')
+        ->where('LOCATE(UPPER(:chaine),UPPER(v.couleurFond)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchecalibresousmun($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:SousMunitions','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.DiametreLargue)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
         ->setParameter('chaine', $chaine);
         
         return $qb->getQuery()

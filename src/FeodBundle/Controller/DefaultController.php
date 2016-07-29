@@ -189,10 +189,18 @@ $artillerief = null;
 $minesn = null;
 $minesc = null;
 $minesp = null;
+$minesy = null;
+$minesl = null;
+$minesd = null;
+$minesf = null;
 
 $mortiern = null;
 $mortierp = null;
 $mortierc = null;
+$mortiery = null;
+$mortierl = null;
+$mortierd = null;
+$mortierf = null;
 
 $grenadesn = null;
 $grenadesc = null;
@@ -212,12 +220,29 @@ $bombesp = null;
 $bombesy = null;
 $bombesl = null;
 
-//$missiles= null;
-//$missilesc= null;
-//$sousMunitions = null;
-//$sousMunitionsc = null;
-//$minesMarines = null;
-//$minesMarinesC = null;
+$missilesn = null;
+$missilesc = null;
+$missilesp = null;
+$missilesy = null;
+$missilesl = null;
+
+$sousmunn = null;
+$sousmunc = null;
+$sousmunp = null;
+$sousmuny = null;
+$sousmunl = null;
+
+$minesmarn = null;
+$minesmarc = null;
+$minesmarp = null;
+$minesmary = null;
+$minesmarl = null;
+
+$amorcagen = null;
+$amorcagec = null;
+$amorcagep = null;
+$amorcagey = null;
+$amorcagel = null;
 
         if ($form->handleRequest($request)->isValid()) {
             //$form->bind($this->get('request'));
@@ -234,13 +259,19 @@ $bombesl = null;
             $minesn = $em->getRepository('FeodBundle:Mines')->recherchenommines($s->getRecherchenommines());
             $minesp = $em->getRepository('FeodBundle:Mines')->recherchepoidsmines($s->getRecherchepoidsmines());
             $minesc = $em->getRepository('FeodBundle:Mines')->recherchecouleurmines($s->getRecherchecouleurmines());
+            $minesy = $em->getRepository('FeodBundle:Mines')->recherchepaysmines($s->getRecherchepaysmines());
+            $minesl = $em->getRepository('FeodBundle:Mines')->recherchecalibremines($s->getRecherchecalibremines());
+            $minesd = $em->getRepository('FeodBundle:Mines')->recherchedimmines($s->getRecherchedimmines());
+            $minesf = $em->getRepository('FeodBundle:Mines')->rechercheformemines($s->getRechercheformemines());
             
             
             $mortierp = $em->getRepository('FeodBundle:Mortier')->recherchepoidsmortier($s->getRecherchepoidsmortier());
             $mortierc = $em->getRepository('FeodBundle:Mortier')->recherchecouleurmortier($s->getRecherchecouleurmortier());
             $mortiern = $em->getRepository('FeodBundle:Mortier')->recherchenommortier($s->getRecherchenommortier());
-            
-            //$munition = $em->getRepository('FeodBundle:Munition')->recherchepoids($s->getRecherchepoids());
+            $mortiery = $em->getRepository('FeodBundle:Mortier')->recherchepaysmortier($s->getRecherchepaysmortier());
+            $mortierl = $em->getRepository('FeodBundle:Mortier')->recherchecalibremortier($s->getRecherchecalibremortier());
+            $mortierd = $em->getRepository('FeodBundle:Mortier')->recherchedimmortier($s->getRecherchedimmortier());
+            $mortierf = $em->getRepository('FeodBundle:Mortier')->rechercheformemortier($s->getRechercheformemortier());
             
             $grenadesn = $em->getRepository('FeodBundle:Grenades')->recherchenomgrenades($s->getRecherchenomgrenades());
             $grenadesc = $em->getRepository('FeodBundle:Grenades')->recherchecouleurgrenades($s->getRecherchecouleurgrenades());
@@ -254,26 +285,48 @@ $bombesl = null;
             $roquettesy = $em->getRepository('FeodBundle:Roquettes')->recherchepaysroquettes($s->getRecherchepaysroquettes());
             $roquettesl = $em->getRepository('FeodBundle:Roquettes')->recherchecalibreroquettes($s->getRecherchecalibreroquettes());
             
-            //$missiles = $em->getRepository('FeodBundle:Missiles')->recherchepoids($s->getRecherchepoids());
-            //$missilesc = $em->getRepository('FeodBundle:Missiles')->recherchecouleur($s->getRecherchecouleur());
+            $missilesn = $em->getRepository('FeodBundle:Missiles')->recherchenommissiles($s->getRecherchenommissiles());
+            $missilesc = $em->getRepository('FeodBundle:Missiles')->recherchecouleurmissiles($s->getRecherchecouleurmissiles());
+            $missilesp = $em->getRepository('FeodBundle:Missiles')->recherchepoidsmissiles($s->getRecherchepoidsmissiles());
+            $missilesy = $em->getRepository('FeodBundle:Missiles')->recherchepaysmissiles($s->getRecherchepaysmissiles());
+            $missilesl = $em->getRepository('FeodBundle:Missiles')->recherchecalibremissiles($s->getRecherchecalibremissiles());
             
             $bombesn = $em->getRepository('FeodBundle:Bombes')->recherchenombombes($s->getRecherchenombombes());
             $bombesc = $em->getRepository('FeodBundle:Bombes')->recherchecouleurbombes($s->getRecherchecouleurbombes());
             $bombesp = $em->getRepository('FeodBundle:Bombes')->recherchepoidsbombes($s->getRecherchepoidsbombes());
             $bombesy = $em->getRepository('FeodBundle:Bombes')->recherchepaysbombes($s->getRecherchepaysbombes());
-            $bombesl = $em->getRepository('FeodBundle:Bombes')->recherchecalibrebombes($s->getRecherchepaysbombes());
+            $bombesl = $em->getRepository('FeodBundle:Bombes')->recherchecalibrebombes($s->getRecherchecalibrebombes());
             
-            //$sousMunitions = $em->getRepository('FeodBundle:SousMunitions')->recherchepoids($s->getRecherchepoids());
-            //$sousMunitionsc = $em->getRepository('FeodBundle:SousMunitions')->recherchecouleur($s->getRecherchecouleur());
+            $sousmunn = $em->getRepository('FeodBundle:SousMunitions')->recherchenomsousmun($s->getRecherchenomsousmun());
+            $sousmunc = $em->getRepository('FeodBundle:SousMunitions')->recherchecouleursousmun($s->getRecherchecouleursousmun());
+            $sousmunp = $em->getRepository('FeodBundle:SousMunitions')->recherchepoidssousmun($s->getRecherchepoidssousmun());
+            $sousmuny = $em->getRepository('FeodBundle:SousMunitions')->recherchepayssousmun($s->getRecherchepayssousmun());
+            $sousmunl = $em->getRepository('FeodBundle:SousMunitions')->recherchecalibresousmun($s->getRecherchecalibresousmun());
             
-            //$minesMarines = $em->getRepository('FeodBundle:MinesMarines')->recherchepoids($s->getRecherchepoids());
-            //$minesMarinesC = $em->getRepository('FeodBundle:MinesMarines')->recherchecouleur($s->getRecherchecouleur());
+            $minesmarn = $em->getRepository('FeodBundle:MinesMarines')->recherchenomminesmar($s->getRecherchenomminesmar());
+            $minesmarc = $em->getRepository('FeodBundle:MinesMarines')->recherchecouleurminesmar($s->getRecherchecouleurminesmar());
+            $minesmarp = $em->getRepository('FeodBundle:MinesMarines')->recherchepoidsminesmar($s->getRecherchepoidsminesmar());
+            $minesmary = $em->getRepository('FeodBundle:MinesMarines')->recherchepaysminesmar($s->getRecherchepaysminesmar());
+            $minesmarl = $em->getRepository('FeodBundle:MinesMarines')->recherchecalibreminesmar($s->getRecherchecalibreminesmar());
+
+            $amorcagen = $em->getRepository('FeodBundle:Amorcage')->recherchenomamorcage($s->getRecherchenomamorcage());
+            $amorcagec = $em->getRepository('FeodBundle:Amorcage')->recherchecouleuramorcage($s->getRecherchecouleuramorcage());
+            $amorcagep = $em->getRepository('FeodBundle:Amorcage')->recherchepoidsamorcage($s->getRecherchepoidsamorcage());
+            $amorcagey = $em->getRepository('FeodBundle:Amorcage')->recherchepaysamorcage($s->getRecherchepaysamorcage());
+            $amorcagel = $em->getRepository('FeodBundle:Amorcage')->recherchecalibreamorcage($s->getRecherchecalibreamorcage());
         } 
         return $this->render('FeodBundle:Default:search.html.twig', array(
             'form' => $form->createView(),
-            'entities'=> $artilleriep + $mortierp + $artillerien + $artilleriec + $mortierc + $mortiern + $minesn + $minesp + $minesc
-                + $artilleriey + $artilleriel + $artilleried + $artillerief + $grenadesc + $grenadesn + $grenadesp + $grenadesl + $grenadesy
-                + $roquettesc + $roquettesn + $roquettesp + $roquettesl + $roquettesy + $bombesc + $bombesn + $bombesp + $bombesl + $bombesy
+            'entities'=> $artilleriep +  $artillerien + $artilleriec + $artilleriey + $artilleriel + $artilleried + $artillerief
+            + $mortierp + $mortierc + $mortiern + $mortiery + $mortierl + $mortierd + $mortierf 
+            + $minesn + $minesp + $minesc + $minesy + $minesl + $minesd + $minesf
+            + $grenadesc + $grenadesn + $grenadesp + $grenadesl + $grenadesy
+            + $roquettesc + $roquettesn + $roquettesp + $roquettesl + $roquettesy
+            + $bombesc + $bombesn + $bombesp + $bombesl + $bombesy
+            + $missilesc + $missilesn + $missilesp + $missilesl + $missilesy
+            + $sousmunc + $sousmunn + $sousmunp + $sousmunl + $sousmuny
+            + $minesmarc + $minesmarn + $minesmarp + $minesmarl + $minesmary
+            + $amorcagec + $amorcagen + $amorcagep + $amorcagel + $amorcagey
         ));
     }
 }

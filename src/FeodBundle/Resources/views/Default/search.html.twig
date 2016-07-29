@@ -67,20 +67,82 @@
 </div>
 
 
-<div id="Mortier" role="tabpanel" class="tab-pane container-fluid"><br> 
-<div  class="row">
-<div class="col-sm-4">{{form_label(form.recherchenommortier)}}{{form_widget(form.recherchenommortier)}}</div>
-<div class="col-sm-3">{{form_label(form.recherchepoidsmortier)}}{{form_widget(form.recherchepoidsmortier)}}</div>
-<div class="col-sm-3">{{form_label(form.recherchecouleurmortier)}}{{form_widget(form.recherchecouleurmortier)}}</div>
-</div>
+<div id="Mortier" role="tabpanel" class="tab-pane container-fluid"><br>
+  <div class="form-group">
+      <label class="control-label col-sm-1"><b><I>Nom :</I></b></label>
+    <div class="col-sm-3">
+      {{form_widget(form.recherchenommortier)}}
+    </div>
+    <label class="control-label col-sm-1">Pays :</label>
+    <div class="col-sm-3"> 
+      {{form_widget(form.recherchepaysmortier)}}
+    </div>
+  </div>
+    <hr>
+  <div class="form-group">
+    <label class="control-label col-sm-1">Calibre :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchecalibremortier)}}
+    </div>
+    <label class="control-label col-sm-1">Poids :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchepoidsmortier)}}
+    </div>
+    <label class="control-label col-sm-1">Dimensions :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchedimmortier)}}
+    </div>
+  </div>
+    <hr>
+  <div class="form-group">
+    <label class="control-label col-sm-1">Couleur :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchecouleurmortier)}}
+    </div>
+    <label class="control-label col-sm-1">Forme :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.rechercheformemortier)}}
+    </div>
+  </div>
 </div>
 
-<div id="Mines" role="tabpanel" class="tab-pane container-fluid"><br>                    
-<div  class="row">
-<div class="col-sm-4">{{form_label(form.recherchenommines)}}{{form_widget(form.recherchenommines)}}</div>
-<div class="col-sm-3">{{form_label(form.recherchepoidsmines)}}{{form_widget(form.recherchepoidsmines)}}</div>
-<div class="col-sm-3">{{form_label(form.recherchecouleurmines)}}{{form_widget(form.recherchecouleurmines)}}</div>
-</div>
+<div id="Mines" role="tabpanel" class="tab-pane container-fluid"><br>
+  <div class="form-group">
+      <label class="control-label col-sm-1"><b><I>Nom :</I></b></label>
+    <div class="col-sm-3">
+      {{form_widget(form.recherchenommines)}}
+    </div>
+    <label class="control-label col-sm-1">Pays :</label>
+    <div class="col-sm-3"> 
+      {{form_widget(form.recherchepaysmines)}}
+    </div>
+  </div>
+    <hr>
+  <div class="form-group">
+    <label class="control-label col-sm-1">Calibre :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchecalibremines)}}
+    </div>
+    <label class="control-label col-sm-1">Poids :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchepoidsmines)}}
+    </div>
+    <label class="control-label col-sm-1">Dimensions :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchedimmines)}}
+    </div>
+  </div>
+    <hr>
+  <div class="form-group">
+    <label class="control-label col-sm-1">Couleur :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.recherchecouleurmines)}}
+    </div>
+    <label class="control-label col-sm-1">Forme :</label>
+    <div class="col-sm-2"> 
+      {{form_widget(form.rechercheformemines)}}
+    </div>
+  </div>
 </div>
 
 <div id="Grenades" role="tabpanel" class="tab-pane container-fluid"><br>                    

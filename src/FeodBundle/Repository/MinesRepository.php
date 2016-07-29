@@ -100,4 +100,73 @@ class MinesRepository extends EntityRepository
             ->getResult();
     }
 
+    public function recherchepaysmines($chaine)
+    {
+        $qb = $this->createQueryBuilder('u')
+        ->select('u')
+        ->join('u.pays', 'c')
+        ->leftjoin('u.paysAcquereur', 'p')
+        ->leftjoin('u.retrouveEn', 'r')
+        ->where('LOCATE(UPPER(:chaine),UPPER(c.pays)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(p.pays)) != 0')
+        ->orwhere('LOCATE(UPPER(:chaine),UPPER(r.pays)) != 0')
+        ->orderBy('u.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function recherchecalibremines($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Mines','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.diametre)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(m.calibreCalcul)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function recherchedimmines($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Mines','m')
+        ->where('LOCATE(UPPER(:chaine),UPPER(m.hauteurAvecAll)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.hauteurSansAll)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.longueur)) != 0')
+        ->orWhere('LOCATE(UPPER(:chaine),UPPER(m.largeur)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
+    public function rechercheformemines($chaine)
+    {
+
+         $qb = $this->_em->createQueryBuilder();
+        //$qb = $this->createQueryBuilder('u');        
+        $qb -> select('m')
+        ->from('FeodBundle:Mines','m')
+        ->Join('m.formeMine', 'f')
+        //->leftjoin('a.couleurOgive', 'x')
+        ->where('LOCATE(UPPER(:chaine),UPPER(f.id)) != 0')
+        //->orWhere('LOCATE(UPPER(:chaine),UPPER(x.couleurFond)) != 0')
+        ->orderBy('m.dateMAJ', 'DESC')
+        ->setParameter('chaine', $chaine);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+
 }

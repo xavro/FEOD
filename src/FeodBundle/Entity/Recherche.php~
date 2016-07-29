@@ -106,6 +106,25 @@ class Recherche
      * @ORM\Column(nullable=true, name="recherchedimmortier", type="string", length=255)
      */
     private $recherchedimmortier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchepaysmortier", type="string", length=255)
+     */
+    private $recherchepaysmortier;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchecalibremortier", type="string", length=255)
+     */
+    private $recherchecalibremortier;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeCorps")
+     */
+    private $rechercheformemortier;
     
     /**
      * @var string
@@ -127,6 +146,32 @@ class Recherche
      * @ORM\Column(nullable=true, name="recherchecouleurmines", type="string", length=255)
      */
     private $recherchecouleurmines;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchepaysmines", type="string", length=255)
+     */
+    private $recherchepaysmines;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchecalibremines", type="string", length=255)
+     */
+    private $recherchecalibremines;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(nullable=true, name="recherchedimmines", type="string", length=255)
+     */
+    private $recherchedimmines;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="FeodBundle\Entity\FormeCorps")
+     */
+    private $rechercheformemines;
     
     /**
      * @var string
@@ -1072,5 +1117,534 @@ class Recherche
     public function getRecherchecalibrebombes()
     {
         return $this->recherchecalibrebombes;
+    }
+
+    /**
+     * Set recherchenommissiles
+     *
+     * @param string $recherchenommissiles
+     * @return Recherche
+     */
+    public function setRecherchenommissiles($recherchenommissiles)
+    {
+        $this->recherchenommissiles = $recherchenommissiles;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchenommissiles
+     *
+     * @return string 
+     */
+    public function getRecherchenommissiles()
+    {
+        return $this->recherchenommissiles;
+    }
+
+    /**
+     * Set recherchepoidsmissiles
+     *
+     * @param string $recherchepoidsmissiles
+     * @return Recherche
+     */
+    public function setRecherchepoidsmissiles($recherchepoidsmissiles)
+    {
+        $this->recherchepoidsmissiles = $recherchepoidsmissiles;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepoidsmissiles
+     *
+     * @return string 
+     */
+    public function getRecherchepoidsmissiles()
+    {
+        return $this->recherchepoidsmissiles;
+    }
+
+    /**
+     * Set recherchecouleurmissiles
+     *
+     * @param string $recherchecouleurmissiles
+     * @return Recherche
+     */
+    public function setRecherchecouleurmissiles($recherchecouleurmissiles)
+    {
+        $this->recherchecouleurmissiles = $recherchecouleurmissiles;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecouleurmissiles
+     *
+     * @return string 
+     */
+    public function getRecherchecouleurmissiles()
+    {
+        return $this->recherchecouleurmissiles;
+    }
+
+    /**
+     * Set recherchepaysmissiles
+     *
+     * @param string $recherchepaysmissiles
+     * @return Recherche
+     */
+    public function setRecherchepaysmissiles($recherchepaysmissiles)
+    {
+        $this->recherchepaysmissiles = $recherchepaysmissiles;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepaysmissiles
+     *
+     * @return string 
+     */
+    public function getRecherchepaysmissiles()
+    {
+        return $this->recherchepaysmissiles;
+    }
+
+    /**
+     * Set recherchecalibremissiles
+     *
+     * @param string $recherchecalibremissiles
+     * @return Recherche
+     */
+    public function setRecherchecalibremissiles($recherchecalibremissiles)
+    {
+        $this->recherchecalibremissiles = $recherchecalibremissiles;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibremissiles
+     *
+     * @return string 
+     */
+    public function getRecherchecalibremissiles()
+    {
+        return $this->recherchecalibremissiles;
+    }
+
+    /**
+     * Set recherchenomsousmun
+     *
+     * @param string $recherchenomsousmun
+     * @return Recherche
+     */
+    public function setRecherchenomsousmun($recherchenomsousmun)
+    {
+        $this->recherchenomsousmun = $recherchenomsousmun;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchenomsousmun
+     *
+     * @return string 
+     */
+    public function getRecherchenomsousmun()
+    {
+        return $this->recherchenomsousmun;
+    }
+
+    /**
+     * Set recherchepoidssousmun
+     *
+     * @param string $recherchepoidssousmun
+     * @return Recherche
+     */
+    public function setRecherchepoidssousmun($recherchepoidssousmun)
+    {
+        $this->recherchepoidssousmun = $recherchepoidssousmun;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepoidssousmun
+     *
+     * @return string 
+     */
+    public function getRecherchepoidssousmun()
+    {
+        return $this->recherchepoidssousmun;
+    }
+
+    /**
+     * Set recherchecouleursousmun
+     *
+     * @param string $recherchecouleursousmun
+     * @return Recherche
+     */
+    public function setRecherchecouleursousmun($recherchecouleursousmun)
+    {
+        $this->recherchecouleursousmun = $recherchecouleursousmun;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecouleursousmun
+     *
+     * @return string 
+     */
+    public function getRecherchecouleursousmun()
+    {
+        return $this->recherchecouleursousmun;
+    }
+
+    /**
+     * Set recherchepayssousmun
+     *
+     * @param string $recherchepayssousmun
+     * @return Recherche
+     */
+    public function setRecherchepayssousmun($recherchepayssousmun)
+    {
+        $this->recherchepayssousmun = $recherchepayssousmun;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepayssousmun
+     *
+     * @return string 
+     */
+    public function getRecherchepayssousmun()
+    {
+        return $this->recherchepayssousmun;
+    }
+
+    /**
+     * Set recherchecalibresousmun
+     *
+     * @param string $recherchecalibresousmun
+     * @return Recherche
+     */
+    public function setRecherchecalibresousmun($recherchecalibresousmun)
+    {
+        $this->recherchecalibresousmun = $recherchecalibresousmun;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibresousmun
+     *
+     * @return string 
+     */
+    public function getRecherchecalibresousmun()
+    {
+        return $this->recherchecalibresousmun;
+    }
+
+    /**
+     * Set recherchenomminesmar
+     *
+     * @param string $recherchenomminesmar
+     * @return Recherche
+     */
+    public function setRecherchenomminesmar($recherchenomminesmar)
+    {
+        $this->recherchenomminesmar = $recherchenomminesmar;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchenomminesmar
+     *
+     * @return string 
+     */
+    public function getRecherchenomminesmar()
+    {
+        return $this->recherchenomminesmar;
+    }
+
+    /**
+     * Set recherchepoidsminesmar
+     *
+     * @param string $recherchepoidsminesmar
+     * @return Recherche
+     */
+    public function setRecherchepoidsminesmar($recherchepoidsminesmar)
+    {
+        $this->recherchepoidsminesmar = $recherchepoidsminesmar;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepoidsminesmar
+     *
+     * @return string 
+     */
+    public function getRecherchepoidsminesmar()
+    {
+        return $this->recherchepoidsminesmar;
+    }
+
+    /**
+     * Set recherchecouleurminesmar
+     *
+     * @param string $recherchecouleurminesmar
+     * @return Recherche
+     */
+    public function setRecherchecouleurminesmar($recherchecouleurminesmar)
+    {
+        $this->recherchecouleurminesmar = $recherchecouleurminesmar;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecouleurminesmar
+     *
+     * @return string 
+     */
+    public function getRecherchecouleurminesmar()
+    {
+        return $this->recherchecouleurminesmar;
+    }
+
+    /**
+     * Set recherchepaysminesmar
+     *
+     * @param string $recherchepaysminesmar
+     * @return Recherche
+     */
+    public function setRecherchepaysminesmar($recherchepaysminesmar)
+    {
+        $this->recherchepaysminesmar = $recherchepaysminesmar;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepaysminesmar
+     *
+     * @return string 
+     */
+    public function getRecherchepaysminesmar()
+    {
+        return $this->recherchepaysminesmar;
+    }
+
+    /**
+     * Set recherchecalibreminesmar
+     *
+     * @param string $recherchecalibreminesmar
+     * @return Recherche
+     */
+    public function setRecherchecalibreminesmar($recherchecalibreminesmar)
+    {
+        $this->recherchecalibreminesmar = $recherchecalibreminesmar;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibreminesmar
+     *
+     * @return string 
+     */
+    public function getRecherchecalibreminesmar()
+    {
+        return $this->recherchecalibreminesmar;
+    }
+
+    /**
+     * Set recherchenomamorcage
+     *
+     * @param string $recherchenomamorcage
+     * @return Recherche
+     */
+    public function setRecherchenomamorcage($recherchenomamorcage)
+    {
+        $this->recherchenomamorcage = $recherchenomamorcage;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchenomamorcage
+     *
+     * @return string 
+     */
+    public function getRecherchenomamorcage()
+    {
+        return $this->recherchenomamorcage;
+    }
+
+    /**
+     * Set recherchepoidsamorcage
+     *
+     * @param string $recherchepoidsamorcage
+     * @return Recherche
+     */
+    public function setRecherchepoidsamorcage($recherchepoidsamorcage)
+    {
+        $this->recherchepoidsamorcage = $recherchepoidsamorcage;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepoidsamorcage
+     *
+     * @return string 
+     */
+    public function getRecherchepoidsamorcage()
+    {
+        return $this->recherchepoidsamorcage;
+    }
+
+    /**
+     * Set recherchecouleuramorcage
+     *
+     * @param string $recherchecouleuramorcage
+     * @return Recherche
+     */
+    public function setRecherchecouleuramorcage($recherchecouleuramorcage)
+    {
+        $this->recherchecouleuramorcage = $recherchecouleuramorcage;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecouleuramorcage
+     *
+     * @return string 
+     */
+    public function getRecherchecouleuramorcage()
+    {
+        return $this->recherchecouleuramorcage;
+    }
+
+    /**
+     * Set recherchepaysamorcage
+     *
+     * @param string $recherchepaysamorcage
+     * @return Recherche
+     */
+    public function setRecherchepaysamorcage($recherchepaysamorcage)
+    {
+        $this->recherchepaysamorcage = $recherchepaysamorcage;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepaysamorcage
+     *
+     * @return string 
+     */
+    public function getRecherchepaysamorcage()
+    {
+        return $this->recherchepaysamorcage;
+    }
+
+    /**
+     * Set recherchecalibreamorcage
+     *
+     * @param string $recherchecalibreamorcage
+     * @return Recherche
+     */
+    public function setRecherchecalibreamorcage($recherchecalibreamorcage)
+    {
+        $this->recherchecalibreamorcage = $recherchecalibreamorcage;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibreamorcage
+     *
+     * @return string 
+     */
+    public function getRecherchecalibreamorcage()
+    {
+        return $this->recherchecalibreamorcage;
+    }
+
+    /**
+     * Set recherchepaysmortier
+     *
+     * @param string $recherchepaysmortier
+     * @return Recherche
+     */
+    public function setRecherchepaysmortier($recherchepaysmortier)
+    {
+        $this->recherchepaysmortier = $recherchepaysmortier;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchepaysmortier
+     *
+     * @return string 
+     */
+    public function getRecherchepaysmortier()
+    {
+        return $this->recherchepaysmortier;
+    }
+
+    /**
+     * Set recherchecalibremortier
+     *
+     * @param string $recherchecalibremortier
+     * @return Recherche
+     */
+    public function setRecherchecalibremortier($recherchecalibremortier)
+    {
+        $this->recherchecalibremortier = $recherchecalibremortier;
+
+        return $this;
+    }
+
+    /**
+     * Get recherchecalibremortier
+     *
+     * @return string 
+     */
+    public function getRecherchecalibremortier()
+    {
+        return $this->recherchecalibremortier;
+    }
+
+    /**
+     * Set rechercheformemortier
+     *
+     * @param \FeodBundle\Entity\FormeCorps $rechercheformemortier
+     * @return Recherche
+     */
+    public function setRechercheformemortier(\FeodBundle\Entity\FormeCorps $rechercheformemortier = null)
+    {
+        $this->rechercheformemortier = $rechercheformemortier;
+
+        return $this;
+    }
+
+    /**
+     * Get rechercheformemortier
+     *
+     * @return \FeodBundle\Entity\FormeCorps 
+     */
+    public function getRechercheformemortier()
+    {
+        return $this->rechercheformemortier;
     }
 }

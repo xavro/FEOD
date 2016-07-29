@@ -4,6 +4,7 @@ namespace FeodBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use FeodBundle\Entity\Artillerie;
 use FeodBundle\Form\ArtillerieType;
 use FeodBundle\Form\ArtillerieSearchType;
@@ -2530,12 +2531,13 @@ class MunitionController extends Controller
         $minesMarines = $em->getRepository('FeodBundle:MinesMarines')->findOneById($id);
         $image = $em->getRepository('FeodBundle:Image')->findOneById($id);
         
+        
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Munition entity.');
         }
         
-        return $this->render('FeodBundle:'.ucfirst($type).':fiche.html.twig', array(
+        $html = $this->renderView('FeodBundle:'.ucfirst($type).':fiche.html.twig', array(
             'entity'      => $entity,
             'artillerie'        => $artillerie,
             'mines'        => $mines,
@@ -2549,7 +2551,17 @@ class MunitionController extends Controller
             'image'        => $image,
 
         ));
+
+
+return new Response(
+    $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+    200,
+    array(
+        'Content-Type'          => 'application/pdf',
+        'Content-Disposition'   => 'filename="fiche '.$type.'.pdf"'
+    )
+);
+
     }
-    
 
 }
